@@ -1,11 +1,11 @@
 import mongoose, { Schema, Document, Model, model } from 'mongoose';
 
-interface ICompany extends Document {
+export interface ICompany extends Document {
   name: string;
   personName: string;
   email: string;
   password: string;
-  bitrix_id: string;
+  bitrix_id: number;
   cpf_cnpj: string;
 }
 
