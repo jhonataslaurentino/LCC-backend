@@ -1,14 +1,13 @@
-import { Document } from 'mongoose';
-import bitrixApi, { bitrixApiMethods } from '../api/bitrix';
-import Company, { ICompany } from '../Model/Company';
+import { hash } from 'bcryptjs';
+import { CompaniesModel, Company } from '../Entities/Company';
 
 interface Request {
   name: string;
   personName: string;
   email: string;
-  phone: string;
   password: string;
   cpf_cnpj: string;
+  bitrix_id: number;
 }
 
 class CreateCompanyService {
@@ -16,40 +15,30 @@ class CreateCompanyService {
     name,
     personName,
     email,
-    phone,
     password,
     cpf_cnpj,
-  }: Request): Promise<Document<ICompany>> {
-    const requestBody = {
-      fields: {
-        TITLE: name,
-        COMPANY_TYPE: 'CUSTOMER',
-        CURRENCY_ID: 'BRL',
-        OPENED: 'Y',
-        PHONE: [phone],
-        EMAIL: [
-          {
-            VALUE_TYPE: 'WORK',
-            VALUE: email,
-          },
-        ],
-      },
-    };
-    const response = await bitrixApi.post(
-      `${bitrixApiMethods.ADD_COMPANY}.json`,
-      requestBody,
-    );
+    bitrix_id,
+  }: Request): Promise<Company> {
+    const isThereAnyCompanyWithSameEmail = await CompaniesModel.findOne({
+      email,
+    }).exec();
 
-    const { ID: companyBitrixId } = response.data;
+    if (isThereAnyCompanyWithSameEmail) {
+      throw new Error('This email is already used');
+    }
 
-    const company: ICompany = await Company.create({
-      name,
-      personName,
-      password,
-      bitrix_id: Number(companyBitrixId),
-      cpf_cnpj,
-    });
+    const hashedPassword = await hash(password, 8);
 
+    const company = (
+      await CompaniesModel.create({
+        name,
+        personName,
+        email,
+        password: hashedPassword,
+        cpf_cnpj,
+        bitrix_id,
+      })
+    ).save();
     return company;
   }
 }
