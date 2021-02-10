@@ -3,6 +3,12 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+"""Company's Authentication Args"""
+input AuthenticationCompanyInput {
+  email: String!
+  password: String!
+}
+
 """The company model"""
 type Company {
   """The ID returned from Bitrix platform"""
@@ -19,7 +25,7 @@ type Company {
   """
   The hashed company's password. it should not be returned at any request
   """
-  password: String!
+  password: String
 
   """The person name"""
   personName: String!
@@ -36,8 +42,15 @@ input CreateCompanyInput {
   personName: String!
 }
 
+"""Login Schema"""
+type Login {
+  company: Company!
+  token: String!
+}
+
 type Mutation {
   createCompany(data: CreateCompanyInput!): Company!
+  login(data: AuthenticationCompanyInput!): Login!
   setBitrixId(data: UpdateBitrixIdInput!): Company!
 }
 

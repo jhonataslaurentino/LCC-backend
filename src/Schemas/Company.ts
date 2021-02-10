@@ -21,6 +21,7 @@ export default class Company {
   @Field({
     description:
       "The hashed company's password. it should not be returned at any request",
+      nullable: true
   })
   @Property()
   password: string;
