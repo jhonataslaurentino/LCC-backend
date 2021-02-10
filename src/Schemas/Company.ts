@@ -1,46 +1,38 @@
-import mongoose, { Schema, Document, Model, model } from 'mongoose';
+import {  prop as Property } from '@typegoose/typegoose';
+import { Field, ID, ObjectType } from 'type-graphql';
 
-export interface ICompany extends Document {
+@ObjectType({ description: 'The company model' })
+export default class Company {
+  @Field(() => ID)
+  id: string;
+
+  @Field({ description: 'The company name' })
+  @Property()
   name: string;
+
+  @Field({ description: 'The person name' })
+  @Property()
   personName: string;
+
+  @Field({ description: 'The company email' })
+  @Property()
   email: string;
+
+  @Field({
+    description:
+      "The hashed company's password. it should not be returned at any request",
+  })
+  @Property()
   password: string;
+
+  @Field(() => Number, {
+    description: 'The ID returned from Bitrix platform',
+    nullable: true,
+  })
+  @Property()
   bitrix_id: number;
+
+  @Field()
+  @Property()
   cpf_cnpj: string;
 }
-
-const CompanySchema: Schema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-
-  personName: {
-    type: String,
-    required: true,
-  },
-
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-
-  password: {
-    type: String,
-    required: true,
-  },
-
-  bitrix_id: {
-    type: Number,
-  },
-
-  cpf_cnpj: {
-    type: String,
-    required: true,
-  },
-});
-
-const Company: Model<ICompany> = model('Company', CompanySchema);
-
-export default Company;

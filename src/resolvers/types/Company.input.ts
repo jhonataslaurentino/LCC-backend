@@ -1,6 +1,6 @@
 import { IsEmail, Length } from 'class-validator';
 import { Field, InputType } from 'type-graphql';
-import { Company } from '../../Entities/Company';
+import Company from '../../Schemas/Company';
 
 @InputType({ description: 'It is building yet' })
 class CompaniesInput implements Partial<Company> {
@@ -17,7 +17,7 @@ class CompaniesInput implements Partial<Company> {
   email: string;
 
   @Field()
-  @Length(1, 255)
+  @Length(8, 255)
   password: string;
 
   @Field(() => Number, { nullable: true })
