@@ -2,7 +2,7 @@ import { compare } from "bcryptjs";
 import CompanyModel from "../Entities/Company";
 import Company from "../Schemas/Company";
 import { sign } from "jsonwebtoken";
-import Authentication from "../config/Authentication";
+import auth from "../config/auth";
 
 interface Request{
   email: string;
@@ -27,7 +27,7 @@ class AuthenticateCompanyService {
       throw new Error("Incorrect email/password combination");
     }
 
-    const {secret, expiresIn} = Authentication.jwt
+    const {secret, expiresIn} = auth.jwt
 
     const token = sign({}, secret, {
       subject: company.id,
