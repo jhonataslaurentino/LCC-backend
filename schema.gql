@@ -3,16 +3,6 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
-"""It is building yet"""
-input CompaniesInput {
-  bitrix_id: Float
-  cpf_cnpj: String
-  email: String!
-  name: String!
-  password: String!
-  personName: String!
-}
-
 """The company model"""
 type Company {
   """The ID returned from Bitrix platform"""
@@ -35,10 +25,28 @@ type Company {
   personName: String!
 }
 
+"""Create Company Args"""
+input CreateCompanyInput {
+  bitrix_id: Float
+  cpf_cnpj: String
+  email: String!
+  id: ID!
+  name: String!
+  password: String!
+  personName: String!
+}
+
 type Mutation {
-  createCompany(data: CompaniesInput!): Company!
+  createCompany(data: CreateCompanyInput!): Company!
+  setBitrixId(data: UpdateBitrixIdInput!): Company!
 }
 
 type Query {
   getCompanies: [Company!]!
+}
+
+"""Update Company's bitrix id Args"""
+input UpdateBitrixIdInput {
+  bitrix_id: Float!
+  company_id: ID!
 }
