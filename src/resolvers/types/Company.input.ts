@@ -1,9 +1,12 @@
 import { IsEmail, Length } from 'class-validator';
-import { Field, InputType } from 'type-graphql';
+import { Field, ID, InputType } from 'type-graphql';
 import Company from '../../Schemas/Company';
 
-@InputType({ description: 'It is building yet' })
-class CompaniesInput implements Partial<Company> {
+@InputType({ description: 'Create Company Args' })
+class CreateCompanyInput implements Partial<Company> {
+  @Field(() => ID)
+  id: string
+
   @Field()
   @Length(1, 255)
   name: string;
@@ -28,4 +31,24 @@ class CompaniesInput implements Partial<Company> {
   cpf_cnpj: string;
 }
 
-export default CompaniesInput;
+@InputType({description: "Update Company's bitrix id Args"})
+class UpdateBitrixIdInput implements Partial<Company> {
+  @Field(() => ID)
+  company_id: string;
+
+  @Field(() => Number)
+  bitrix_id: number;
+}
+
+@InputType({description: "Company's Authentication Args"})
+class AuthenticationCompanyInput implements Partial<Company>{
+  @Field()
+  @IsEmail()
+  email: string
+
+  @Field()
+  @Length(8, 255)
+  password: string;
+}
+
+export {CreateCompanyInput, UpdateBitrixIdInput, AuthenticationCompanyInput};
