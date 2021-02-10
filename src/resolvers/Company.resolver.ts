@@ -1,5 +1,6 @@
 import { Arg, Mutation, Resolver, Query } from 'type-graphql';
-import { CompaniesModel, Company } from '../Entities/Company';
+import CompanyModel from '../Entities/Company';
+import Company from '../Schemas/Company';
 import CreateCompanyService from '../Services/CreateCompanyService';
 import CompaniesInput from './types/Company.input';
 
@@ -7,8 +8,8 @@ import CompaniesInput from './types/Company.input';
 class CompaniesResolver {
   @Query(() => [Company])
   async getCompanies(): Promise<Company[]> {
-    // eslint-disable-next-line no-return-await
-    return await CompaniesModel.find();
+    const companies = await CompanyModel.find();
+    return companies
   }
 
   @Mutation(() => Company)

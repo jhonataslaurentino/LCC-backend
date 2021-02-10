@@ -1,5 +1,6 @@
 import { hash } from 'bcryptjs';
-import { CompaniesModel, Company } from '../Entities/Company';
+import CompanyModel from '../Entities/Company';
+import Company from '../Schemas/Company';
 
 interface Request {
   name: string;
@@ -19,7 +20,7 @@ class CreateCompanyService {
     cpf_cnpj,
     bitrix_id,
   }: Request): Promise<Company> {
-    const isThereAnyCompanyWithSameEmail = await CompaniesModel.findOne({
+    const isThereAnyCompanyWithSameEmail = await CompanyModel.findOne({
       email,
     }).exec();
 
@@ -30,7 +31,7 @@ class CreateCompanyService {
     const hashedPassword = await hash(password, 8);
 
     const company = (
-      await CompaniesModel.create({
+      await CompanyModel.create({
         name,
         personName,
         email,

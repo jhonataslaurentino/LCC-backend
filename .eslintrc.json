@@ -27,8 +27,9 @@
         "ts": "never"
       }
     ],
-    "camelcase":"off",
-    "class-methods-use-this":"off"
+    "camelcase": "off",
+    "class-methods-use-this": "off",
+    "import/prefer-default-export": false
   },
   "settings": {
     "import/resolver": {
