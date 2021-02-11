@@ -36,7 +36,6 @@ input CreateCompanyInput {
   bitrix_id: Float
   cpf_cnpj: String
   email: String!
-  id: ID!
   name: String!
   password: String!
   personName: String!

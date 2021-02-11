@@ -4,9 +4,6 @@ import Company from '../../Schemas/Company';
 
 @InputType({ description: 'Create Company Args' })
 class CreateCompanyInput implements Partial<Company> {
-  @Field(() => ID)
-  id: string
-
   @Field()
   @Length(1, 255)
   name: string;

@@ -52,6 +52,7 @@ class CompaniesResolver {
   ):Promise<Login>{
     const authenticateCompanyService = new AuthenticateCompanyService()
     const data = await authenticateCompanyService.execute({email, password})
+    data.company.password = ''
     return data
   }
 }
