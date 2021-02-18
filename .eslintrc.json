@@ -29,7 +29,7 @@
     ],
     "camelcase": "off",
     "class-methods-use-this": "off",
-    "import/prefer-default-export": false
+    "import/prefer-default-export": "off"
   },
   "settings": {
     "import/resolver": {

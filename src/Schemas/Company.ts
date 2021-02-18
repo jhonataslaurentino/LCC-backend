@@ -1,7 +1,7 @@
-import {  prop as Property } from '@typegoose/typegoose';
-import { Field, ID, ObjectType } from 'type-graphql';
+import { prop as Property } from '@typegoose/typegoose';
+import { Field, ID, Int, ObjectType } from 'type-graphql';
 
-@ObjectType({ description: 'The company model' })
+@ObjectType({ description: 'The company schema' })
 export default class Company {
   @Field(() => ID)
   id: string;
@@ -21,12 +21,12 @@ export default class Company {
   @Field({
     description:
       "The hashed company's password. it should not be returned at any request",
-      nullable: true
+    nullable: true,
   })
   @Property()
   password: string;
 
-  @Field(() => Number, {
+  @Field(() => Int, {
     description: 'The ID returned from Bitrix platform',
     nullable: true,
   })
