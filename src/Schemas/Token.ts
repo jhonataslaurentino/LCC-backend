@@ -1,7 +1,7 @@
-import { Field, ObjectType } from "type-graphql";
+import { Field, ObjectType } from 'type-graphql';
 
-@ObjectType({description:'Token Schema'})
+@ObjectType({ description: 'Token Schema' })
 export default class Login {
   @Field()
-  token: string
+  token: string;
 }

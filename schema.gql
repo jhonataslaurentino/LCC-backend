@@ -3,16 +3,33 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+"""Add Contact Info Args"""
+input AddContactInput {
+  address: String
+  cnpj: String
+  companyID: Float
+  cpf: String
+  creditType: String
+  email: String!
+  name: String!
+  opportunityValue: Float
+  personType: String!
+  phone: String
+  propertyType: String
+  propertyValue: Float
+  term: Int
+}
+
 """Company's Authentication Args"""
 input AuthenticationCompanyInput {
   email: String!
   password: String!
 }
 
-"""The company model"""
+"""The company schema"""
 type Company {
   """The ID returned from Bitrix platform"""
-  bitrix_id: Float
+  bitrix_id: Int
   cpf_cnpj: String!
 
   """The company email"""
@@ -39,6 +56,20 @@ input CreateCompanyInput {
   name: String!
   password: String!
   personName: String!
+  phone: String!
+}
+
+"""The company deal's schema"""
+type Deal {
+  COMPANY_ID: Int
+  CONTACT_ID: Int
+  CURRENCY_ID: String
+  DATE_CREATE: String
+  DATE_MODIFY: String
+  ID: Int!
+  OPPORTUNITY: Float
+  STAGE_ID: String
+  TITLE: String
 }
 
 """Login Schema"""
@@ -48,6 +79,7 @@ type Login {
 }
 
 type Mutation {
+  addContact(data: AddContactInput!): Deal!
   createCompany(data: CreateCompanyInput!): Company!
   login(data: AuthenticationCompanyInput!): Login!
   setBitrixId(data: UpdateBitrixIdInput!): Company!
