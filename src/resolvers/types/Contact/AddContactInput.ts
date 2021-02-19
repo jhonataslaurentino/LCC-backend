@@ -5,6 +5,10 @@ import { Field, Float, InputType, Int } from 'type-graphql';
 class AddContactInput {
   @Field()
   @Length(1, 255)
+  companyID: string;
+
+  @Field()
+  @Length(1, 255)
   name: string;
 
   @Field()
@@ -46,10 +50,6 @@ class AddContactInput {
   @Field({ nullable: true })
   @Length(1, 255)
   propertyType: string;
-
-  @Field({ nullable: true })
-  @Length(1, 255)
-  companyID: number;
 }
 
 export { AddContactInput };

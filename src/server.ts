@@ -4,6 +4,7 @@ import 'reflect-metadata';
 import cors from 'cors';
 import configureSchema from './Schemas';
 import connectToDatabase from './database';
+import context from './Context/context';
 
 const main = async () => {
   await connectToDatabase();

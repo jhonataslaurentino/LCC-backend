@@ -1,32 +1,29 @@
 import qs from 'qs';
+
 import bitrixApi from '../api/bitrix';
 import bitrixApiMethods from '../api/Bitrix/bitrixMethods';
-import { IDeal } from '../dtos/IDeal';
 import CompanyModel from '../Entities/Company';
+import GetContactsResponse from '../Schemas/GetContactsResponse';
 
 interface Request {
-  page?: number;
   companyID: string;
+  page?: number;
 }
 
-interface Response {
-  result: IDeal[];
-  total: number;
-  next: number;
-}
-
-class GetDealsService {
-  public async execute({ page, companyID }: Request): Promise<Response> {
+class GetContactsService {
+  public async execute({
+    companyID,
+    page,
+  }: Request): Promise<GetContactsResponse> {
     const company = await CompanyModel.findById(companyID).exec();
     if (!company) {
       throw new Error('Company does not exists');
     }
-
     const responseFromBitrix = (
-      await bitrixApi.get(`${bitrixApiMethods.GET_DEALS}.json`, {
+      await bitrixApi.get(`${bitrixApiMethods.GET_CONTACTS}.json`, {
         params: {
           start: page || 0,
-          order: { TITLE: 'ASC' },
+          order: { NAME: 'ASC' },
           filter: { '=COMPANY_ID': company.bitrix_id },
         },
         paramsSerializer: params => {
@@ -34,14 +31,9 @@ class GetDealsService {
         },
       })
     ).data;
-    const { result, total, next } = responseFromBitrix;
-    const response = {
-      result,
-      total,
-      next,
-    } as Response;
-    return response;
+
+    return responseFromBitrix;
   }
 }
 
-export default GetDealsService;
+export default GetContactsService;

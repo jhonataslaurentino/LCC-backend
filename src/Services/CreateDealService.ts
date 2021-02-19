@@ -2,10 +2,11 @@ import bitrixApi from '../api/bitrix';
 import bitrixApiMethods from '../api/Bitrix/bitrixMethods';
 import createAddDealRequestBody from '../api/Bitrix/createAddDealRequestBody';
 import getBitrixProperty from '../api/Bitrix/getBitrixProperty';
+import CompanyModel from '../Entities/Company';
 
 interface Request {
   name: string;
-  companyID: number;
+  companyID: string;
   contactID: number;
   opportunityValue: number;
   term: number;
@@ -18,7 +19,7 @@ interface Request {
   creditType: string;
 }
 
-class AddDealService {
+class CreateDealService {
   public async execute({
     name,
     companyID,
@@ -33,11 +34,16 @@ class AddDealService {
     address,
     creditType,
   }: Request): Promise<number> {
+    const company = await CompanyModel.findById(companyID).exec();
+    if (!company) {
+      throw new Error('Company does not exists');
+    }
+
     const property = getBitrixProperty({ propertyType });
 
     const addDealRequestBody = createAddDealRequestBody({
       name,
-      companyID,
+      companyID: company.bitrix_id,
       contactID,
       opportunityValue,
       term,
@@ -63,4 +69,4 @@ class AddDealService {
   }
 }
 
-export default AddDealService;
+export default CreateDealService;

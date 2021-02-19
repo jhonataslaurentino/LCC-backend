@@ -8,7 +8,7 @@ interface Request {
 
 class UpdateBitrixIdService {
   public async execute({ company_id, bitrix_id }: Request): Promise<Company> {
-    const company = await CompanyModel.findById(company_id);
+    const company = await CompanyModel.findById(company_id).exec();
     if (!company) {
       throw new Error('Company not found');
     }

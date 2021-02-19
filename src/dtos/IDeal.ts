@@ -1,4 +1,5 @@
 export interface IDeal {
+  ID: number;
   TITLE: string;
   TYPE_ID: string;
   STAGE_ID: string;
@@ -11,4 +12,6 @@ export interface IDeal {
   OPPORTUNITY: number;
   BEGINDATE: Date;
   CLOSEDATE: Date;
+  DATE_CREATE: string;
+  DATE_MODIFY: string;
 }

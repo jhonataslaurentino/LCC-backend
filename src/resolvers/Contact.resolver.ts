@@ -1,9 +1,12 @@
-import { Arg, Mutation, Resolver } from 'type-graphql';
+import { Arg, Mutation, Resolver, Query } from 'type-graphql';
 import Deal from '../Schemas/Deal';
-import AddContactService from '../Services/AddContactService';
-import AddDealService from '../Services/AddDealService';
+import GetContactsResponse from '../Schemas/GetContactsResponse';
+import CreateContactService from '../Services/CreateContactService';
+import CreateDealService from '../Services/CreateDealService';
+import GetContactsService from '../Services/GetContactsService';
 import GetDealService from '../Services/GetDealService';
 import { AddContactInput } from './types/Contact/AddContactInput';
+import GetContactsInput from './types/Contact/GetContactsInput';
 
 @Resolver()
 class ContactResolver {
@@ -26,8 +29,9 @@ class ContactResolver {
       companyID,
     }: AddContactInput,
   ): Promise<Deal> {
-    const addContactService = new AddContactService();
-    const contactID = await addContactService.execute({
+    const createContactService = new CreateContactService();
+    const contactID = await createContactService.execute({
+      companyID,
       name,
       email,
       personType,
@@ -36,8 +40,8 @@ class ContactResolver {
       phone,
     });
 
-    const addDealService = new AddDealService();
-    const dealID = await addDealService.execute({
+    const createDealService = new CreateDealService();
+    const dealID = await createDealService.execute({
       name,
       companyID,
       contactID,
@@ -58,6 +62,18 @@ class ContactResolver {
     });
 
     return deal;
+  }
+
+  @Query(() => GetContactsResponse)
+  async getContacts(
+    @Arg('data') { companyID, page }: GetContactsInput,
+  ): Promise<GetContactsResponse> {
+    const getContactsService = new GetContactsService();
+    const response = await getContactsService.execute({
+      companyID,
+      page,
+    });
+    return response;
   }
 }
 
