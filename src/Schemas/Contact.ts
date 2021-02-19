@@ -26,4 +26,7 @@ export default class Contact {
 
   @Field(() => [ContactInfo], { nullable: true })
   EMAIL: ContactInfo[];
+
+  @Field(() => Int, { nullable: true })
+  CREATED_BY_ID: number;
 }

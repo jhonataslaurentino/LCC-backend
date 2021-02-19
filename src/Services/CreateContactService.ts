@@ -1,17 +1,19 @@
 import bitrixApi from '../api/bitrix';
 import bitrixApiMethods from '../api/Bitrix/bitrixMethods';
 import createAddContactRequestBody from '../api/Bitrix/createAddContactRequestBody';
+import CompanyModel from '../Entities/Company';
 
 interface Request {
   name: string;
   email: string;
   personType: string;
+  companyID: string;
   cpf?: string;
   cnpj?: string;
   phone?: string;
 }
 
-class AddContactService {
+class CreateContactService {
   public async execute({
     name,
     email,
@@ -19,7 +21,13 @@ class AddContactService {
     cpf,
     cnpj,
     phone,
+    companyID,
   }: Request): Promise<number> {
+    const company = await CompanyModel.findById(companyID).exec();
+    if (!company) {
+      throw new Error('Company does not exists');
+    }
+
     const addContactRequestBody = createAddContactRequestBody({
       email,
       name,
@@ -27,6 +35,7 @@ class AddContactService {
       cnpj,
       cpf,
       phone,
+      companyBitrixID: company.bitrix_id,
     });
     const response = await bitrixApi.post(
       `${bitrixApiMethods.ADD_CONTACT}.json`,
@@ -42,4 +51,4 @@ class AddContactService {
   }
 }
 
-export default AddContactService;
+export default CreateContactService;

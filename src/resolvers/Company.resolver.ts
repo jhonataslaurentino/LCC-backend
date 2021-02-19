@@ -35,13 +35,6 @@ class CompaniesResolver {
       phone,
     }: CreateCompanyInput,
   ): Promise<Company> {
-    const createCompanyAtBitrixService = new CreateCompanyAtBitrixService();
-    const companyAtBitrixID = await createCompanyAtBitrixService.execute({
-      email,
-      title: name,
-      phone,
-    });
-
     const createCompanyService = new CreateCompanyService();
     const company = await createCompanyService.execute({
       name,
@@ -50,6 +43,13 @@ class CompaniesResolver {
       password,
       cpf_cnpj,
       bitrix_id,
+    });
+
+    const createCompanyAtBitrixService = new CreateCompanyAtBitrixService();
+    const companyAtBitrixID = await createCompanyAtBitrixService.execute({
+      email,
+      title: name,
+      phone,
     });
 
     const updateBitrixIdService = new UpdateBitrixIdService();

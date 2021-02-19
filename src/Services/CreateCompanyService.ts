@@ -8,7 +8,7 @@ interface Request {
   email: string;
   password: string;
   cpf_cnpj: string;
-  bitrix_id: number;
+  bitrix_id?: number;
 }
 
 class CreateCompanyService {

@@ -7,7 +7,7 @@
 input AddContactInput {
   address: String
   cnpj: String
-  companyID: Float
+  companyID: String!
   cpf: String
   creditType: String
   email: String!
@@ -48,6 +48,26 @@ type Company {
   personName: String!
 }
 
+"""Contact schema"""
+type Contact {
+  COMPANY_ID: Int
+  CREATED_BY_ID: Int
+  DATE_CREATE: DateTime
+  DATE_MODIFY: DateTime
+  EMAIL: [ContactInfo!]
+  ID: Int!
+  LAST_NAME: String
+  NAME: String
+  PHONE: [ContactInfo!]
+}
+
+"""Contact Info Schema"""
+type ContactInfo {
+  ID: Int!
+  VALUE: String!
+  VALUE_TYPE: String!
+}
+
 """Create Company Args"""
 input CreateCompanyInput {
   bitrix_id: Float
@@ -58,6 +78,11 @@ input CreateCompanyInput {
   personName: String!
   phone: String!
 }
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
 
 """The company deal's schema"""
 type Deal {
@@ -70,6 +95,51 @@ type Deal {
   OPPORTUNITY: Float
   STAGE_ID: String
   TITLE: String
+}
+
+"""Add Contact Info Args"""
+input GetContactsInput {
+  companyID: String!
+  page: Int
+}
+
+"""The schema response for get deals service request."""
+type GetContactsResponse {
+  """
+  If there are more deals, the bitrix api should return a number to get the next list of deals
+  """
+  next: Int
+
+  """The list of Deals gathered from bitrix api."""
+  result: [Contact!]
+
+  """The number of deals gathered."""
+  total: Int
+}
+
+"""Get Deal Input Arguments"""
+input GetDealInput {
+  dealID: Int!
+}
+
+"""Get Deal Input Arguments"""
+input GetDealsInput {
+  companyID: String!
+  page: Int
+}
+
+"""The schema response for get deals service request."""
+type GetDealsResponse {
+  """
+  If there are more deals, the bitrix api should return a number to get the next list of deals
+  """
+  next: Int!
+
+  """The list of Deals gathered from bitrix api."""
+  result: [Deal!]
+
+  """The number of deals gathered."""
+  total: Int!
 }
 
 """Login Schema"""
@@ -87,6 +157,9 @@ type Mutation {
 
 type Query {
   getCompanies: [Company!]!
+  getContacts(data: GetContactsInput!): GetContactsResponse!
+  getDeal(data: GetDealInput!): Deal
+  getDeals(data: GetDealsInput!): GetDealsResponse
 }
 
 """Update Company's bitrix id Args"""

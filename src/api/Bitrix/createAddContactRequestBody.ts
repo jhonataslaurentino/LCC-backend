@@ -1,4 +1,5 @@
 interface ICreateAddContactRequestBody {
+  companyBitrixID: number;
   name: string;
   phone?: string;
   email: string;
@@ -14,10 +15,12 @@ const createAddContactRequestBody = ({
   personType,
   cpf,
   cnpj,
+  companyBitrixID,
 }: // eslint-disable-next-line @typescript-eslint/ban-types
 ICreateAddContactRequestBody): Object => {
   return {
     fields: {
+      COMPANY_ID: companyBitrixID,
       NAME: name,
       PHONE: [
         {
