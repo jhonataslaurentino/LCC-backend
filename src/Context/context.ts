@@ -1,9 +1,14 @@
 import { ExpressContext } from 'apollo-server-express';
 
-const context = ({ req }: ExpressContext): string => {
+interface RequestData {
+  token: string;
+}
+
+const context = ({ req }: ExpressContext): RequestData => {
   const authHeader = req.headers.authorization || '';
   const [, token] = authHeader.split(' ');
-  return token;
+  const requestData = { token };
+  return requestData;
 };
 
 export default context;
