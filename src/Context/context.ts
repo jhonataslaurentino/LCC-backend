@@ -1,12 +1,9 @@
-import { Request } from 'express';
+import { ExpressContext } from 'apollo-server-express';
 
-interface AuthCheckerData {
-  request: Request;
-}
-const context = async ({ request }: AuthCheckerData): Promise<void> => {
-  console.log(request);
-  // const token = request.headers.authorization || '';
-  // return token;
+const context = ({ req }: ExpressContext): string => {
+  const authHeader = req.headers.authorization || '';
+  const [, token] = authHeader.split(' ');
+  return token;
 };
 
 export default context;
