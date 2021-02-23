@@ -1,4 +1,4 @@
-import { Resolver, Query, Arg, Authorized } from 'type-graphql';
+import { Resolver, Query, Arg } from 'type-graphql';
 import Deal from '../Schemas/Deal';
 import GetDealsResponse from '../Schemas/GetDealsResponse';
 import GetDealService from '../Services/GetDealService';
@@ -20,7 +20,6 @@ class DealsResolver {
     return deal;
   }
 
-  @Authorized()
   @Query(() => GetDealsResponse, { nullable: true })
   async getDeals(
     @Arg('data')

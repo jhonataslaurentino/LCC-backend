@@ -1,5 +1,6 @@
 import { ApolloServer } from 'apollo-server-express';
-import express from 'express';
+import express, { Request } from 'express';
+
 import 'reflect-metadata';
 import cors from 'cors';
 import configureSchema from './Schemas';
@@ -9,7 +10,10 @@ import context from './Context/context';
 const main = async () => {
   await connectToDatabase();
   const schema = await configureSchema();
-  const server = new ApolloServer({ schema });
+  const server = new ApolloServer({
+    schema,
+    context,
+  });
   const app = express();
   app.use(cors());
   server.applyMiddleware({ app });
