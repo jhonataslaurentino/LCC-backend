@@ -1,4 +1,4 @@
-import { Arg, Mutation, Resolver, Query } from 'type-graphql';
+import { Arg, Mutation, Resolver, Query, Authorized } from 'type-graphql';
 import CompanyModel from '../Entities/Company';
 import Company from '../Schemas/Company';
 import Login from '../Schemas/Login';
@@ -13,6 +13,7 @@ import CreateCompanyInput from './types/Company/CreateCompanyInput';
 @Resolver()
 class CompaniesResolver {
   @Query(() => [Company])
+  @Authorized()
   async getCompanies(): Promise<Company[]> {
     const companies = await CompanyModel.find();
     companies.forEach(company => {

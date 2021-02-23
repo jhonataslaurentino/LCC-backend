@@ -1,15 +1,20 @@
-import { Request } from 'apollo-server-express';
 import { AuthChecker } from 'type-graphql';
 
-interface AuthCheckerData {
+interface TokenData {
   token: string;
 }
 
-const AuthenticatedChecker: AuthChecker<AuthCheckerData> = async ({
+interface ContextData {
+  token: TokenData;
+}
+
+const AuthenticatedChecker: AuthChecker<ContextData> = async ({
   context,
-}) => {
-  console.log('We are cheking if the user is authenticated');
-  console.log(context);
+}): Promise<boolean> => {
+  const { token } = context;
+  if (!token) {
+    throw new Error('JWT token is missing');
+  }
   return true;
 };
 
