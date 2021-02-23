@@ -1,5 +1,15 @@
-import { Arg, Mutation, Resolver, Query, Authorized } from 'type-graphql';
+import {
+  Arg,
+  Mutation,
+  Resolver,
+  Query,
+  UseMiddleware,
+  Ctx,
+} from 'type-graphql';
 import CompanyModel from '../Entities/Company';
+import AuthenticatedChecker, {
+  ContextData,
+} from '../middlewares/AuthenticatedChecker';
 import Company from '../Schemas/Company';
 import Login from '../Schemas/Login';
 import AuthenticateCompanyService from '../Services/AuthenticateCompanyService';
@@ -13,8 +23,12 @@ import CreateCompanyInput from './types/Company/CreateCompanyInput';
 @Resolver()
 class CompaniesResolver {
   @Query(() => [Company])
-  @Authorized()
-  async getCompanies(): Promise<Company[]> {
+  @UseMiddleware(AuthenticatedChecker)
+  async getCompanies(
+    @Ctx()
+    ctx: ContextData,
+  ): Promise<Company[]> {
+    console.log(ctx.id);
     const companies = await CompanyModel.find();
     companies.forEach(company => {
       // eslint-disable-next-line no-param-reassign
