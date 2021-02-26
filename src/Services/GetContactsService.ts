@@ -25,13 +25,13 @@ class GetContactsService {
           start: page || 0,
           order: { NAME: 'ASC' },
           filter: { '=COMPANY_ID': company.bitrix_id },
+          select: ['ID', 'NAME', 'EMAIL', 'PHONE'],
         },
         paramsSerializer: params => {
           return qs.stringify(params);
         },
       })
     ).data;
-
     return responseFromBitrix;
   }
 }

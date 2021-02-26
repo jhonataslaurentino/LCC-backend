@@ -23,12 +23,11 @@ import CreateCompanyInput from './types/Company/CreateCompanyInput';
 @Resolver()
 class CompaniesResolver {
   @Query(() => [Company])
-  @UseMiddleware(AuthenticatedChecker)
-  async getCompanies(
-    @Ctx()
-    ctx: ContextData,
-  ): Promise<Company[]> {
-    console.log(ctx.id);
+  // @UseMiddleware(AuthenticatedChecker)
+  async getCompanies(): // @Ctx()
+  // ctx: ContextData,
+  Promise<Company[]> {
+    // console.log(ctx.id);
     const companies = await CompanyModel.find();
     companies.forEach(company => {
       // eslint-disable-next-line no-param-reassign

@@ -24,7 +24,7 @@ export interface ReponseFromAuthenticatedChecker {
 
 const AuthenticatedChecker: MiddlewareFn<ContextData> = async (
   { context },
-  next,
+  next: NextFn,
 ): Promise<string> => {
   const { token } = context;
   if (!token) {
