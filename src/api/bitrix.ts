@@ -1,8 +1,8 @@
 import axios from 'axios';
+import endpoint from '../config/endpoints.config';
 
 const bitrixApi = axios.create({
-  baseURL:
-    'https://lucrandocomcredito.bitrix24.com.br/rest/37/ufuozwlfqsr9y5am/',
+  baseURL: endpoint.bitrixBaseURL,
 });
 
 export default bitrixApi;
