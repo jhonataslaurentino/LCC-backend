@@ -1,10 +1,5 @@
 import { verify } from 'jsonwebtoken';
-import {
-  MiddlewareFn,
-  MiddlewareInterface,
-  NextFn,
-  ResolverData,
-} from 'type-graphql';
+import { MiddlewareFn, NextFn } from 'type-graphql';
 import authConfig from '../config/authConfig';
 
 interface TokenPayload {
