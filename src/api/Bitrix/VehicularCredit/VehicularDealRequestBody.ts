@@ -1,45 +1,36 @@
+import { Request } from '../../../Services/CreateVehicularDealService';
+
+interface VehicularDealRequestBodyProperties
+  extends Omit<Request, 'companyID'> {
+  companyID: number;
+}
+
 class VehicularDealRequestBody {
   // eslint-disable-next-line no-useless-constructor
-  constructor(
-    private contactID: number,
-    private companyID: number,
-    private OpportunityValue: number,
-    private vehicularCreditType: 'Refin' | 'Aquisição',
-    private clientSituation:
-      | 'Assalariado'
-      | 'Empresário'
-      | 'Funcionário Público'
-      | 'Aposentado'
-      | 'Autônomo',
-    private contactMonthlyIncome: number,
-    private vehicleName: string,
-    private vehicleManufacturedDate: Date,
-    private vehicleModel: string,
-    private vehicleValue: number,
-    private vehicleTargetValue: number,
-  ) {}
+  constructor(private properties: VehicularDealRequestBodyProperties) {}
 
   // eslint-disable-next-line @typescript-eslint/ban-types
   public getRequestBody(): Object {
     return {
       fields: {
-        CONTACT_ID: this.contactID,
-        COMPANY_ID: this.companyID,
-        OPPORTUNITY: this.OpportunityValue,
+        TITLE: this.properties.name,
+        CONTACT_ID: this.properties.contactID,
+        COMPANY_ID: this.properties.companyID,
+        OPPORTUNITY: this.properties.opportunityValue,
         UF_CRM_1612805901: this.getCreditTypeID(),
         UF_CRM_1612806099: this.getClientSituationID(),
-        UF_CRM_1612806163: this.contactMonthlyIncome,
-        UF_CRM_1612806216: this.vehicleName,
-        UF_CRM_1612806231: this.vehicleManufacturedDate,
-        UF_CRM_1612806238: this.vehicleModel,
-        UF_CRM_1612806255: this.vehicleValue,
-        UF_CRM_1612806274: this.vehicleTargetValue,
+        UF_CRM_1612806163: this.properties.contactMonthlyIncome,
+        UF_CRM_1612806216: this.properties.vehicleName,
+        UF_CRM_1612806231: this.properties.vehicleManufacturedDate,
+        UF_CRM_1612806238: this.properties.vehicleModel,
+        UF_CRM_1612806255: this.properties.vehicleValue,
+        UF_CRM_1612806274: this.properties.vehicleTargetValue,
       },
     };
   }
 
   private getClientSituationID(): number {
-    switch (this.clientSituation) {
+    switch (this.properties.clientSituation) {
       case 'Assalariado':
         return 171;
 
@@ -61,7 +52,7 @@ class VehicularDealRequestBody {
   }
 
   private getCreditTypeID(): number {
-    switch (this.vehicularCreditType) {
+    switch (this.properties.vehicularCreditType) {
       case 'Aquisição':
         return 167;
       case 'Refin':

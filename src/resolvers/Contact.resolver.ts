@@ -3,13 +3,71 @@ import Deal from '../Schemas/Deal';
 import GetContactsResponse from '../Schemas/GetContactsResponse';
 import CreateContactService from '../Services/CreateContactService';
 import CreateDealService from '../Services/CreateDealService';
+import CreateVehicleDealService from '../Services/CreateVehicularDealService';
 import GetContactsService from '../Services/GetContactsService';
 import GetDealService from '../Services/GetDealService';
 import { AddContactInput } from './types/Contact/AddContactInput';
+import { AddVehicularCreditContactInput } from './types/Contact/AddVehicularCreditContactInput';
 import GetContactsInput from './types/Contact/GetContactsInput';
 
 @Resolver()
 class ContactResolver {
+  @Mutation(() => Deal)
+  async addVehicularCreditContact(
+    @Arg('data')
+    {
+      birthday,
+      clientSituation,
+      cnpj,
+      companyID,
+      contactMonthlyIncome,
+      cpf,
+      email,
+      name,
+      phone,
+      vehicleManufacturedDate,
+      vehicleModel,
+      vehicleName,
+      vehicleTargetValue,
+      vehicleValue,
+      vehicularCreditType,
+      opportunityValue,
+    }: AddVehicularCreditContactInput,
+  ): Promise<Deal> {
+    const createContactService = new CreateContactService();
+    const contactID = await createContactService.execute({
+      companyID,
+      name,
+      email,
+      cpf,
+      cnpj,
+      phone,
+      birthday,
+    });
+
+    const createVehicleDealService = new CreateVehicleDealService();
+    const vehicleDealID = await createVehicleDealService.execute({
+      clientSituation,
+      companyID,
+      contactID,
+      contactMonthlyIncome,
+      name,
+      opportunityValue,
+      vehicleManufacturedDate,
+      vehicleModel,
+      vehicleName,
+      vehicleTargetValue,
+      vehicleValue,
+      vehicularCreditType,
+    });
+    const getDealService = new GetDealService();
+    const deal = await getDealService.execute({
+      id: vehicleDealID,
+    });
+
+    return deal;
+  }
+
   @Mutation(() => Deal)
   async addContact(
     @Arg('data')

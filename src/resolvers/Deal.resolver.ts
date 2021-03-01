@@ -3,6 +3,7 @@ import Deal from '../Schemas/Deal';
 import GetDealsResponse from '../Schemas/GetDealsResponse';
 import GetDealService from '../Services/GetDealService';
 import GetDealsService from '../Services/GetDealsService';
+import GetVehicularDealsService from '../Services/GetVehicularDealsService';
 import GetDealInput from './types/Deal/GetDealInput';
 import GetDealsInput from './types/Deal/GetDealsInput';
 
@@ -27,6 +28,19 @@ class DealsResolver {
   ): Promise<GetDealsResponse> {
     const getDealsService = new GetDealsService();
     const dealsGathered = await getDealsService.execute({
+      page,
+      companyID,
+    });
+    return dealsGathered;
+  }
+
+  @Query(() => GetDealsResponse, { nullable: true })
+  async getVehicularDeals(
+    @Arg('data')
+    { companyID, page }: GetDealsInput,
+  ): Promise<GetDealsResponse> {
+    const getVehicularDealsService = new GetVehicularDealsService();
+    const dealsGathered = await getVehicularDealsService.execute({
       page,
       companyID,
     });
