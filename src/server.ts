@@ -1,8 +1,9 @@
-import { ApolloServer } from 'apollo-server-express';
-import express, { Request } from 'express';
-
 import 'reflect-metadata';
+import { ApolloServer } from 'apollo-server-express';
+import express from 'express';
+
 import cors from 'cors';
+import endpoint from './config/endpoints.config';
 import configureSchema from './Schemas';
 import connectToDatabase from './database';
 import context from './Context/context';
@@ -17,8 +18,8 @@ const main = async () => {
   const app = express();
   app.use(cors());
   server.applyMiddleware({ app });
-  app.listen(4000, () => {
-    console.log('🚀 Server started on port 4000');
+  app.listen(endpoint.serverPort, () => {
+    console.log(`🚀 Server started on port ${endpoint.serverPort}`);
   });
 };
 
