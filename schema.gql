@@ -20,6 +20,26 @@ input AddContactInput {
   term: Int
 }
 
+"""Add Contact Info Args"""
+input AddVehicularCreditContactInput {
+  birthday: DateTime!
+  clientSituation: String!
+  cnpj: String
+  companyID: String!
+  contactMonthlyIncome: Float!
+  cpf: String
+  email: String!
+  name: String!
+  opportunityValue: Float
+  phone: String
+  vehicleManufacturedDate: DateTime!
+  vehicleModel: String!
+  vehicleName: String!
+  vehicleTargetValue: Float!
+  vehicleValue: Float!
+  vehicularCreditType: String!
+}
+
 """Company's Authentication Args"""
 input AuthenticationCompanyInput {
   email: String!
@@ -150,6 +170,7 @@ type Login {
 
 type Mutation {
   addContact(data: AddContactInput!): Deal!
+  addVehicularCreditContact(data: AddVehicularCreditContactInput!): Deal!
   createCompany(data: CreateCompanyInput!): Company!
   login(data: AuthenticationCompanyInput!): Login!
   setBitrixId(data: UpdateBitrixIdInput!): Company!
@@ -160,6 +181,7 @@ type Query {
   getContacts(data: GetContactsInput!): GetContactsResponse!
   getDeal(data: GetDealInput!): Deal
   getDeals(data: GetDealsInput!): GetDealsResponse
+  getVehicularDeals(data: GetDealsInput!): GetDealsResponse
 }
 
 """Update Company's bitrix id Args"""

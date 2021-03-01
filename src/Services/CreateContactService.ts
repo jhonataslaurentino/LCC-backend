@@ -6,7 +6,8 @@ import CompanyModel from '../Entities/Company';
 interface Request {
   name: string;
   email: string;
-  personType: string;
+  birthday?: Date;
+  personType?: string;
   companyID: string;
   cpf?: string;
   cnpj?: string;
