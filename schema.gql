@@ -22,6 +22,7 @@ input AddContactInput {
 
 """Add Contact Info Args"""
 input AddVehicularCreditContactInput {
+  address: String
   birthday: DateTime!
   clientSituation: String!
   cnpj: String

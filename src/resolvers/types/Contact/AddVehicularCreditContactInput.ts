@@ -1,5 +1,5 @@
 import { IsEmail, Length } from 'class-validator';
-import { Field, Float, InputType, Int } from 'type-graphql';
+import { Field, Float, InputType } from 'type-graphql';
 
 @InputType({ description: 'Add Contact Info Args' })
 class AddVehicularCreditContactInput {
@@ -32,6 +32,9 @@ class AddVehicularCreditContactInput {
 
   @Field()
   vehicularCreditType: 'Refin' | 'Aquisição';
+
+  @Field({ nullable: true })
+  address: string;
 
   @Field()
   clientSituation:
