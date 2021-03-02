@@ -32,6 +32,7 @@ class ContactResolver {
       vehicleValue,
       vehicularCreditType,
       opportunityValue,
+      address,
     }: AddVehicularCreditContactInput,
   ): Promise<Deal> {
     const createContactService = new CreateContactService();
@@ -59,6 +60,7 @@ class ContactResolver {
       vehicleTargetValue,
       vehicleValue,
       vehicularCreditType,
+      address,
     });
     const getDealService = new GetDealService();
     const deal = await getDealService.execute({

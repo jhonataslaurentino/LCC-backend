@@ -21,6 +21,7 @@ export interface Request {
   vehicleModel: string;
   vehicleValue: number;
   vehicleTargetValue: number;
+  address: string;
 }
 
 class CreateVehicleDealService {
@@ -37,6 +38,7 @@ class CreateVehicleDealService {
     vehicleTargetValue,
     vehicleValue,
     name,
+    address,
   }: Request): Promise<number> {
     const company = await CompanyModel.findById(companyID).exec();
     if (!company) {
@@ -56,6 +58,7 @@ class CreateVehicleDealService {
       vehicleModel,
       vehicleTargetValue,
       vehicleValue,
+      address,
     });
     const requestBody = vehicleDealRequestBody.getRequestBody();
     const response = await bitrixApi.post(
