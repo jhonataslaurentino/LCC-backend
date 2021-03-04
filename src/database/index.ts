@@ -1,7 +1,8 @@
 import { connect } from 'mongoose';
+import endpoint from '../config/endpoints.config';
 
 const connectToDatabase = async (): Promise<void> => {
-  await connect('mongodb://localhost:27017/LCC', {
+  await connect(endpoint.databaseURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
