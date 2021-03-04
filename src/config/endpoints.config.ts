@@ -6,4 +6,5 @@ export default {
   serverPort: Number(process.env.PORT),
   bitrixBaseURL: String(process.env.BITRIX_URL),
   serverMode: String(process.env.NODE_ENV),
+  databaseURL: String(process.env.DATABASE_URL),
 };

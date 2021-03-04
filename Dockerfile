@@ -1,15 +1,18 @@
-From node:14.11.0
+From node:14-slim
 
 ENV HOME=/home/app
 
 WORKDIR $HOME/
 
-COPY package.json package.json
-COPY yarn.lock yarn.lock
+COPY package.json .
+COPY yarn.lock .
 
-RUN yarn
+RUN yarn install --production && yarn global add pm2
+
 COPY . .
 
-CMD ["yarn", "build"]
+RUN yarn build
 
-CMD ["node", "dist/server.js"]
+RUN rm -rf src/
+
+CMD ["pm2-runtime", "node", "dist/server.js", "-i", "max"]
