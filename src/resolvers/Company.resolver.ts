@@ -12,13 +12,16 @@ import AuthenticatedChecker, {
 } from '../middlewares/AuthenticatedChecker';
 import Company from '../Schemas/Company';
 import Login from '../Schemas/Login';
+import RequestRecoverPasswordResponse from '../Schemas/RequestRecoverPasswordResponse';
 import AuthenticateCompanyService from '../Services/AuthenticateCompanyService';
 import CreateCompanyAtBitrixService from '../Services/CreateCompanyAtBitrixService';
 import CreateCompanyService from '../Services/CreateCompanyService';
+import RequestRecoverPasswordService from '../Services/RequestRecoverPasswordService';
 import UpdateBitrixIdService from '../Services/UpdateBitrixIdService';
 import UpdateBitrixIdInput from './types/Bitrix/UpdateBitrixIdInput';
 import AuthenticationCompanyInput from './types/Company/AuthenticationCompanyInput';
 import CreateCompanyInput from './types/Company/CreateCompanyInput';
+import RecoverPasswordInput from './types/Company/RecoverPasswordInput';
 
 @Resolver()
 class CompaniesResolver {
@@ -99,6 +102,16 @@ class CompaniesResolver {
     const data = await authenticateCompanyService.execute({ email, password });
     data.company.password = '';
     return data;
+  }
+
+  @Mutation(() => RequestRecoverPasswordResponse)
+  async requestRecoverPassword(
+    @Arg('data')
+    { email }: RecoverPasswordInput,
+  ): Promise<RequestRecoverPasswordResponse> {
+    const requestRecoverPasswordService = new RequestRecoverPasswordService();
+    const wasMailSent = await requestRecoverPasswordService.execute({ email });
+    return { wasMailSent } as RequestRecoverPasswordResponse;
   }
 }
 
