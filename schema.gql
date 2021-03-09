@@ -174,7 +174,8 @@ type Mutation {
   addVehicularCreditContact(data: AddVehicularCreditContactInput!): Deal!
   createCompany(data: CreateCompanyInput!): Company!
   login(data: AuthenticationCompanyInput!): Login!
-  requestRecoverPassword(data: RecoverPasswordInput!): RequestRecoverPasswordResponse!
+  recoverPassword(data: RecoverPasswordInput!): Company!
+  requestRecoverPassword(data: RequestRecoverPasswordInput!): RequestRecoverPasswordResponse!
   setBitrixId(data: UpdateBitrixIdInput!): Company!
 }
 
@@ -188,6 +189,15 @@ type Query {
 
 """Recover Password Args"""
 input RecoverPasswordInput {
+  """Company email to recover"""
+  password: String!
+
+  """Token sent to company's email"""
+  token: String!
+}
+
+"""Request Recover Password Args"""
+input RequestRecoverPasswordInput {
   """Company email to recover"""
   email: String!
 }

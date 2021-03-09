@@ -16,12 +16,14 @@ import RequestRecoverPasswordResponse from '../Schemas/RequestRecoverPasswordRes
 import AuthenticateCompanyService from '../Services/AuthenticateCompanyService';
 import CreateCompanyAtBitrixService from '../Services/CreateCompanyAtBitrixService';
 import CreateCompanyService from '../Services/CreateCompanyService';
+import RecoverPasswordService from '../Services/RecoverPasswordService';
 import RequestRecoverPasswordService from '../Services/RequestRecoverPasswordService';
 import UpdateBitrixIdService from '../Services/UpdateBitrixIdService';
 import UpdateBitrixIdInput from './types/Bitrix/UpdateBitrixIdInput';
 import AuthenticationCompanyInput from './types/Company/AuthenticationCompanyInput';
 import CreateCompanyInput from './types/Company/CreateCompanyInput';
 import RecoverPasswordInput from './types/Company/RecoverPasswordInput';
+import RequestRecoverPasswordInput from './types/Company/RequestRecoverPasswordInput';
 
 @Resolver()
 class CompaniesResolver {
@@ -107,11 +109,25 @@ class CompaniesResolver {
   @Mutation(() => RequestRecoverPasswordResponse)
   async requestRecoverPassword(
     @Arg('data')
-    { email }: RecoverPasswordInput,
+    { email }: RequestRecoverPasswordInput,
   ): Promise<RequestRecoverPasswordResponse> {
     const requestRecoverPasswordService = new RequestRecoverPasswordService();
     const wasMailSent = await requestRecoverPasswordService.execute({ email });
     return { wasMailSent } as RequestRecoverPasswordResponse;
+  }
+
+  @Mutation(() => Company)
+  async recoverPassword(
+    @Arg('data')
+    { password, token }: RecoverPasswordInput,
+  ): Promise<Company> {
+    const recoverPasswordService = new RecoverPasswordService();
+    const company = await recoverPasswordService.execute({
+      token,
+      password,
+    });
+    company.password = '';
+    return company;
   }
 }
 
