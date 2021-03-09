@@ -29,7 +29,7 @@ class GetVehicularDealsService {
           order: { TITLE: 'ASC' },
           filter: {
             '=COMPANY_ID': company.bitrix_id,
-            '!=UF_CRM_1612806216': null,
+            '=CATEGORY_ID': 5,
           },
         },
         paramsSerializer: params => {

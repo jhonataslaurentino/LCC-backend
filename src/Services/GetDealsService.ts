@@ -27,7 +27,7 @@ class GetDealsService {
         params: {
           start: page || 0,
           order: { TITLE: 'ASC' },
-          filter: { '=COMPANY_ID': company.bitrix_id },
+          filter: { '=COMPANY_ID': company.bitrix_id, '=CATEGORY_ID': 1 },
         },
         paramsSerializer: params => {
           return qs.stringify(params);

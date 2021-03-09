@@ -33,7 +33,7 @@ input AddVehicularCreditContactInput {
   name: String!
   opportunityValue: Float
   phone: String
-  vehicleManufacturedDate: DateTime!
+  vehicleManufacturedDate: String!
   vehicleModel: String!
   vehicleName: String!
   vehicleTargetValue: Float!

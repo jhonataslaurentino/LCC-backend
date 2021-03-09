@@ -50,8 +50,8 @@ class AddVehicularCreditContactInput {
   @Field()
   vehicleName: string;
 
-  @Field(() => Date)
-  vehicleManufacturedDate: Date;
+  @Field()
+  vehicleManufacturedDate: string;
 
   @Field()
   vehicleModel: string;
