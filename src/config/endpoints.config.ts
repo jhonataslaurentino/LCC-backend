@@ -9,7 +9,6 @@ export default {
   databaseURL: String(process.env.DATABASE_URL),
   mailUserName: String(process.env.MAIL_USERNAME),
   mailPassword: String(process.env.MAIL_PASSWORD),
-  mailOAuthClientID: String(process.env.OAUTH_CLIENTID),
-  mailOAuthClientSecret: String(process.env.OAUTH_CLIENT_SECRET),
-  mailOauthRefreshToken: String(process.env.OAUTH_REFRESH_TOKEN),
+  mailPORT: Number(process.env.MAIL_PORT),
+  mailHOST: String(process.env.MAIL_HOST),
 };
