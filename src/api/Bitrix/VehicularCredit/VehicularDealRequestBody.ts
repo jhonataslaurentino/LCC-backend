@@ -16,7 +16,7 @@ class VehicularDealRequestBody {
         TITLE: this.properties.name,
         CONTACT_ID: this.properties.contactID,
         COMPANY_ID: this.properties.companyID,
-        OPPORTUNITY: this.properties.opportunityValue,
+        OPPORTUNITY: this.properties.vehicleTargetValue,
         UF_CRM_1612805901: this.getCreditTypeID(),
         UF_CRM_1612806099: this.getClientSituationID(),
         UF_CRM_1612806163: this.properties.contactMonthlyIncome,
@@ -25,6 +25,7 @@ class VehicularDealRequestBody {
         UF_CRM_1612806238: this.properties.vehicleModel,
         UF_CRM_1612806255: this.properties.vehicleValue,
         UF_CRM_1612806274: this.properties.vehicleTargetValue,
+        CATEGORY_ID: '5',
       },
     };
   }

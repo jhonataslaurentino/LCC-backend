@@ -17,7 +17,7 @@ export interface Request {
     | 'Autônomo';
   contactMonthlyIncome: number;
   vehicleName: string;
-  vehicleManufacturedDate: Date;
+  vehicleManufacturedDate: string;
   vehicleModel: string;
   vehicleValue: number;
   vehicleTargetValue: number;
