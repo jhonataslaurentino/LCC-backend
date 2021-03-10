@@ -118,6 +118,11 @@ type Deal {
   TITLE: String
 }
 
+"""Get Company Info Args"""
+input GetCompanyInfoInput {
+  id: String!
+}
+
 """Add Contact Info Args"""
 input GetContactsInput {
   companyID: String!
@@ -181,6 +186,7 @@ type Mutation {
 
 type Query {
   getCompanies: [Company!]!
+  getCompanyInfo(data: GetCompanyInfoInput!): Company!
   getContacts(data: GetContactsInput!): GetContactsResponse!
   getDeal(data: GetDealInput!): Deal
   getDeals(data: GetDealsInput!): GetDealsResponse
