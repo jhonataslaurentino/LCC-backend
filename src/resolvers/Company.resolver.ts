@@ -6,6 +6,8 @@ import {
   UseMiddleware,
   Ctx,
 } from 'type-graphql';
+import { createWriteStream } from 'fs';
+import path from 'path';
 import CompanyModel from '../Entities/Company';
 import AuthenticatedChecker, {
   ContextData,
@@ -21,12 +23,27 @@ import RequestRecoverPasswordService from '../Services/RequestRecoverPasswordSer
 import UpdateBitrixIdService from '../Services/UpdateBitrixIdService';
 import UpdateBitrixIdInput from './types/Bitrix/UpdateBitrixIdInput';
 import AuthenticationCompanyInput from './types/Company/AuthenticationCompanyInput';
+import ChangeProfilePictureInput from './types/Company/ChangeProfilePictureInput';
 import CreateCompanyInput from './types/Company/CreateCompanyInput';
 import RecoverPasswordInput from './types/Company/RecoverPasswordInput';
 import RequestRecoverPasswordInput from './types/Company/RequestRecoverPasswordInput';
+import GetCompanyInfoInput from './types/Company/GetCompanyInfoInput';
+import GetCompanyInfoService from '../Services/GetCompanyInfoService';
 
 @Resolver()
 class CompaniesResolver {
+  @Query(() => Company)
+  async getCompanyInfo(
+    @Arg('data') { id }: GetCompanyInfoInput,
+  ): Promise<Company> {
+    const getCompanyInfoService = new GetCompanyInfoService();
+    const company = await getCompanyInfoService.execute({ id });
+    delete company.password;
+    delete company.bitrix_id;
+    delete company.cpf_cnpj;
+    return company;
+  }
+
   @Query(() => [Company])
   // @UseMiddleware(AuthenticatedChecker)
   async getCompanies(): // @Ctx()
