@@ -26,7 +26,7 @@ class RequestRecoverPasswordService {
 
     const sendEmailService = new SendEmailService();
     const wasEmailSent = await sendEmailService.execute({
-      from: 'LCC',
+      from: 'plataforma@lucrandocomcredito.com.br',
       to: email,
       subject: 'Recuperar Senha',
       text: token,

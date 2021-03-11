@@ -36,4 +36,8 @@ export default class Company {
   @Field()
   @Property()
   cpf_cnpj: string;
+
+  @Field({ nullable: true })
+  @Property()
+  phone: string;
 }
