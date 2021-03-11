@@ -1,5 +1,6 @@
 import { sign } from 'jsonwebtoken';
 import authConfig from '../config/authConfig';
+import endpointsConfig from '../config/endpoints.config';
 import CompanyModel from '../Entities/Company';
 import SendEmailService from './SendEmailService';
 
@@ -26,10 +27,13 @@ class RequestRecoverPasswordService {
 
     const sendEmailService = new SendEmailService();
     const wasEmailSent = await sendEmailService.execute({
-      from: 'plataforma@lucrandocomcredito.com.br',
       to: email,
       subject: 'Recuperar Senha',
-      text: token,
+      template: 'recoverPassword',
+      context: {
+        name: company.name,
+        link: `${endpointsConfig.frontendURL}/recover-password/${token}`,
+      },
     });
     if (!wasEmailSent) {
       throw new Error('Não foi possível enviar o email');
