@@ -47,6 +47,17 @@ input AuthenticationCompanyInput {
   password: String!
 }
 
+"""The basic company schema"""
+type BasicCompany {
+  """The company email"""
+  email: String!
+  id: ID!
+
+  """The company name"""
+  name: String!
+  phone: String
+}
+
 """The company schema"""
 type Company {
   """The ID returned from Bitrix platform"""
@@ -67,6 +78,7 @@ type Company {
 
   """The person name"""
   personName: String!
+  phone: String
 }
 
 """Contact schema"""
@@ -87,6 +99,13 @@ type ContactInfo {
   ID: Int!
   VALUE: String!
   VALUE_TYPE: String!
+}
+
+"""Create Basic Company Args"""
+input CreateBasicCompanyInput {
+  email: String!
+  name: String!
+  phone: String!
 }
 
 """Create Company Args"""
@@ -177,6 +196,7 @@ type Login {
 type Mutation {
   addContact(data: AddContactInput!): Deal!
   addVehicularCreditContact(data: AddVehicularCreditContactInput!): Deal!
+  createBasicCompany(data: CreateBasicCompanyInput!): BasicCompany!
   createCompany(data: CreateCompanyInput!): Company!
   login(data: AuthenticationCompanyInput!): Login!
   recoverPassword(data: RecoverPasswordInput!): Company!
@@ -185,6 +205,7 @@ type Mutation {
 }
 
 type Query {
+  getBasicCompanies: [BasicCompany!]
   getCompanies: [Company!]!
   getCompanyInfo(data: GetCompanyInfoInput!): Company!
   getContacts(data: GetContactsInput!): GetContactsResponse!

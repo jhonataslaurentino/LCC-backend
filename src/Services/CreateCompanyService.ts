@@ -9,6 +9,7 @@ interface Request {
   password: string;
   cpf_cnpj: string;
   bitrix_id?: number;
+  phone?: string;
 }
 
 class CreateCompanyService {
@@ -19,6 +20,7 @@ class CreateCompanyService {
     password,
     cpf_cnpj,
     bitrix_id,
+    phone,
   }: Request): Promise<Company> {
     const isThereAnyCompanyWithSameEmail = await CompanyModel.findOne({
       email,
@@ -38,6 +40,7 @@ class CreateCompanyService {
         password: hashedPassword,
         cpf_cnpj,
         bitrix_id,
+        phone: phone || '',
       })
     ).save();
     return company;
