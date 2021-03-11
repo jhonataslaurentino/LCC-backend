@@ -9,7 +9,5 @@ export default {
   databaseURL: String(process.env.DATABASE_URL),
   mailUserName: String(process.env.MAIL_USERNAME),
   mailPassword: String(process.env.MAIL_PASSWORD),
-  mailPORT: Number(process.env.MAIL_PORT),
-  mailHOST: String(process.env.MAIL_HOST),
   frontendURL: String(process.env.FRONTEND_URL),
 };
