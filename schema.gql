@@ -144,7 +144,6 @@ input GetCompanyInfoInput {
 
 """Add Contact Info Args"""
 input GetContactsInput {
-  companyID: String!
   page: Int
 }
 
@@ -169,7 +168,6 @@ input GetDealInput {
 
 """Get Deal Input Arguments"""
 input GetDealsInput {
-  companyID: String!
   page: Int
 }
 
@@ -201,12 +199,10 @@ type Mutation {
   login(data: AuthenticationCompanyInput!): Login!
   recoverPassword(data: RecoverPasswordInput!): Company!
   requestRecoverPassword(data: RequestRecoverPasswordInput!): RequestRecoverPasswordResponse!
-  setBitrixId(data: UpdateBitrixIdInput!): Company!
 }
 
 type Query {
   getBasicCompanies: [BasicCompany!]
-  getCompanies: [Company!]!
   getCompanyInfo(data: GetCompanyInfoInput!): Company!
   getContacts(data: GetContactsInput!): GetContactsResponse!
   getDeal(data: GetDealInput!): Deal
@@ -232,10 +228,4 @@ input RequestRecoverPasswordInput {
 """Response for request recover company's password"""
 type RequestRecoverPasswordResponse {
   wasMailSent: Boolean!
-}
-
-"""Update Company's bitrix id Args"""
-input UpdateBitrixIdInput {
-  bitrix_id: Float!
-  company_id: ID!
 }
