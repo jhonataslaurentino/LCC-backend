@@ -176,7 +176,7 @@ type GetDealsResponse {
   """
   If there are more deals, the bitrix api should return a number to get the next list of deals
   """
-  next: Int!
+  next: Int
 
   """The list of Deals gathered from bitrix api."""
   result: [Deal!]

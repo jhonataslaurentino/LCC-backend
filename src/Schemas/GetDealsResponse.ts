@@ -15,6 +15,7 @@ class GetDealsResponse {
   total: number;
 
   @Field(() => Int, {
+    nullable: true,
     description:
       'If there are more deals, the bitrix api should return a number to get the next list of deals',
   })
