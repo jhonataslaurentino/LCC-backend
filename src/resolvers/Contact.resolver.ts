@@ -1,4 +1,14 @@
-import { Arg, Mutation, Resolver, Query } from 'type-graphql';
+import {
+  Arg,
+  Mutation,
+  Resolver,
+  Query,
+  UseMiddleware,
+  Ctx,
+} from 'type-graphql';
+import AuthenticatedChecker, {
+  ContextData,
+} from '../middlewares/AuthenticatedChecker';
 import Deal from '../Schemas/Deal';
 import GetContactsResponse from '../Schemas/GetContactsResponse';
 import CreateContactService from '../Services/CreateContactService';
@@ -65,6 +75,7 @@ class ContactResolver {
     const getDealService = new GetDealService();
     const deal = await getDealService.execute({
       id: vehicleDealID,
+      companyID,
     });
 
     return deal;
@@ -119,15 +130,20 @@ class ContactResolver {
     const getDealService = new GetDealService();
     const deal = await getDealService.execute({
       id: dealID,
+      companyID,
     });
 
     return deal;
   }
 
   @Query(() => GetContactsResponse)
+  @UseMiddleware(AuthenticatedChecker)
   async getContacts(
-    @Arg('data') { companyID, page }: GetContactsInput,
+    @Ctx()
+    ctx: ContextData,
+    @Arg('data') { page }: GetContactsInput,
   ): Promise<GetContactsResponse> {
+    const { id: companyID } = ctx;
     const getContactsService = new GetContactsService();
     const response = await getContactsService.execute({
       companyID,

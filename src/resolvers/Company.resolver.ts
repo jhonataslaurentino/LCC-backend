@@ -1,17 +1,4 @@
-import {
-  Arg,
-  Mutation,
-  Resolver,
-  Query,
-  UseMiddleware,
-  Ctx,
-} from 'type-graphql';
-import { createWriteStream } from 'fs';
-import path from 'path';
-import CompanyModel from '../Entities/Company';
-import AuthenticatedChecker, {
-  ContextData,
-} from '../middlewares/AuthenticatedChecker';
+import { Arg, Mutation, Resolver, Query } from 'type-graphql';
 import Company from '../Schemas/Company';
 import Login from '../Schemas/Login';
 import RequestRecoverPasswordResponse from '../Schemas/RequestRecoverPasswordResponse';
@@ -21,9 +8,7 @@ import CreateCompanyService from '../Services/CreateCompanyService';
 import RecoverPasswordService from '../Services/RecoverPasswordService';
 import RequestRecoverPasswordService from '../Services/RequestRecoverPasswordService';
 import UpdateBitrixIdService from '../Services/UpdateBitrixIdService';
-import UpdateBitrixIdInput from './types/Bitrix/UpdateBitrixIdInput';
 import AuthenticationCompanyInput from './types/Company/AuthenticationCompanyInput';
-import ChangeProfilePictureInput from './types/Company/ChangeProfilePictureInput';
 import CreateCompanyInput from './types/Company/CreateCompanyInput';
 import RecoverPasswordInput from './types/Company/RecoverPasswordInput';
 import RequestRecoverPasswordInput from './types/Company/RequestRecoverPasswordInput';
@@ -42,20 +27,6 @@ class CompaniesResolver {
     delete company.bitrix_id;
     delete company.cpf_cnpj;
     return company;
-  }
-
-  @Query(() => [Company])
-  // @UseMiddleware(AuthenticatedChecker)
-  async getCompanies(): // @Ctx()
-  // ctx: ContextData,
-  Promise<Company[]> {
-    // console.log(ctx.id);
-    const companies = await CompanyModel.find();
-    companies.forEach(company => {
-      // eslint-disable-next-line no-param-reassign
-      company.password = '';
-    });
-    return companies;
   }
 
   @Mutation(() => Company)
@@ -96,20 +67,6 @@ class CompaniesResolver {
 
     registeredCompany.password = '';
     return registeredCompany;
-  }
-
-  @Mutation(() => Company)
-  async setBitrixId(
-    @Arg('data')
-    { company_id, bitrix_id }: UpdateBitrixIdInput,
-  ): Promise<Company> {
-    const updateBitrixIdService = new UpdateBitrixIdService();
-    const company = await updateBitrixIdService.execute({
-      bitrix_id,
-      company_id,
-    });
-    company.password = '';
-    return company;
   }
 
   @Mutation(() => Login)
