@@ -23,3 +23,5 @@ class GetDealsResponse {
 }
 
 export default GetDealsResponse;
+
+console.log('hello World')
