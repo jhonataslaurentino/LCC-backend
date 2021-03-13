@@ -40,4 +40,8 @@ export default class Company {
   @Field({ nullable: true })
   @Property()
   phone: string;
+
+  @Field({ nullable: true })
+  @Property()
+  avatarFile: string;
 }

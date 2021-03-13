@@ -60,6 +60,8 @@ type BasicCompany {
 
 """The company schema"""
 type Company {
+  avatarFile: String
+
   """The ID returned from Bitrix platform"""
   bitrix_id: Int
   cpf_cnpj: String!
@@ -193,6 +195,7 @@ type Login {
 
 type Mutation {
   addContact(data: AddContactInput!): Deal!
+  addProfilePicture(picture: Upload!): Boolean!
   addVehicularCreditContact(data: AddVehicularCreditContactInput!): Deal!
   createBasicCompany(data: CreateBasicCompanyInput!): BasicCompany!
   createCompany(data: CreateCompanyInput!): Company!
@@ -229,3 +232,6 @@ input RequestRecoverPasswordInput {
 type RequestRecoverPasswordResponse {
   wasMailSent: Boolean!
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload

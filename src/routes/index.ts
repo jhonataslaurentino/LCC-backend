@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import eduuzRouter from './eduuzRouter';
+import eduzzRouter from './eduzzRouter';
 
 const routes = Router();
-routes.use('/eduuz', eduuzRouter);
+routes.use('/eduuz', eduzzRouter);
 
 export default routes;

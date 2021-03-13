@@ -1,4 +1,12 @@
-import { Arg, Mutation, Resolver, Query } from 'type-graphql';
+import {
+  Arg,
+  Mutation,
+  Resolver,
+  Query,
+  UseMiddleware,
+  Ctx,
+} from 'type-graphql';
+import { GraphQLUpload } from 'apollo-server-express';
 import Company from '../Schemas/Company';
 import Login from '../Schemas/Login';
 import RequestRecoverPasswordResponse from '../Schemas/RequestRecoverPasswordResponse';
@@ -14,6 +22,11 @@ import RecoverPasswordInput from './types/Company/RecoverPasswordInput';
 import RequestRecoverPasswordInput from './types/Company/RequestRecoverPasswordInput';
 import GetCompanyInfoInput from './types/Company/GetCompanyInfoInput';
 import GetCompanyInfoService from '../Services/GetCompanyInfoService';
+import FileType from './types/Global/FileInput';
+import ChangeUserProfileAvatarService from '../Services/ChangeUserProfileAvatarService';
+import AuthenticatedChecker, {
+  ContextData,
+} from '../middlewares/AuthenticatedChecker';
 
 @Resolver()
 class CompaniesResolver {
@@ -102,6 +115,26 @@ class CompaniesResolver {
     });
     company.password = '';
     return company;
+  }
+
+  @Mutation(() => Boolean)
+  @UseMiddleware(AuthenticatedChecker)
+  async addProfilePicture(
+    @Ctx()
+    ctx: ContextData,
+    @Arg('picture', () => GraphQLUpload)
+    { filename, createReadStream }: FileType,
+  ): Promise<boolean> {
+    const { id: companyID } = ctx;
+    const changeUserProfilAvatareService = new ChangeUserProfileAvatarService();
+    const wasProfilePhotoUpdated = await changeUserProfilAvatareService.execute(
+      {
+        companyID,
+        filename,
+        createReadStream,
+      },
+    );
+    return wasProfilePhotoUpdated;
   }
 }
 
