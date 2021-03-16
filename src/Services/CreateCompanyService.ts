@@ -41,6 +41,7 @@ class CreateCompanyService {
         cpf_cnpj,
         bitrix_id,
         phone: phone || '',
+        avatarFile: '',
       })
     ).save();
     return company;
