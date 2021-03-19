@@ -126,8 +126,8 @@ class CompaniesResolver {
     { filename, createReadStream }: FileType,
   ): Promise<boolean> {
     const { id: companyID } = ctx;
-    const changeUserProfilAvatareService = new ChangeUserProfileAvatarService();
-    const wasProfilePhotoUpdated = await changeUserProfilAvatareService.execute(
+    const changeUserProfileAvatarService = new ChangeUserProfileAvatarService();
+    const wasProfilePhotoUpdated = await changeUserProfileAvatarService.execute(
       {
         companyID,
         filename,

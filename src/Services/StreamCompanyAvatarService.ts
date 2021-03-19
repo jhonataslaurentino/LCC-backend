@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import path from 'path';
+import fs from 'fs';
 import CompanyModel from '../Entities/Company';
-import StreamFile from '../utils/StreamFile';
 
 interface Request {
   companyID: string;
@@ -16,13 +16,23 @@ class StreamCompanyAvatarService {
     }
     const pathToGetProfilePicture = ['images', 'companies', 'profile'];
     const directory = path.resolve(
+      __dirname,
       '..',
       '..',
       'files',
       ...pathToGetProfilePicture,
     );
-    const fileName = company.avatarFile;
-    StreamFile(response, directory, fileName);
+    // const fileName = company.avatarFile;
+    const fileName = 'logo-lcc.png';
+    const pathWithFileName = path.join(directory, fileName || '');
+    try {
+      if (!fs.existsSync(pathWithFileName)) {
+        throw new Error('We cannot access this file');
+      }
+      return response.sendFile(pathWithFileName);
+    } catch (error) {
+      throw new Error('We cannot access this file');
+    }
   }
 }
 
