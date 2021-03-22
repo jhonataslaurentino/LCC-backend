@@ -119,6 +119,7 @@ input CreateCompanyInput {
   password: String!
   personName: String!
   phone: String!
+  token: String!
 }
 
 """
@@ -200,6 +201,7 @@ type Mutation {
   createCompany(data: CreateCompanyInput!): Company!
   login(data: AuthenticationCompanyInput!): Login!
   recoverPassword(data: RecoverPasswordInput!): Company!
+  requestCreateCompany(data: RequestCreateCompanyInput!): Boolean!
   requestRecoverPassword(data: RequestRecoverPasswordInput!): RequestRecoverPasswordResponse!
   setProfilePicture(file: Upload!): Boolean!
   updateProfile(data: UpdateCompanyProfileInput!): Company!
@@ -221,6 +223,12 @@ input RecoverPasswordInput {
 
   """Token sent to company's email"""
   token: String!
+}
+
+"""Request create company service args"""
+input RequestCreateCompanyInput {
+  email: String!
+  name: String!
 }
 
 """Request Recover Password Args"""

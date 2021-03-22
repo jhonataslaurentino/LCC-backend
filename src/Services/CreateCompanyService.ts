@@ -1,6 +1,9 @@
 import { hash } from 'bcryptjs';
+import { verify } from 'jsonwebtoken';
+import authConfig from '../config/authConfig';
 import CompanyModel from '../Entities/Company';
 import Company from '../Schemas/Company';
+import { TokenPayload } from './RecoverPasswordService';
 
 interface Request {
   name: string;
@@ -10,6 +13,7 @@ interface Request {
   cpf_cnpj: string;
   bitrix_id?: number;
   phone?: string;
+  token: string;
 }
 
 class CreateCompanyService {
@@ -21,7 +25,18 @@ class CreateCompanyService {
     cpf_cnpj,
     bitrix_id,
     phone,
+    token,
   }: Request): Promise<Company> {
+    try {
+      const tokenDecoded = verify(token, authConfig.jwt.secret);
+      const { sub: emailInsideToken } = tokenDecoded as TokenPayload;
+      if (emailInsideToken !== email) {
+        throw new Error('Email invalid for this token');
+      }
+    } catch (error) {
+      throw new Error(`Invalid JWT token: ${error}`);
+    }
+
     const isThereAnyCompanyWithSameEmail = await CompanyModel.findOne({
       email,
     }).exec();

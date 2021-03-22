@@ -1,5 +1,4 @@
 import { Arg, Mutation, Resolver, Query } from 'type-graphql';
-import BasicCompanyModel from '../Entities/BasicCompany';
 import BasicCompany from '../Schemas/BasicCompany';
 import CreateBasicCompanyService from '../Services/CreateBasicCompanyService';
 import GetBasicCompaniesService from '../Services/GetBasicCompaniesService';

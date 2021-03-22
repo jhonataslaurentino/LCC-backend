@@ -29,6 +29,8 @@ import AuthenticatedChecker, {
 } from '../middlewares/AuthenticatedChecker';
 import UpdateCompanyProfileInput from './types/Company/UpdateCompanyProfileInput';
 import UpdateProfileService from '../Services/UpdateProfileService';
+import RequestCreateCompanyInput from './types/Company/RequestCreateCompanyInput';
+import SendEmailToCreateCompanyService from '../Services/SendEmailToCreateCompanyService';
 
 @Resolver()
 class CompaniesResolver {
@@ -44,6 +46,18 @@ class CompaniesResolver {
     return company;
   }
 
+  @Mutation(() => Boolean)
+  async requestCreateCompany(
+    @Arg('data') { name, email }: RequestCreateCompanyInput,
+  ): Promise<boolean> {
+    const requestCreateCompany = new SendEmailToCreateCompanyService();
+    const wasEmailSent = await requestCreateCompany.execute({
+      name,
+      email,
+    });
+    return wasEmailSent;
+  }
+
   @Mutation(() => Company)
   async createCompany(
     @Arg('data')
@@ -55,6 +69,7 @@ class CompaniesResolver {
       cpf_cnpj,
       bitrix_id,
       phone,
+      token,
     }: CreateCompanyInput,
   ): Promise<Company> {
     const createCompanyService = new CreateCompanyService();
@@ -65,6 +80,7 @@ class CompaniesResolver {
       password,
       cpf_cnpj,
       bitrix_id,
+      token,
     });
 
     const createCompanyAtBitrixService = new CreateCompanyAtBitrixService();

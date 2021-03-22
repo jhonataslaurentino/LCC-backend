@@ -30,4 +30,7 @@ export default class CreateCompanyInput implements Partial<Company> {
   @Field({ nullable: true })
   @Length(1, 255)
   cpf_cnpj: string;
+
+  @Field()
+  token: string;
 }
