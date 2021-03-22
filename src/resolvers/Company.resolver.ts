@@ -27,6 +27,8 @@ import ChangeUserProfileAvatarService from '../Services/ChangeUserProfileAvatarS
 import AuthenticatedChecker, {
   ContextData,
 } from '../middlewares/AuthenticatedChecker';
+import UpdateCompanyProfileInput from './types/Company/UpdateCompanyProfileInput';
+import UpdateProfileService from '../Services/UpdateProfileService';
 
 @Resolver()
 class CompaniesResolver {
@@ -119,10 +121,10 @@ class CompaniesResolver {
 
   @Mutation(() => Boolean)
   @UseMiddleware(AuthenticatedChecker)
-  async addProfilePicture(
+  async setProfilePicture(
     @Ctx()
     ctx: ContextData,
-    @Arg('picture', () => GraphQLUpload)
+    @Arg('file', () => GraphQLUpload)
     { filename, createReadStream }: FileType,
   ): Promise<boolean> {
     const { id: companyID } = ctx;
@@ -135,6 +137,27 @@ class CompaniesResolver {
       },
     );
     return wasProfilePhotoUpdated;
+  }
+
+  @Mutation(() => Company)
+  @UseMiddleware(AuthenticatedChecker)
+  async updateProfile(
+    @Ctx()
+    ctx: ContextData,
+    @Arg('data')
+    { name, personName, password, phone }: UpdateCompanyProfileInput,
+  ): Promise<Company> {
+    const { id: companyID } = ctx;
+    const updateProfileService = new UpdateProfileService();
+    const company = await updateProfileService.execute({
+      companyID,
+      name,
+      phone,
+      password,
+      personName,
+    });
+    delete company.password;
+    return company;
   }
 }
 

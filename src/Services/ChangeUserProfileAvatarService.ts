@@ -26,6 +26,7 @@ class ChangeUserProfileAvatarService {
       folderToSave: pathToSaveProfilePicture,
     });
     company.avatarFile = fileNameFromUploadFileService;
+    await company.save();
     return true;
   }
 }

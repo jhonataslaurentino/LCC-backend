@@ -12,7 +12,7 @@ class FileType {
   @Field()
   encoding: string;
 
-  @Field(() => Stream)
+  @Field(() => Stream, { nullable: true })
   createReadStream: () => Stream;
 }
 

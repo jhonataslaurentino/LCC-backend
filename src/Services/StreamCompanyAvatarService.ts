@@ -23,7 +23,7 @@ class StreamCompanyAvatarService {
       ...pathToGetProfilePicture,
     );
     // const fileName = company.avatarFile;
-    const fileName = 'logo-lcc.png';
+    const fileName = company.avatarFile;
     const pathWithFileName = path.join(directory, fileName || '');
     try {
       if (!fs.existsSync(pathWithFileName)) {

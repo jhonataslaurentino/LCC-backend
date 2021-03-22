@@ -16,6 +16,7 @@ class UploadFileService {
   }: Request): Promise<string> {
     const fileNameWithoutSpaces = filename.replace(/\s/g, '');
     const pathName = path.resolve(
+      __dirname,
       '..',
       '..',
       'files',

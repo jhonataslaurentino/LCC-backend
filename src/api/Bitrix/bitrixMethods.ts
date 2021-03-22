@@ -8,6 +8,7 @@ const bitrixApiMethods = {
   GET_COMPANIES: 'crm.company.list',
   GET_COMPANY: 'crm.company.get',
   ADD_COMPANY: 'crm.company.add',
+  UPDATE_COMPANY: 'crm.company.update',
 };
 
 export default bitrixApiMethods;

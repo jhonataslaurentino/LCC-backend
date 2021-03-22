@@ -195,13 +195,14 @@ type Login {
 
 type Mutation {
   addContact(data: AddContactInput!): Deal!
-  addProfilePicture(picture: Upload!): Boolean!
   addVehicularCreditContact(data: AddVehicularCreditContactInput!): Deal!
   createBasicCompany(data: CreateBasicCompanyInput!): BasicCompany!
   createCompany(data: CreateCompanyInput!): Company!
   login(data: AuthenticationCompanyInput!): Login!
   recoverPassword(data: RecoverPasswordInput!): Company!
   requestRecoverPassword(data: RequestRecoverPasswordInput!): RequestRecoverPasswordResponse!
+  setProfilePicture(file: Upload!): Boolean!
+  updateProfile(data: UpdateCompanyProfileInput!): Company!
 }
 
 type Query {
@@ -231,6 +232,14 @@ input RequestRecoverPasswordInput {
 """Response for request recover company's password"""
 type RequestRecoverPasswordResponse {
   wasMailSent: Boolean!
+}
+
+"""Update Company Profile Args"""
+input UpdateCompanyProfileInput {
+  name: String!
+  password: String!
+  personName: String!
+  phone: String!
 }
 
 """The `Upload` scalar type represents a file upload."""
