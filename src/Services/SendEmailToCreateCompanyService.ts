@@ -15,9 +15,9 @@ class SendEmailToCreateCompanyService {
       email,
     }).exec();
 
-    // if (company) {
-    //   throw new Error('This email is already used');
-    // }
+    if (company) {
+      throw new Error('This email is already used');
+    }
 
     const { secret } = authConfig.jwt;
 
