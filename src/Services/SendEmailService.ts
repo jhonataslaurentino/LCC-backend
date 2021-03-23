@@ -13,7 +13,7 @@ class SendEmailService {
     return transporter
       .sendMail({
         ...mailOptions,
-        from: `Plataforma LCC<${endpointsConfig.mailUserName}>`,
+        from: `${endpointsConfig.mailUserName}`,
       } as SendMailOptions)
       .then(() => {
         return true;
