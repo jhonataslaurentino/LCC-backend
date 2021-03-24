@@ -24,9 +24,11 @@ class RemoveCompanyProfileAvatarService {
           fileName: avatarFileName,
         });
       } catch (error) {
-        console.log('File does not exists');
+        throw new Error('Company does not have an avatar yet.');
       }
     }
+    company.avatarFile = '';
+    await company.save();
     return company;
   }
 }
