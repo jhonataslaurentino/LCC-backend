@@ -201,6 +201,7 @@ type Mutation {
   createCompany(data: CreateCompanyInput!): Company!
   login(data: AuthenticationCompanyInput!): Login!
   recoverPassword(data: RecoverPasswordInput!): Company!
+  removeProfilePicture: Company!
   requestCreateCompany(data: RequestCreateCompanyInput!): Boolean!
   requestRecoverPassword(data: RequestRecoverPasswordInput!): RequestRecoverPasswordResponse!
   setProfilePicture(file: Upload!): Boolean!

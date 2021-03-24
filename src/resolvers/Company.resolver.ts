@@ -23,7 +23,7 @@ import RequestRecoverPasswordInput from './types/Company/RequestRecoverPasswordI
 import GetCompanyInfoInput from './types/Company/GetCompanyInfoInput';
 import GetCompanyInfoService from '../Services/GetCompanyInfoService';
 import FileType from './types/Global/FileInput';
-import ChangeUserProfileAvatarService from '../Services/ChangeUserProfileAvatarService';
+import ChangeCompanyProfileAvatarService from '../Services/ChangeCompanyProfileAvatarService';
 import AuthenticatedChecker, {
   ContextData,
 } from '../middlewares/AuthenticatedChecker';
@@ -31,6 +31,7 @@ import UpdateCompanyProfileInput from './types/Company/UpdateCompanyProfileInput
 import UpdateProfileService from '../Services/UpdateProfileService';
 import RequestCreateCompanyInput from './types/Company/RequestCreateCompanyInput';
 import SendEmailToCreateCompanyService from '../Services/SendEmailToCreateCompanyService';
+import RemoveCompanyProfileAvatarService from '../Services/RemoveCompanyProfileAvatarService';
 
 @Resolver()
 class CompaniesResolver {
@@ -157,7 +158,7 @@ class CompaniesResolver {
     { filename, createReadStream }: FileType,
   ): Promise<boolean> {
     const { id: companyID } = ctx;
-    const changeUserProfileAvatarService = new ChangeUserProfileAvatarService();
+    const changeUserProfileAvatarService = new ChangeCompanyProfileAvatarService();
     const wasProfilePhotoUpdated = await changeUserProfileAvatarService.execute(
       {
         companyID,
@@ -186,6 +187,20 @@ class CompaniesResolver {
       personName,
     });
     delete company.password;
+    return company;
+  }
+
+  @Mutation(() => Company)
+  @UseMiddleware(AuthenticatedChecker)
+  async removeProfilePicture(
+    @Ctx()
+    ctx: ContextData,
+  ): Promise<Company> {
+    const { id: companyID } = ctx;
+    const removeCompanyProfileAvatarService = new RemoveCompanyProfileAvatarService();
+    const company = await removeCompanyProfileAvatarService.execute({
+      companyID,
+    });
     return company;
   }
 }

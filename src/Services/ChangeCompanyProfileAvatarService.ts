@@ -1,6 +1,8 @@
 import { Stream } from 'stream';
 import CompanyModel from '../Entities/Company';
 import UploadFileService from './UploadFileService';
+import FilesConfig from '../config/Files';
+import removeFile from '../utils/removeFile';
 
 interface Request {
   companyID: string;
@@ -8,7 +10,7 @@ interface Request {
   createReadStream: () => Stream;
 }
 
-class ChangeUserProfileAvatarService {
+class ChangeCompanyProfileAvatarService {
   public async execute({
     filename,
     createReadStream,
@@ -17,6 +19,17 @@ class ChangeUserProfileAvatarService {
     const company = await CompanyModel.findById(companyID).exec();
     if (!company) {
       throw new Error('Company does not exists');
+    }
+    const avatarFileName = company.avatarFile;
+    if (avatarFileName) {
+      try {
+        removeFile({
+          filePath: FilesConfig.companiesProfile,
+          fileName: avatarFileName,
+        });
+      } catch (error) {
+        console.log('File does not exits');
+      }
     }
     const pathToSaveProfilePicture = ['images', 'companies', 'profile'];
     const uploadFileService = new UploadFileService();
@@ -31,4 +44,4 @@ class ChangeUserProfileAvatarService {
   }
 }
 
-export default ChangeUserProfileAvatarService;
+export default ChangeCompanyProfileAvatarService;
