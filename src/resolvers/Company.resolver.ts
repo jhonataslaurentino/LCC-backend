@@ -50,10 +50,12 @@ class CompaniesResolver {
   async requestCreateCompany(
     @Arg('data') { name, email }: RequestCreateCompanyInput,
   ): Promise<boolean> {
+    const emailInLoweCase = email.toLowerCase();
+
     const requestCreateCompany = new SendEmailToCreateCompanyService();
     const wasEmailSent = await requestCreateCompany.execute({
       name,
-      email,
+      email: emailInLoweCase,
     });
     return wasEmailSent;
   }
@@ -72,11 +74,13 @@ class CompaniesResolver {
       token,
     }: CreateCompanyInput,
   ): Promise<Company> {
+    const emailInLoweCase = email.toLowerCase();
+
     const createCompanyService = new CreateCompanyService();
     const company = await createCompanyService.execute({
       name,
       personName,
-      email,
+      email: emailInLoweCase,
       password,
       cpf_cnpj,
       bitrix_id,
@@ -85,7 +89,7 @@ class CompaniesResolver {
 
     const createCompanyAtBitrixService = new CreateCompanyAtBitrixService();
     const companyAtBitrixID = await createCompanyAtBitrixService.execute({
-      email,
+      email: emailInLoweCase,
       title: name,
       phone,
     });
@@ -105,8 +109,13 @@ class CompaniesResolver {
     @Arg('data')
     { email, password }: AuthenticationCompanyInput,
   ): Promise<Login> {
+    const emailInLoweCase = email.toLowerCase();
+
     const authenticateCompanyService = new AuthenticateCompanyService();
-    const data = await authenticateCompanyService.execute({ email, password });
+    const data = await authenticateCompanyService.execute({
+      email: emailInLoweCase,
+      password,
+    });
     data.company.password = '';
     return data;
   }
@@ -116,8 +125,12 @@ class CompaniesResolver {
     @Arg('data')
     { email }: RequestRecoverPasswordInput,
   ): Promise<RequestRecoverPasswordResponse> {
+    const emailInLoweCase = email.toLowerCase();
+
     const requestRecoverPasswordService = new RequestRecoverPasswordService();
-    const wasMailSent = await requestRecoverPasswordService.execute({ email });
+    const wasMailSent = await requestRecoverPasswordService.execute({
+      email: emailInLoweCase,
+    });
     return { wasMailSent } as RequestRecoverPasswordResponse;
   }
 

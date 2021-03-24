@@ -11,13 +11,13 @@ interface Request {
 
 class SendEmailToCreateCompanyService {
   public async execute({ email, name }: Request): Promise<boolean> {
-    // const company = await CompanyModel.findOne({
-    //   email,
-    // }).exec();
+    const company = await CompanyModel.findOne({
+      email,
+    }).exec();
 
-    // if (company) {
-    //   throw new Error('This email is already used');
-    // }
+    if (company) {
+      throw new Error('This email is already used');
+    }
 
     const { secret } = authConfig.jwt;
 

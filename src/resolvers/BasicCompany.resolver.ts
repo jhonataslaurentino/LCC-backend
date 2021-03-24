@@ -17,10 +17,11 @@ class BasicCompaniesResolver {
   async createBasicCompany(
     @Arg('data') { email, name, phone }: CreateBasicCompanyInput,
   ): Promise<BasicCompany> {
+    const emailInLoweCase = email.toLowerCase();
     const createBasicCompanyService = new CreateBasicCompanyService();
     const basicCompany = await createBasicCompanyService.execute({
       name,
-      email,
+      email: emailInLoweCase,
       phone,
     });
     return basicCompany;

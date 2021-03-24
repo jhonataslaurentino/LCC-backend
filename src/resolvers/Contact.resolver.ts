@@ -45,11 +45,13 @@ class ContactResolver {
       address,
     }: AddVehicularCreditContactInput,
   ): Promise<Deal> {
+    const emailInLoweCase = email.toLowerCase();
+
     const createContactService = new CreateContactService();
     const contactID = await createContactService.execute({
       companyID,
       name,
-      email,
+      email: emailInLoweCase,
       cpf,
       cnpj,
       phone,
@@ -100,11 +102,13 @@ class ContactResolver {
       companyID,
     }: AddContactInput,
   ): Promise<Deal> {
+    const emailInLoweCase = email.toLowerCase();
+
     const createContactService = new CreateContactService();
     const contactID = await createContactService.execute({
       companyID,
       name,
-      email,
+      email: emailInLoweCase,
       personType,
       cpf,
       cnpj,
@@ -119,7 +123,7 @@ class ContactResolver {
       opportunityValue,
       term,
       phone,
-      email,
+      email: emailInLoweCase,
       propertyValue,
       propertyType,
       personType,
