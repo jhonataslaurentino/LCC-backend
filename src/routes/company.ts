@@ -11,12 +11,16 @@ companiesRouter.get(
   '/avatar/:id',
   async (request: Request, response: Response) => {
     const { id: companyID } = request.params;
-    const streamCompanyAvatarService = new StreamCompanyAvatarService();
-    const fileResponse = await streamCompanyAvatarService.execute({
-      companyID,
-      response,
-    });
-    return fileResponse;
+    try {
+      const streamCompanyAvatarService = new StreamCompanyAvatarService();
+      const fileResponse = await streamCompanyAvatarService.execute({
+        companyID,
+        response,
+      });
+      return fileResponse;
+    } catch {
+      return response.status(404).send();
+    }
   },
 );
 

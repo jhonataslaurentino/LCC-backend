@@ -18,7 +18,7 @@ class StreamCompanyAvatarService {
       throw new Error('Company does not exists');
     }
     if (!company.avatarFile) {
-      return response.status(404).send('company does not have an avatar yet');
+      throw new Error('company does not have an avatar yet');
     }
     const pathToGetProfilePicture = ['images', 'companies', 'profile'];
     const directory = path.resolve(
