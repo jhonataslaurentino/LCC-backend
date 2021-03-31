@@ -8,24 +8,18 @@ eduzzRouter.get('/', async (request: Request, response: Response) => {
 });
 
 eduzzRouter.post('/', async (request: Request, response: Response) => {
-  try {
-    const {
-      cus_email: customer_email,
-      cus_name: customer_name,
-      trans_code: bill_id,
-    } = request.body;
-    const handleWebhookService = new HandleWebhookService();
-    await handleWebhookService.execute({
-      bill_id,
-      customer_email,
-      customer_name,
-    });
-    return response.status(200).send();
-  } catch (error) {
-    return response.status(404).send({
-      message: error.message,
-    });
-  }
+  const {
+    cus_email: customer_email,
+    cus_name: customer_name,
+    trans_code: bill_id,
+  } = request.body;
+  const handleWebhookService = new HandleWebhookService();
+  await handleWebhookService.execute({
+    bill_id,
+    customer_email,
+    customer_name,
+  });
+  return response.status(200).send();
 });
 
 export default eduzzRouter;

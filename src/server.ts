@@ -1,5 +1,6 @@
+/* eslint-disable no-console */
 import 'reflect-metadata';
-
+import 'express-async-errors';
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 
@@ -9,6 +10,7 @@ import configureSchema from './Schemas';
 import connectToDatabase from './database';
 import context from './Context/context';
 import routes from './routes';
+import ExpressErrorHandler from './errors/ExpressErrorHandler';
 
 const main = async () => {
   await connectToDatabase();
@@ -22,6 +24,7 @@ const main = async () => {
   app.use(express.json());
 
   app.use(routes);
+  app.use(ExpressErrorHandler);
   server.applyMiddleware({ app });
 
   app.listen(endpoint.serverPort, () => {
