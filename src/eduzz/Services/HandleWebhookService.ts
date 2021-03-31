@@ -15,7 +15,7 @@ class HandleWebhookService {
   }: Request): Promise<void> {
     const getBillStatusService = new GetBillStatusService();
     const billStatus = getBillStatusService.execute({ bill_id });
-    if (billStatus.id === 2) {
+    if (billStatus.id === 3) {
       const handleBillApprovedService = new HandleBillApprovedService();
       await handleBillApprovedService.execute({
         customer_name,

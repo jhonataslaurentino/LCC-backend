@@ -1,8 +1,6 @@
 import { Request, Response, Router } from 'express';
 import HandleWebhookService from '../eduzz/Services/HandleWebhookService';
 
-// https://github.com/eduzz/webhook
-
 const eduzzRouter = Router();
 
 eduzzRouter.get('/', async (request: Request, response: Response) => {
@@ -24,7 +22,9 @@ eduzzRouter.post('/', async (request: Request, response: Response) => {
     });
     return response.status(200).send();
   } catch (error) {
-    return response.status(404).send();
+    return response.status(404).send({
+      message: error.message,
+    });
   }
 });
 

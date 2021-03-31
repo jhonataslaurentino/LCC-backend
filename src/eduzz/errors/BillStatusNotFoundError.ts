@@ -1,5 +1,5 @@
 class BillStatusNotFoundError extends Error {
-  constructor(message: string) {
+  constructor(message = 'Bill status not found') {
     super(message);
     this.name = 'BillStatusNotFoundError';
   }
