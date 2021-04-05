@@ -48,4 +48,8 @@ export default class Company {
   @Field({ nullable: true })
   @Property()
   avatarBitrixFileID: number;
+
+  @Field(() => Boolean, { nullable: true })
+  @Property()
+  sawTutorial: boolean;
 }

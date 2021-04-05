@@ -1,7 +1,6 @@
 import CompanyModel from '../Entities/Company';
 import Company from '../Schemas/Company';
-import removeFile from '../utils/removeFile';
-import FilesConfig from '../config/Files';
+import DeleteFileAtBitrixStorageService from './DeleteFileAtBitrixStorageService';
 
 interface Request {
   companyID: string;
@@ -13,21 +12,11 @@ class RemoveCompanyProfileAvatarService {
     if (!company) {
       throw new Error('Company does not exists');
     }
-    const avatarFileName = company.avatarFile;
-    if (!avatarFileName) {
-      throw new Error('Company does not have an avatar yet.');
-    }
-    if (avatarFileName) {
-      try {
-        removeFile({
-          filePath: FilesConfig.companiesProfile,
-          fileName: avatarFileName,
-        });
-      } catch (error) {
-        throw new Error('Company does not have an avatar yet.');
-      }
-    }
-    company.avatarFile = '';
+    const deleteFileAtBitrixStorageService = new DeleteFileAtBitrixStorageService();
+    await deleteFileAtBitrixStorageService.execute({
+      fileId: company.avatarBitrixFileID,
+    });
+    company.avatarBitrixFileID = null;
     await company.save();
     return company;
   }
