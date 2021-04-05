@@ -31,6 +31,8 @@ import UpdateProfileService from '../Services/UpdateProfileService';
 import RequestCreateCompanyInput from './types/Company/RequestCreateCompanyInput';
 import SendEmailToCreateCompanyService from '../Services/SendEmailToCreateCompanyService';
 import RemoveCompanyProfileAvatarService from '../Services/RemoveCompanyProfileAvatarService';
+import ConfirmTutorialHasBeenViewedService from '../Services/ConfirmTutorialHasBeenViewedService';
+import VerifyIfCompanySawTutorialService from '../Services/VerifyIfCompanySawTutorialService';
 
 @Resolver()
 class CompaniesResolver {
@@ -44,6 +46,22 @@ class CompaniesResolver {
     delete company.bitrix_id;
     delete company.cpf_cnpj;
     return company;
+  }
+
+  @Query(() => Boolean)
+  @UseMiddleware(AuthenticatedChecker)
+  async verifyIfCompanySawTutorial(
+    @Ctx()
+    ctx: ContextData,
+  ): Promise<boolean> {
+    const { id: companyID } = ctx;
+    const verifyIfCompanySawTutorialService = new VerifyIfCompanySawTutorialService();
+    const didCompanySawTutorial = await verifyIfCompanySawTutorialService.execute(
+      {
+        companyID,
+      },
+    );
+    return didCompanySawTutorial;
   }
 
   @Mutation(() => Boolean)
@@ -199,6 +217,22 @@ class CompaniesResolver {
     const company = await removeCompanyProfileAvatarService.execute({
       companyID,
     });
+    delete company.password;
+    return company;
+  }
+
+  @Mutation(() => Company)
+  @UseMiddleware(AuthenticatedChecker)
+  async confirmTutorialHasBeenViewed(
+    @Ctx()
+    ctx: ContextData,
+  ): Promise<Company> {
+    const { id: companyID } = ctx;
+    const confirmTutorialHasBeenViewed = new ConfirmTutorialHasBeenViewedService();
+    const company = await confirmTutorialHasBeenViewed.execute({
+      companyID,
+    });
+    delete company.password;
     return company;
   }
 }

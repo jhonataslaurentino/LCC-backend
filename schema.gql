@@ -208,6 +208,7 @@ type Login {
 type Mutation {
   addContact(data: AddContactInput!): Deal!
   addVehicularCreditContact(data: AddVehicularCreditContactInput!): Deal!
+  confirmTutorialHasBeenViewed: Company!
   createBasicCompany(data: CreateBasicCompanyInput!): BasicCompany!
   createCompany(data: CreateCompanyInput!): Company!
   login(data: AuthenticationCompanyInput!): Login!
@@ -226,6 +227,7 @@ type Query {
   getDeal(data: GetDealInput!): Deal
   getDeals(data: GetDealsInput!): GetDealsResponse
   getVehicularDeals(data: GetDealsInput!): GetDealsResponse
+  verifyIfCompanySawTutorial: Boolean!
 }
 
 """Recover Password Args"""
