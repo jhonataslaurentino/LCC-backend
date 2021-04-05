@@ -1,46 +1,37 @@
-import { Stream } from 'stream';
 import CompanyModel from '../Entities/Company';
-import UploadFileService from './UploadFileService';
-import FilesConfig from '../config/Files';
-import removeFile from '../utils/removeFile';
+import DeleteFileAtBitrixStorageService from './DeleteFileAtBitrixStorageService';
+import UploadFileToBitrixStorageService from './UploadFileToBitrixStorageService';
 
 interface Request {
   companyID: string;
-  filename: string;
-  createReadStream: () => Stream;
+  fileName: string;
+  fileBase64Encoded: string;
 }
 
 class ChangeCompanyProfileAvatarService {
   public async execute({
-    filename,
-    createReadStream,
+    fileName,
+    fileBase64Encoded,
     companyID,
-  }: Request): Promise<boolean> {
+  }: Request): Promise<void> {
     const company = await CompanyModel.findById(companyID).exec();
     if (!company) {
       throw new Error('Company does not exists');
     }
-    const avatarFileName = company.avatarFile;
-    if (avatarFileName) {
-      try {
-        removeFile({
-          filePath: FilesConfig.companiesProfile,
-          fileName: avatarFileName,
-        });
-      } catch (error) {
-        console.log('File does not exits');
-      }
+    if (company.avatarBitrixFileID) {
+      const deleteFileAtBitrixStorageService = new DeleteFileAtBitrixStorageService();
+      await deleteFileAtBitrixStorageService.execute({
+        fileId: company.avatarBitrixFileID,
+      });
     }
-    const pathToSaveProfilePicture = ['images', 'companies', 'profile'];
-    const uploadFileService = new UploadFileService();
-    const fileNameFromUploadFileService = await uploadFileService.execute({
-      createReadStream,
-      filename,
-      folderToSave: pathToSaveProfilePicture,
+    const uploadFileToBitrixStorageService = new UploadFileToBitrixStorageService();
+    const fileId = await uploadFileToBitrixStorageService.execute({
+      fileBase64: fileBase64Encoded,
+      fileName,
+      folderId: 483,
     });
-    company.avatarFile = fileNameFromUploadFileService;
+    company.avatarBitrixFileID = fileId;
     await company.save();
-    return true;
   }
 }
 

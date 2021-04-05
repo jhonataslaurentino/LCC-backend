@@ -6,7 +6,6 @@ import {
   UseMiddleware,
   Ctx,
 } from 'type-graphql';
-import { GraphQLUpload } from 'apollo-server-express';
 import Company from '../Schemas/Company';
 import Login from '../Schemas/Login';
 import RequestRecoverPasswordResponse from '../Schemas/RequestRecoverPasswordResponse';
@@ -22,7 +21,7 @@ import RecoverPasswordInput from './types/Company/RecoverPasswordInput';
 import RequestRecoverPasswordInput from './types/Company/RequestRecoverPasswordInput';
 import GetCompanyInfoInput from './types/Company/GetCompanyInfoInput';
 import GetCompanyInfoService from '../Services/GetCompanyInfoService';
-import FileType from './types/Global/FileInput';
+import FileInput from './types/Global/FileInput';
 import ChangeCompanyProfileAvatarService from '../Services/ChangeCompanyProfileAvatarService';
 import AuthenticatedChecker, {
   ContextData,
@@ -154,18 +153,17 @@ class CompaniesResolver {
   async setProfilePicture(
     @Ctx()
     ctx: ContextData,
-    @Arg('file', () => GraphQLUpload)
-    { filename, createReadStream }: FileType,
+    @Arg('data')
+    { file, fileName }: FileInput,
   ): Promise<boolean> {
     const { id: companyID } = ctx;
-    const changeUserProfileAvatarService = new ChangeCompanyProfileAvatarService();
-    const wasProfilePhotoUpdated = await changeUserProfileAvatarService.execute(
-      {
-        companyID,
-        filename,
-        createReadStream,
-      },
-    );
+    const changeCompanyProfileAvatarService = new ChangeCompanyProfileAvatarService();
+    await changeCompanyProfileAvatarService.execute({
+      companyID,
+      fileBase64Encoded: file,
+      fileName,
+    });
+    const wasProfilePhotoUpdated = true;
     return wasProfilePhotoUpdated;
   }
 

@@ -60,6 +60,7 @@ type BasicCompany {
 
 """The company schema"""
 type Company {
+  avatarBitrixFileID: Float
   avatarFile: String
 
   """The ID returned from Bitrix platform"""
@@ -140,6 +141,15 @@ type Deal {
   TITLE: String
 }
 
+"""Files to store at our system"""
+input FileInput {
+  """You should provide a BASE64 file"""
+  file: String!
+
+  """The file name"""
+  fileName: String!
+}
+
 """Get Company Info Args"""
 input GetCompanyInfoInput {
   id: String!
@@ -204,7 +214,7 @@ type Mutation {
   removeProfilePicture: Company!
   requestCreateCompany(data: RequestCreateCompanyInput!): Boolean!
   requestRecoverPassword(data: RequestRecoverPasswordInput!): RequestRecoverPasswordResponse!
-  setProfilePicture(file: Upload!): Boolean!
+  setProfilePicture(data: FileInput!): Boolean!
   updateProfile(data: UpdateCompanyProfileInput!): Company!
 }
 
@@ -250,6 +260,3 @@ input UpdateCompanyProfileInput {
   personName: String!
   phone: String!
 }
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload

@@ -1,19 +1,12 @@
-import { Stream } from 'stream';
 import { Field, InputType } from 'type-graphql';
 
-@InputType({ description: 'File type' })
-class FileType {
-  @Field()
-  filename: string;
+@InputType({ description: 'Files to store at our system' })
+class FileInput {
+  @Field({ description: 'You should provide a BASE64 file' })
+  file: string;
 
-  @Field()
-  mimetype: string;
-
-  @Field()
-  encoding: string;
-
-  @Field(() => Stream, { nullable: true })
-  createReadStream: () => Stream;
+  @Field({ description: 'The file name' })
+  fileName: string;
 }
 
-export default FileType;
+export default FileInput;
