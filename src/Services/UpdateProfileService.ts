@@ -23,7 +23,6 @@ class UpdateProfileService {
     if (!company) {
       throw new Error('Company does not exists');
     }
-
     const isPasswordMatched = await compare(password, company.password);
     if (!isPasswordMatched) {
       throw new Error('Incorrect email/password combination');

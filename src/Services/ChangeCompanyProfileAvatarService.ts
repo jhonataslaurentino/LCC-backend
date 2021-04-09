@@ -1,3 +1,4 @@
+import endpointsConfig from '../config/endpoints.config';
 import CompanyModel from '../Entities/Company';
 import DeleteFileAtBitrixStorageService from './DeleteFileAtBitrixStorageService';
 import UploadFileToBitrixStorageService from './UploadFileToBitrixStorageService';
@@ -28,7 +29,7 @@ class ChangeCompanyProfileAvatarService {
     const fileId = await uploadFileToBitrixStorageService.execute({
       fileBase64: fileBase64Encoded,
       fileName,
-      folderId: 483,
+      folderId: endpointsConfig.bitrixAvatarFolderID,
     });
     company.avatarBitrixFileID = fileId;
     await company.save();
