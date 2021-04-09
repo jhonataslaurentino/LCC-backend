@@ -14,6 +14,7 @@ class HandleBillApprovedService {
     await sendEmailToCreateCompanyService.execute({
       email: customer_email,
       name: customer_name,
+      template: 'SignUpEduzz',
     });
   }
 }

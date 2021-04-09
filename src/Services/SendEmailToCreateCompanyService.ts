@@ -7,10 +7,11 @@ import SendEmailService from './SendEmailService';
 interface Request {
   email: string;
   name: string;
+  template: string;
 }
 
 class SendEmailToCreateCompanyService {
-  public async execute({ email, name }: Request): Promise<boolean> {
+  public async execute({ email, name, template }: Request): Promise<boolean> {
     const company = await CompanyModel.findOne({
       email,
     }).exec();
@@ -30,7 +31,7 @@ class SendEmailToCreateCompanyService {
     const wasEmailSent = await sendEmailService.execute({
       to: email,
       subject: 'Seja bem vindo(a)!',
-      template: 'SingUp',
+      template,
       context: {
         name,
         link: `${endpointsConfig.frontendURL}/cadastro/${token}`,

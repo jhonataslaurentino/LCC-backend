@@ -74,6 +74,7 @@ class CompaniesResolver {
     const wasEmailSent = await requestCreateCompany.execute({
       name,
       email: emailInLoweCase,
+      template: 'SingUp',
     });
     return wasEmailSent;
   }
