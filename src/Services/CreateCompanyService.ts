@@ -57,6 +57,8 @@ class CreateCompanyService {
         bitrix_id,
         phone: phone || '',
         avatarFile: '',
+        sawTutorial: false,
+        avatarBitrixFileID: null,
       })
     ).save();
     return company;
