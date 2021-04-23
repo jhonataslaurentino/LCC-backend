@@ -1,7 +1,5 @@
-import { isUUID } from 'class-validator';
 import { Request, Response, Router } from 'express';
 import request from 'request';
-import ExpressError from '../errors/ExpressError';
 import GetProfileAvatarService from '../Services/GetProfileAvatarService';
 
 const companiesRouter = Router();
@@ -12,9 +10,7 @@ companiesRouter.get('/', async (req: Request, response: Response) => {
 
 companiesRouter.get('/avatar/:id', async (req: Request, response: Response) => {
   const { id: companyID } = req.params;
-  if (!isUUID(companyID)) {
-    throw new ExpressError('Invalid uuid');
-  }
+
   const getProfileAvatarService = new GetProfileAvatarService();
   const { downloadURL } = await getProfileAvatarService.execute({
     companyID,

@@ -199,6 +199,14 @@ type GetDealsResponse {
   total: Int!
 }
 
+"""Price Table Installment Schema"""
+type Installment {
+  amortization: Float!
+  amount: Float!
+  installment: Float!
+  interest: Float!
+}
+
 """Login Schema"""
 type Login {
   company: Company!
@@ -211,6 +219,8 @@ type Mutation {
   confirmTutorialHasBeenViewed: Company!
   createBasicCompany(data: CreateBasicCompanyInput!): BasicCompany!
   createCompany(data: CreateCompanyInput!): Company!
+  getPriceTableSimulation(data: SimulationInput!): [Installment!]!
+  getSACSimulation(data: SimulationInput!): [Installment!]!
   login(data: AuthenticationCompanyInput!): Login!
   recoverPassword(data: RecoverPasswordInput!): Company!
   removeProfilePicture: Company!
@@ -254,6 +264,15 @@ input RequestRecoverPasswordInput {
 """Response for request recover company's password"""
 type RequestRecoverPasswordResponse {
   wasMailSent: Boolean!
+}
+
+"""Get Price Table Simulation Input"""
+input SimulationInput {
+  loanAmount: Float!
+
+  """A percentage value"""
+  loanInterest: Float!
+  numberOfInstallments: Int!
 }
 
 """Update Company Profile Args"""
