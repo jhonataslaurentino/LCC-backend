@@ -6,7 +6,7 @@ interface Request {
   loanInterest: number;
 }
 
-interface Installment {
+export interface Installment {
   amortization: number;
   amount: number;
   interest: number;

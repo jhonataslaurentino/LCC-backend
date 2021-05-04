@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    />
+    <title>Simulation Table</title>
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      .Container {
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        align-items: stretch;
+      }
+
+      .Content {
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-direction: column;
+
+        gap: 0.5rem;
+
+        padding: 0.5rem;
+      }
+
+      .Title {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 10.7246px;
+        line-height: 9px;
+        color: #363c4c;
+      }
+
+      .Table {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .Table > thead {
+        height: 29px;
+
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #3f9177;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 10.7246px;
+        line-height: 16px;
+        /* or 145% */
+
+        color: #fbfbfb;
+      }
+
+      .Table > thead > tr {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 10% repeat(4, calc(90% / 4));
+        grid-auto-flow: column;
+        white-space: nowrap;
+      }
+
+      .Table > tbody {
+        width: 100%;
+        display: grid;
+      }
+
+      .Table > tbody > tr {
+        width: 100%;
+        height: 54.48px;
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: 10% repeat(4, calc(90% / 4));
+        justify-items: center;
+        align-items: center;
+
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 9.65217px;
+        line-height: 16px;
+        letter-spacing: 0.193824px;
+
+        box-shadow: inset 0px -0.775295px 0px #dfe2e9;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section class="Container">
+      <section class="Content">
+        <h1 class="Title">Resultado da Simulação</h1>
+        <table class="Table">
+          <thead>
+            <tr>
+              <th>Período</th>
+              <th>Prestação</th>
+              <th>Juros</th>
+              <th>Amortização</th>
+              <th>Saldo Devedor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if(installments.length>0) {%> <%
+            installments.forEach(({amortization, amount, installment, interest},
+            index) => { %>
+            <tr>
+              <td><%= index+1 %></td>
+              <td>
+                <%=new Intl.NumberFormat('pt-BR', { style: 'currency', currency:
+                'BRL', }).format(installment)%>
+              </td>
+              <td>
+                <%=new Intl.NumberFormat('pt-BR', { style: 'currency', currency:
+                'BRL', }).format(interest)%>
+              </td>
+              <td>
+                <%=new Intl.NumberFormat('pt-BR', { style: 'currency', currency:
+                'BRL', }).format(amortization)%>
+              </td>
+              <td>
+                <%=new Intl.NumberFormat('pt-BR', { style: 'currency', currency:
+                'BRL', }).format(amount)%>
+              </td>
+            </tr>
+            <% }) %> <% } %>
+          </tbody>
+        </table>
+      </section>
+    </section>
+  </body>
+</html>

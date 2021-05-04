@@ -19,6 +19,7 @@
     "class-validator": "^0.13.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "graphql": "^15.5.0",
@@ -27,6 +28,7 @@
     "mongoose": "5.10.18",
     "nodemailer": "^6.5.0",
     "nodemailer-express-handlebars": "^4.0.0",
+    "puppeteer": "^9.1.0",
     "qs": "^6.9.6",
     "reflect-metadata": "^0.1.13",
     "request": "^2.88.2",
@@ -35,6 +37,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/ejs": "^3.0.6",
     "@types/express": "^4.17.11",
     "@types/express-handlebars": "^3.1.0",
     "@types/jsonwebtoken": "^8.5.0",
