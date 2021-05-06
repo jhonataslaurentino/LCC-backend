@@ -11,9 +11,12 @@ import connectToDatabase from './database';
 import context from './Context/context';
 import routes from './routes';
 import ExpressErrorHandler from './errors/ExpressErrorHandler';
+import InsertDefaultRolesService from './Services/Roles/InsertDefaultRolesService';
 
 const main = async () => {
   await connectToDatabase();
+  const insertDefaultRolesService = new InsertDefaultRolesService();
+  await insertDefaultRolesService.execute();
   const schema = await configureSchema();
   const server = new ApolloServer({
     schema,

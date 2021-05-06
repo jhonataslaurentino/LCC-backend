@@ -1,5 +1,5 @@
 import { prop as Property } from '@typegoose/typegoose';
-import { Field, ID, ObjectType, Int } from 'type-graphql';
+import { Field, ID, ObjectType, Int, GraphQLISODateTime } from 'type-graphql';
 
 @ObjectType({ description: 'The user role schema' })
 class Role {
@@ -13,6 +13,18 @@ class Role {
   @Field(() => Int, { description: 'The role permissions' })
   @Property({ default: 0 })
   permissions: number;
+
+  @Field(() => Date, {
+    description: 'Created date of the model',
+    nullable: true,
+  })
+  createdAt: Date;
+
+  @Field(() => Date, {
+    description: 'Created date of the model',
+    nullable: true,
+  })
+  updatedAt: Date;
 }
 
 export default Role;

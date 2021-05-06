@@ -4,6 +4,7 @@ import BasicCompaniesResolver from '../resolvers/BasicCompany.resolver';
 import CompaniesResolver from '../resolvers/Company.resolver';
 import ContactResolver from '../resolvers/Contact.resolver';
 import DealsResolver from '../resolvers/Deal.resolver';
+import RolesResolver from '../resolvers/Role.resolver';
 import SimulationsResolver from '../resolvers/Simulation.resolver';
 
 const configureSchema = async (): Promise<GraphQLSchema> => {
@@ -14,6 +15,7 @@ const configureSchema = async (): Promise<GraphQLSchema> => {
       DealsResolver,
       BasicCompaniesResolver,
       SimulationsResolver,
+      RolesResolver,
     ],
     emitSchemaFile: true,
     validate: false,

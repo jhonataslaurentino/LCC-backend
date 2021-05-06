@@ -248,6 +248,7 @@ type Query {
   getContacts(data: GetContactsInput!): GetContactsResponse!
   getDeal(data: GetDealInput!): Deal
   getDeals(data: GetDealsInput!): GetDealsResponse
+  getRoles: [Role!]
   getVehicularDeals(data: GetDealsInput!): GetDealsResponse
   verifyIfCompanySawTutorial: Boolean!
 }
@@ -276,6 +277,22 @@ input RequestRecoverPasswordInput {
 """Response for request recover company's password"""
 type RequestRecoverPasswordResponse {
   wasMailSent: Boolean!
+}
+
+"""The user role schema"""
+type Role {
+  """Created date of the model"""
+  createdAt: DateTime
+  id: ID!
+
+  """The role name"""
+  name: String!
+
+  """The role permissions"""
+  permissions: Int!
+
+  """Created date of the model"""
+  updatedAt: DateTime
 }
 
 """Get Price Table Simulation Input"""

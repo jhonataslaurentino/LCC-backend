@@ -59,6 +59,7 @@ class CreateCompanyService {
         avatarFile: '',
         sawTutorial: false,
         avatarBitrixFileID: null,
+        accessToken: '',
       })
     ).save();
     return company;
