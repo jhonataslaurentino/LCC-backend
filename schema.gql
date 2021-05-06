@@ -60,16 +60,23 @@ type BasicCompany {
 
 """The company schema"""
 type Company {
+  """
+  It should be used to provide a time access limitation for a user through a jwt token.
+  """
+  accessToken: String
+  associatedCompaniesID: [ID!]
   avatarBitrixFileID: Float
   avatarFile: String
 
   """The ID returned from Bitrix platform"""
   bitrix_id: Int
   cpf_cnpj: String!
+  createdAt: DateTime
 
   """The company email"""
   email: String!
   id: ID!
+  logoBitrixFileID: Float
 
   """The company name"""
   name: String!
@@ -82,7 +89,12 @@ type Company {
   """The person name"""
   personName: String!
   phone: String
+  roleId: ID
   sawTutorial: Boolean
+  updatedAt: DateTime
+
+  """The user name"""
+  userName: String
 }
 
 """Contact schema"""

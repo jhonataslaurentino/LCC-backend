@@ -32,6 +32,13 @@ class GenerateSimulationPDFService {
     const pdf = await page.pdf({
       printBackground: true,
       format: 'a4',
+      margin: {
+        top: '2cm',
+        left: '2cm',
+        bottom: '2cm',
+        right: '2cm',
+      },
+      preferCSSPageSize: true,
     });
     await browser.close();
     return pdf;
