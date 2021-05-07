@@ -23,9 +23,7 @@ import GetCompanyInfoInput from './types/Company/GetCompanyInfoInput';
 import GetCompanyInfoService from '../Services/GetCompanyInfoService';
 import FileInput from './types/Global/FileInput';
 import ChangeCompanyProfileAvatarService from '../Services/ChangeCompanyProfileAvatarService';
-import AuthenticatedChecker, {
-  ContextData,
-} from '../middlewares/AuthenticatedChecker';
+import AuthenticatedChecker from '../middlewares/AuthenticatedChecker';
 import UpdateCompanyProfileInput from './types/Company/UpdateCompanyProfileInput';
 import UpdateProfileService from '../Services/UpdateProfileService';
 import RequestCreateCompanyInput from './types/Company/RequestCreateCompanyInput';
@@ -33,6 +31,7 @@ import SendEmailToCreateCompanyService from '../Services/SendEmailToCreateCompan
 import RemoveCompanyProfileAvatarService from '../Services/RemoveCompanyProfileAvatarService';
 import ConfirmTutorialHasBeenViewedService from '../Services/ConfirmTutorialHasBeenViewedService';
 import VerifyIfCompanySawTutorialService from '../Services/VerifyIfCompanySawTutorialService';
+import { ContextData } from '../Context/context';
 
 @Resolver()
 class CompaniesResolver {

@@ -10,6 +10,7 @@ const permissions = {
   changePlatformColorsAndLogo: 256,
   visualizeCommissions: 512,
   requestCredit: 1024,
+  admin: 2048,
 };
 
 export default permissions;

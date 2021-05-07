@@ -89,7 +89,7 @@ type Company {
   """The person name"""
   personName: String!
   phone: String
-  roleId: Role
+  roleId: String
   sawTutorial: Boolean
   updatedAt: DateTime
 

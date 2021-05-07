@@ -1,7 +1,6 @@
 import { Resolver, Query, Arg, Ctx, UseMiddleware } from 'type-graphql';
-import AuthenticatedChecker, {
-  ContextData,
-} from '../middlewares/AuthenticatedChecker';
+import { ContextData } from '../Context/context';
+import AuthenticatedChecker from '../middlewares/AuthenticatedChecker';
 import Deal from '../Schemas/Deal';
 import GetDealsResponse from '../Schemas/GetDealsResponse';
 import GetDealService from '../Services/GetDealService';

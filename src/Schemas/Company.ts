@@ -62,12 +62,12 @@ export default class Company {
   @Property()
   sawTutorial: boolean;
 
-  @Field(() => Role, { nullable: true })
+  @Field({ nullable: true })
   @Property({ ref: () => Role, type: () => String })
   roleId: string;
 
   @Field(() => [String], { nullable: true })
-  @Property()
+  @Property({ type: [String] })
   associatedCompaniesID: string[];
 
   @Field(() => Date, { nullable: true })

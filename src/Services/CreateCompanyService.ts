@@ -2,6 +2,7 @@ import { hash } from 'bcryptjs';
 import { verify } from 'jsonwebtoken';
 import authConfig from '../config/authConfig';
 import CompanyModel from '../Entities/Company';
+import RoleModel from '../Entities/Role';
 import Company from '../Schemas/Company';
 import { TokenPayload } from './RecoverPasswordService';
 
@@ -14,12 +15,14 @@ interface Request {
   bitrix_id?: number;
   phone?: string;
   token: string;
+  userName?: string;
 }
 
 class CreateCompanyService {
   public async execute({
     name,
     personName,
+    userName,
     email,
     password,
     cpf_cnpj,
@@ -47,9 +50,18 @@ class CreateCompanyService {
 
     const hashedPassword = await hash(password, 8);
 
+    const commonUserRole = await RoleModel.findOne({
+      name: 'User',
+    });
+
+    if (!commonUserRole) {
+      throw new Error('User role not found');
+    }
+
     const company = (
       await CompanyModel.create({
         name,
+        userName: userName || '',
         personName,
         email,
         password: hashedPassword,
@@ -59,7 +71,12 @@ class CreateCompanyService {
         avatarFile: '',
         sawTutorial: false,
         avatarBitrixFileID: null,
+        logoBitrixFileID: null,
         accessToken: '',
+        roleId: commonUserRole.id,
+        associatedCompaniesID: [],
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
       })
     ).save();
     return company;
