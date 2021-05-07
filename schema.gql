@@ -58,6 +58,11 @@ type BasicCompany {
   phone: String
 }
 
+"""Change company role arguments"""
+input ChangeCompanyRoleInput {
+  roleID: String!
+}
+
 """The company schema"""
 type Company {
   """
@@ -156,7 +161,7 @@ type Deal {
 
 """Files to store at our system"""
 input FileInput {
-  """You should provide a BASE64 file"""
+  """The file as a BASE64"""
   file: String!
 
   """The file name"""
@@ -228,6 +233,7 @@ type Login {
 type Mutation {
   addContact(data: AddContactInput!): Deal!
   addVehicularCreditContact(data: AddVehicularCreditContactInput!): Deal!
+  changeCompanyRole(data: ChangeCompanyRoleInput!): Company!
   confirmTutorialHasBeenViewed: Company!
   createBasicCompany(data: CreateBasicCompanyInput!): BasicCompany!
   createCompany(data: CreateCompanyInput!): Company!

@@ -32,6 +32,10 @@ import RemoveCompanyProfileAvatarService from '../Services/RemoveCompanyProfileA
 import ConfirmTutorialHasBeenViewedService from '../Services/ConfirmTutorialHasBeenViewedService';
 import VerifyIfCompanySawTutorialService from '../Services/VerifyIfCompanySawTutorialService';
 import { ContextData } from '../Context/context';
+import ChangeCompanyRoleInput from './types/Company/ChangeCompanyRoleInput';
+import ChangeCompanyRoleService from '../Services/ChangeCompanyRoleService';
+import PermissionRequired from '../middlewares/PermissionRequired';
+import permissions from '../config/permissions';
 
 @Resolver()
 class CompaniesResolver {
@@ -64,6 +68,7 @@ class CompaniesResolver {
   }
 
   @Mutation(() => Boolean)
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
   async requestCreateCompany(
     @Arg('data') { name, email }: RequestCreateCompanyInput,
   ): Promise<boolean> {
@@ -231,6 +236,24 @@ class CompaniesResolver {
     const confirmTutorialHasBeenViewed = new ConfirmTutorialHasBeenViewedService();
     const company = await confirmTutorialHasBeenViewed.execute({
       companyID,
+    });
+    delete company.password;
+    return company;
+  }
+
+  @Mutation(() => Company)
+  @UseMiddleware(AuthenticatedChecker)
+  async changeCompanyRole(
+    @Ctx()
+    contextData: ContextData,
+    @Arg('data')
+    { roleID }: ChangeCompanyRoleInput,
+  ): Promise<Company> {
+    const { id: companyID } = contextData;
+    const changeCompanyRoleService = new ChangeCompanyRoleService();
+    const company = await changeCompanyRoleService.execute({
+      companyID,
+      roleID,
     });
     delete company.password;
     return company;
