@@ -64,7 +64,7 @@ type Company {
   It should be used to provide a time access limitation for a user through a jwt token.
   """
   accessToken: String
-  associatedCompaniesID: [ID!]
+  associatedCompaniesID: [String!]
   avatarBitrixFileID: Float
   avatarFile: String
 
@@ -89,7 +89,7 @@ type Company {
   """The person name"""
   personName: String!
   phone: String
-  roleId: ID
+  roleId: Role
   sawTutorial: Boolean
   updatedAt: DateTime
 

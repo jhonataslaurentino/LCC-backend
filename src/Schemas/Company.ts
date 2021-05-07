@@ -1,5 +1,6 @@
 import { prop as Property } from '@typegoose/typegoose';
 import { Field, ID, Int, ObjectType } from 'type-graphql';
+import Role from './Role';
 
 @ObjectType({ description: 'The company schema' })
 export default class Company {
@@ -61,11 +62,11 @@ export default class Company {
   @Property()
   sawTutorial: boolean;
 
-  @Field(() => ID, { nullable: true })
-  @Property()
+  @Field(() => Role, { nullable: true })
+  @Property({ ref: () => Role, type: () => String })
   roleId: string;
 
-  @Field(() => [ID], { nullable: true })
+  @Field(() => [String], { nullable: true })
   @Property()
   associatedCompaniesID: string[];
 
