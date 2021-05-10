@@ -269,6 +269,7 @@ type Query {
   getDeal(data: GetDealInput!): Deal
   getDeals(data: GetDealsInput!): GetDealsResponse
   getRoles: [Role!]
+  getSELICRate: SELICRate!
   getVehicularDeals(data: GetDealsInput!): GetDealsResponse
   hasPermission(data: HasPermissionInput!): Boolean!
   verifyIfCompanySawTutorial: Boolean!
@@ -314,6 +315,12 @@ type Role {
 
   """Created date of the model"""
   updatedAt: DateTime
+}
+
+"""The SELIC rate"""
+type SELICRate {
+  date: String!
+  value: Float!
 }
 
 """Get Price Table Simulation Input"""

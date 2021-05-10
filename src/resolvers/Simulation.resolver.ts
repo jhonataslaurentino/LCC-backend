@@ -1,5 +1,7 @@
-import { Arg, Mutation, Resolver } from 'type-graphql';
+import { Arg, Mutation, Resolver, Query } from 'type-graphql';
 import Installment from '../Schemas/Installment';
+import SELICRate from '../Schemas/SELICRate';
+import GetSELICRateService from '../Services/bcb/GetSELICRateService';
 import GetPriceTableSimulationService from '../Services/Simulations/GetPriceTableSimulationService';
 import GetSACTableSimulationService from '../Services/Simulations/GetSACTableSimulationService';
 import SimulationInput from './types/Simulation/PriceTable/SimulationInput';
@@ -32,6 +34,13 @@ class SimulationsResolver {
       numberOfInstallments,
     });
     return SACInstallments;
+  }
+
+  @Query(() => SELICRate)
+  async getSELICRate(): Promise<SELICRate> {
+    const getSELICRateService = new GetSELICRateService();
+    const selicRate = await getSELICRateService.execute();
+    return selicRate;
   }
 }
 

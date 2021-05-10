@@ -1,5 +1,5 @@
 import { prop as Property } from '@typegoose/typegoose';
-import { Field, ID, ObjectType, Int, GraphQLISODateTime } from 'type-graphql';
+import { Field, ID, ObjectType, Int } from 'type-graphql';
 
 @ObjectType({ description: 'The user role schema' })
 class Role {
