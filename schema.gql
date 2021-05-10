@@ -168,6 +168,13 @@ input FileInput {
   fileName: String!
 }
 
+type GetAdminDataResponse {
+  activeAccounts: Int!
+  inactiveAccounts: Int!
+  numberOfNewBusiness: Int!
+  numberOfPlatformAccess: Int!
+}
+
 """Get Company Info Args"""
 input GetCompanyInfoInput {
   id: String!
@@ -216,6 +223,11 @@ type GetDealsResponse {
   total: Int!
 }
 
+"""Verify if has permission query args"""
+input HasPermissionInput {
+  permissionName: String!
+}
+
 """Price Table Installment Schema"""
 type Installment {
   amortization: Float!
@@ -249,13 +261,16 @@ type Mutation {
 }
 
 type Query {
+  getAdminData: GetAdminDataResponse!
   getBasicCompanies: [BasicCompany!]
   getCompanyInfo(data: GetCompanyInfoInput!): Company!
+  getCompanyRole: Role!
   getContacts(data: GetContactsInput!): GetContactsResponse!
   getDeal(data: GetDealInput!): Deal
   getDeals(data: GetDealsInput!): GetDealsResponse
   getRoles: [Role!]
   getVehicularDeals(data: GetDealsInput!): GetDealsResponse
+  hasPermission(data: HasPermissionInput!): Boolean!
   verifyIfCompanySawTutorial: Boolean!
 }
 

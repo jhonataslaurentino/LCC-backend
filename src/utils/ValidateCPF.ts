@@ -6,19 +6,19 @@ const validateCPF = ({ cpf }: validateCPFArgs): boolean => {
     return false;
   }
   let soma = 0;
-  for (let i = 0; i <= 9; i += 1) {
+  for (let i = 1; i <= 9; i += 1) {
     soma += parseInt(cpf.substring(i - 1, i), 10) * (11 - i);
   }
   let resto = (soma * 10) % 11;
   if (resto === 10 || resto === 11) {
     resto = 0;
   }
-  if (resto !== parseInt(cpf.substring(10, 11), 10)) {
+  if (resto !== parseInt(cpf.substring(9, 10), 10)) {
     return false;
   }
   soma = 0;
   for (let i = 1; i <= 10; i += 1) {
-    soma += parseInt(cpf.substring(9 - 1, i), 10) * (12 - i);
+    soma += parseInt(cpf.substring(i - 1, i), 10) * (12 - i);
   }
   resto = (soma * 10) % 11;
   if (resto === 10 || resto === 11) {
