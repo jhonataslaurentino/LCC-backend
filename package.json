@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "tsc && cp -a ./src/emails/ ./dist/",
+    "build": "tsc && cp -a ./src/emails/ ./dist/ && cp -a ./src/templates ./dist",
     "dev:server": "ts-node-dev --transpile-only --trace-warnings --ignore-watch node_modules src/server.ts",
     "start": "dist/server.js"
   },
