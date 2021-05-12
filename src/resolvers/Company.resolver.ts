@@ -242,7 +242,7 @@ class CompaniesResolver {
   }
 
   @Mutation(() => Company)
-  @UseMiddleware(AuthenticatedChecker)
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
   async changeCompanyRole(
     @Ctx()
     contextData: ContextData,
