@@ -2,9 +2,9 @@ import { hash } from 'bcryptjs';
 import { verify } from 'jsonwebtoken';
 import authConfig from '../config/authConfig';
 import CompanyModel from '../Entities/Company';
-import RoleModel from '../Entities/Role';
 import Company from '../Schemas/Company';
 import { TokenPayload } from './RecoverPasswordService';
+import GetDefaultRoleService from './Roles/GetDefaultRoleService';
 
 interface Request {
   name: string;
@@ -50,11 +50,13 @@ class CreateCompanyService {
 
     const hashedPassword = await hash(password, 8);
 
-    const commonUserRole = await RoleModel.findOne({
-      name: 'User',
+    const getDefaultRoleService = new GetDefaultRoleService();
+
+    const userRole = await getDefaultRoleService.execute({
+      companyEmail: email,
     });
 
-    if (!commonUserRole) {
+    if (!userRole) {
       throw new Error('User role not found');
     }
 
@@ -73,8 +75,7 @@ class CreateCompanyService {
         avatarBitrixFileID: null,
         logoBitrixFileID: null,
         accessToken: '',
-        roleId: commonUserRole.id,
-        associatedCompaniesID: [],
+        roleId: userRole.id,
         createdAt: Date.now(),
         updatedAt: Date.now(),
       })

@@ -66,10 +66,6 @@ export default class Company {
   @Property({ ref: () => Role, type: () => String })
   roleId: string;
 
-  @Field(() => [String], { nullable: true })
-  @Property({ type: [String] })
-  associatedCompaniesID: string[];
-
   @Field(() => Date, { nullable: true })
   @Property({ default: Date.now() })
   createdAt: Date;
