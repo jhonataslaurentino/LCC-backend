@@ -11,4 +11,5 @@ export default {
   mailUserName: String(process.env.MAIL_USERNAME),
   mailPassword: String(process.env.MAIL_PASSWORD),
   frontendURL: String(process.env.FRONTEND_URL),
+  administratorsEmails: String(process.env.ADMINISTRATORS).split(' '),
 };

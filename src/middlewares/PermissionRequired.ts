@@ -16,7 +16,9 @@ function PermissionRequired(
     }
     if (!company.roleId) {
       const getDefaultRoleService = new GetDefaultRoleService();
-      const defaultRole = await getDefaultRoleService.execute();
+      const defaultRole = await getDefaultRoleService.execute({
+        companyEmail: company.email,
+      });
       company.roleId = defaultRole.id;
       await company.save();
     }
