@@ -9,7 +9,7 @@ interface Request {
 
 class GetDefaultRoleService {
   public async execute({ companyEmail }: Request): Promise<Role> {
-    const isAdmin = companyEmail in endpointsConfig.administratorsEmails;
+    const isAdmin = endpointsConfig.administratorsEmails.includes(companyEmail);
     const UserRole = await RoleModel.findOne({
       name: isAdmin ? 'Admin' : 'User',
     });
