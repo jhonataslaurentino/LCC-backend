@@ -6,9 +6,8 @@ import {
   UseMiddleware,
   Ctx,
 } from 'type-graphql';
-import AuthenticatedChecker, {
-  ContextData,
-} from '../middlewares/AuthenticatedChecker';
+import { ContextData } from '../Context/context';
+import AuthenticatedChecker from '../middlewares/AuthenticatedChecker';
 import Deal from '../Schemas/Deal';
 import GetContactsResponse from '../Schemas/GetContactsResponse';
 import CreateContactService from '../Services/CreateContactService';
