@@ -1,7 +1,7 @@
 import { Field, Float, Int, ObjectType } from 'type-graphql';
 
 @ObjectType({ description: "The company deal's schema" })
-export default class Deal {
+export default class BitrixDeal {
   @Field(() => Int)
   ID: number;
 

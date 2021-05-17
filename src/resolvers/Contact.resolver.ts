@@ -8,7 +8,7 @@ import {
 } from 'type-graphql';
 import { ContextData } from '../Context/context';
 import AuthenticatedChecker from '../middlewares/AuthenticatedChecker';
-import Deal from '../Schemas/Deal';
+import BitrixDeal from '../Schemas/BitrixDeal';
 import GetContactsResponse from '../Schemas/GetContactsResponse';
 import CreateContactService from '../Services/CreateContactService';
 import CreateDealService from '../Services/CreateDealService';
@@ -21,7 +21,7 @@ import GetContactsInput from './types/Contact/GetContactsInput';
 
 @Resolver()
 class ContactResolver {
-  @Mutation(() => Deal)
+  @Mutation(() => BitrixDeal)
   async addVehicularCreditContact(
     @Arg('data')
     {
@@ -43,7 +43,7 @@ class ContactResolver {
       opportunityValue,
       address,
     }: AddVehicularCreditContactInput,
-  ): Promise<Deal> {
+  ): Promise<BitrixDeal> {
     const emailInLoweCase = email.toLowerCase();
 
     const createContactService = new CreateContactService();
@@ -82,7 +82,7 @@ class ContactResolver {
     return deal;
   }
 
-  @Mutation(() => Deal)
+  @Mutation(() => BitrixDeal)
   async addContact(
     @Arg('data')
     {
@@ -100,7 +100,7 @@ class ContactResolver {
       propertyType,
       companyID,
     }: AddContactInput,
-  ): Promise<Deal> {
+  ): Promise<BitrixDeal> {
     const emailInLoweCase = email.toLowerCase();
 
     const createContactService = new CreateContactService();

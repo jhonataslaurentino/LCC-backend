@@ -2,7 +2,7 @@ import qs from 'qs';
 import bitrixApi from '../api/bitrix';
 import bitrixApiMethods from '../api/Bitrix/bitrixMethods';
 import CompanyModel from '../Entities/Company';
-import Deal from '../Schemas/Deal';
+import Deal from '../Schemas/BitrixDeal';
 
 interface Request {
   id: number;

@@ -1,12 +1,8 @@
 import bcbApi from '../../api/bcb';
-
-interface Response {
-  date: string;
-  value: number;
-}
+import SELICRate from '../../Schemas/SELICRate';
 
 class GetSELICRateService {
-  public async execute(): Promise<Response> {
+  public async execute(): Promise<SELICRate> {
     const { data } = await bcbApi.get('/');
     return {
       date: data[0].data,

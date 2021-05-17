@@ -28,13 +28,12 @@ class CreateBasicCompanyService {
       throw new Error('This email is already used');
     }
 
-    const basicCompany = (
-      await BasicCompanyModel.create({
-        name,
-        email,
-        phone,
-      })
-    ).save();
+    const basicCompany = await BasicCompanyModel.create({
+      name,
+      email,
+      phone,
+    });
+
     return basicCompany;
   }
 }

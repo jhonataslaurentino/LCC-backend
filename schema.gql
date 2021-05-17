@@ -58,6 +58,28 @@ type BasicCompany {
   phone: String
 }
 
+"""The company deal's schema"""
+type BitrixDeal {
+  COMPANY_ID: Int
+  CONTACT_ID: Int
+  CURRENCY_ID: String
+  DATE_CREATE: String
+  DATE_MODIFY: String
+  ID: Int!
+  OPPORTUNITY: Float
+  STAGE_ID: String
+  TITLE: String
+}
+
+"""Deal Category"""
+type BitrixDealCategory {
+  CREATED_DATA: DateTime!
+  ID: ID!
+  IS_LOCKED: String!
+  NAME: String!
+  SORT: Int!
+}
+
 """Change company role arguments"""
 input ChangeCompanyRoleInput {
   roleID: String!
@@ -95,6 +117,7 @@ type Company {
   phone: String
   roleId: String
   sawTutorial: Boolean
+  simulations: [String!]
   updatedAt: DateTime
 
   """The user name"""
@@ -140,22 +163,67 @@ input CreateCompanyInput {
   token: String!
 }
 
+"""Create Deal Category Input"""
+input CreateDealCategoryInput {
+  bitrix_id: Int!
+  isVisible: Boolean!
+  name: String
+}
+
+"""Create Deal Type Input"""
+input CreateDealTypeInput {
+  bitrix_id: Int!
+
+  """You should provide 0 for property credit either 1 for vehicular credit"""
+  creditType: Int!
+  dealCategoryID: String!
+  name: String
+  simulationRate: Float!
+}
+
+"""Create simulation input data"""
+input CreateSimulationInput {
+  cpf: String!
+  dealTypeID: String!
+  email: String!
+  name: String!
+  numberOfInstallments: Int!
+  phone: String!
+  value: Float!
+}
+
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
 scalar DateTime
 
-"""The company deal's schema"""
-type Deal {
-  COMPANY_ID: Int
-  CONTACT_ID: Int
-  CURRENCY_ID: String
-  DATE_CREATE: String
-  DATE_MODIFY: String
-  ID: Int!
-  OPPORTUNITY: Float
-  STAGE_ID: String
-  TITLE: String
+"""The deals categories"""
+type DealCategory {
+  bitrix_id: Int!
+
+  """Created date of the model"""
+  createdAt: DateTime
+  dealsTypes: [String!]
+  id: ID!
+  isVisible: Boolean
+  name: String!
+
+  """Created date of the model"""
+  updatedAt: DateTime
+}
+
+type DealType {
+  bitrix_id: Int!
+
+  """Created date of the model"""
+  createdAt: DateTime
+  dealCategory: String
+  id: ID!
+  name: String!
+  simulationRate: Float
+
+  """Created date of the model"""
+  updatedAt: DateTime
 }
 
 """Files to store at our system"""
@@ -216,7 +284,7 @@ type GetDealsResponse {
   next: Int
 
   """The list of Deals gathered from bitrix api."""
-  result: [Deal!]
+  result: [BitrixDeal!]
 
   """The number of deals gathered."""
   total: Int!
@@ -242,12 +310,15 @@ type Login {
 }
 
 type Mutation {
-  addContact(data: AddContactInput!): Deal!
-  addVehicularCreditContact(data: AddVehicularCreditContactInput!): Deal!
+  addContact(data: AddContactInput!): BitrixDeal!
+  addVehicularCreditContact(data: AddVehicularCreditContactInput!): BitrixDeal!
   changeCompanyRole(data: ChangeCompanyRoleInput!): Company!
   confirmTutorialHasBeenViewed: Company!
   createBasicCompany(data: CreateBasicCompanyInput!): BasicCompany!
   createCompany(data: CreateCompanyInput!): Company!
+  createDealCategory(data: CreateDealCategoryInput!): DealCategory!
+  createDealType(data: CreateDealTypeInput!): DealType!
+  createSimulation(data: CreateSimulationInput!): Simulation!
   getPriceTableSimulation(data: SimulationInput!): [Installment!]!
   getSACSimulation(data: SimulationInput!): [Installment!]!
   login(data: AuthenticationCompanyInput!): Login!
@@ -262,11 +333,13 @@ type Mutation {
 type Query {
   getAdminData: GetAdminDataResponse!
   getBasicCompanies: [BasicCompany!]
+  getBitrixDealsCategories: [BitrixDealCategory!]!
   getCompanyInfo(data: GetCompanyInfoInput!): Company!
   getCompanyRole: Role!
   getContacts(data: GetContactsInput!): GetContactsResponse!
-  getDeal(data: GetDealInput!): Deal
+  getDeal(data: GetDealInput!): BitrixDeal
   getDeals(data: GetDealsInput!): GetDealsResponse
+  getDealsCategories: [DealCategory!]
   getRoles: [Role!]
   getSELICRate: SELICRate!
   getVehicularDeals(data: GetDealsInput!): GetDealsResponse
@@ -302,6 +375,8 @@ type RequestRecoverPasswordResponse {
 
 """The user role schema"""
 type Role {
+  companies: [String!]
+
   """Created date of the model"""
   createdAt: DateTime
   id: ID!
@@ -319,6 +394,26 @@ type Role {
 """The SELIC rate"""
 type SELICRate {
   date: String!
+  value: Float!
+}
+
+"""Simulation Schema"""
+type Simulation {
+  company: String
+  cpf: String!
+
+  """Created date of the model"""
+  createdAt: DateTime
+  dealType: DealType!
+  email: String!
+  id: ID!
+  name: String!
+  numberOfInstallments: Int!
+  phone: String!
+  selicRate: SELICRate!
+
+  """Created date of the model"""
+  updatedAt: DateTime
   value: Float!
 }
 

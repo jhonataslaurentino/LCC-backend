@@ -1,15 +1,15 @@
 import { Field, Int, ObjectType } from 'type-graphql';
-import Deal from './Deal';
+import BitrixDeal from './BitrixDeal';
 
 @ObjectType({
   description: 'The schema response for get deals service request.',
 })
 class GetDealsResponse {
-  @Field(() => [Deal], {
+  @Field(() => [BitrixDeal], {
     description: 'The list of Deals gathered from bitrix api.',
     nullable: true,
   })
-  result: Deal[];
+  result: BitrixDeal[];
 
   @Field(() => Int, { description: 'The number of deals gathered.' })
   total: number;
