@@ -1,6 +1,6 @@
 import { Field, ID, Int, ObjectType } from 'type-graphql';
 import { prop as Property, Ref } from '@typegoose/typegoose';
-import DealType from './DealType';
+import DealProduct from './DealProduct';
 
 @ObjectType({ description: 'The deals categories' })
 class DealCategory {
@@ -36,8 +36,12 @@ class DealCategory {
   updatedAt: Date;
 
   @Field(() => [String], { nullable: true })
-  @Property({ ref: () => DealType, default: [] })
-  dealsTypes: Ref<DealType>[];
+  @Property({ ref: () => DealProduct, default: [] })
+  products: Ref<DealProduct>[];
+
+  @Field()
+  @Property()
+  bitrixProductsField: string;
 }
 
 export default DealCategory;

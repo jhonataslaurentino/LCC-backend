@@ -1,11 +1,13 @@
 import DealCategoryModel from '../../../Entities/DealCategory';
 import DealCategory from '../../../Schemas/DealCategory';
 import GetBitrixDealCategoryService from './GetBitrixDealCategoryService';
+import GetBitrixDealFieldsService from './GetBitrixDealFieldsService';
 
 interface Request {
   name?: string;
   bitrix_id: number;
   isVisible?: boolean;
+  bitrixProductsField: string;
 }
 
 class CreateDealCategoryService {
@@ -13,12 +15,23 @@ class CreateDealCategoryService {
     name,
     bitrix_id,
     isVisible = true,
+    bitrixProductsField,
   }: Request): Promise<DealCategory> {
     const isThereAnyCompanyWithSameBitrixID = await DealCategoryModel.findOne({
       bitrix_id,
     }).exec();
     if (isThereAnyCompanyWithSameBitrixID) {
       throw new Error('There is a Deal Category using this bitrix ID');
+    }
+    const getBitrixDealFieldsService = new GetBitrixDealFieldsService();
+    const bitrixDealFields = await getBitrixDealFieldsService.execute();
+    const bitrixDealFieldsFiltered = bitrixDealFields.filter(
+      ({ key }) => key === bitrixProductsField,
+    );
+    if (bitrixDealFieldsFiltered.length === 0) {
+      throw new Error(
+        `There is not a field called ${bitrixProductsField} in the bitrix deal fields`,
+      );
     }
     const getBitrixDealCategoryService = new GetBitrixDealCategoryService();
     const bitrixDealCategory = await getBitrixDealCategoryService.execute({
@@ -29,8 +42,9 @@ class CreateDealCategoryService {
       bitrix_id: bitrixDealCategory.ID,
       createdAt: Date.now(),
       updatedAt: Date.now(),
-      dealsTypes: [],
+      products: [],
       isVisible,
+      bitrixProductsField,
     });
 
     return dealCategory;

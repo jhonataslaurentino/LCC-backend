@@ -1,5 +1,5 @@
 import CompanyModel from '../../Entities/Company';
-import DealTypeModel from '../../Entities/DealType';
+import DealProductModel from '../../Entities/DealProduct';
 import SimulationModel from '../../Entities/Simulation';
 import Simulation from '../../Schemas/Simulation';
 import GetSELICRateService from '../bcb/GetSELICRateService';
@@ -32,7 +32,7 @@ class CreateSimulationService {
     }
     const getSELICRateService = new GetSELICRateService();
     const SELICRate = await getSELICRateService.execute();
-    const dealType = await DealTypeModel.findById(dealTypeID);
+    const dealType = await DealProductModel.findById(dealTypeID);
     const simulation = await SimulationModel.create({
       name,
       value,

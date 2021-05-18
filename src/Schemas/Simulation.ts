@@ -1,6 +1,6 @@
 import { Field, Float, ID, Int, ObjectType } from 'type-graphql';
 import { prop as Property, Ref } from '@typegoose/typegoose';
-import DealType from './DealType';
+import DealProduct from './DealProduct';
 import SELICRate from './SELICRate';
 import Company from './Company';
 
@@ -33,9 +33,9 @@ class Simulation {
   @Property()
   phone: string;
 
-  @Field(() => DealType)
-  @Property(() => DealType)
-  dealType: DealType;
+  @Field(() => DealProduct)
+  @Property(() => DealProduct)
+  dealType: DealProduct;
 
   @Field(() => SELICRate)
   @Property(() => SELICRate)

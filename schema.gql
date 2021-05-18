@@ -80,6 +80,19 @@ type BitrixDealCategory {
   SORT: Int!
 }
 
+"""Bitrix Deal Field"""
+type BitrixDealField {
+  items: [BitrixDealFieldItem!]
+  key: String!
+  listLabel: String
+}
+
+"""Bitrix Deal Field Item"""
+type BitrixDealFieldItem {
+  ID: ID!
+  VALUE: String!
+}
+
 """Change company role arguments"""
 input ChangeCompanyRoleInput {
   roleID: String!
@@ -165,20 +178,19 @@ input CreateCompanyInput {
 
 """Create Deal Category Input"""
 input CreateDealCategoryInput {
+  bitrixProductsField: String!
   bitrix_id: Int!
   isVisible: Boolean!
   name: String
 }
 
 """Create Deal Type Input"""
-input CreateDealTypeInput {
+input CreateDealProductInput {
+  averageRate: Float!
   bitrix_id: Int!
-
-  """You should provide 0 for property credit either 1 for vehicular credit"""
-  creditType: Int!
+  competitiveRate: Float!
   dealCategoryID: String!
   name: String
-  simulationRate: Float!
 }
 
 """Create simulation input data"""
@@ -199,31 +211,38 @@ scalar DateTime
 
 """The deals categories"""
 type DealCategory {
+  bitrixProductsField: String!
   bitrix_id: Int!
 
   """Created date of the model"""
   createdAt: DateTime
-  dealsTypes: [String!]
   id: ID!
   isVisible: Boolean
   name: String!
+  products: [String!]
 
   """Created date of the model"""
   updatedAt: DateTime
 }
 
-type DealType {
+type DealProduct {
+  averageRate: Float
   bitrix_id: Int!
+  competitiveRate: Float
 
   """Created date of the model"""
   createdAt: DateTime
   dealCategory: String
   id: ID!
   name: String!
-  simulationRate: Float
 
   """Created date of the model"""
   updatedAt: DateTime
+}
+
+"""Delete Deal Category Input"""
+input DeleteDealCategoryInput {
+  id: String!
 }
 
 """Files to store at our system"""
@@ -317,8 +336,9 @@ type Mutation {
   createBasicCompany(data: CreateBasicCompanyInput!): BasicCompany!
   createCompany(data: CreateCompanyInput!): Company!
   createDealCategory(data: CreateDealCategoryInput!): DealCategory!
-  createDealType(data: CreateDealTypeInput!): DealType!
+  createDealProduct(data: CreateDealProductInput!): DealProduct!
   createSimulation(data: CreateSimulationInput!): Simulation!
+  deleteDealCategory(data: DeleteDealCategoryInput!): DealCategory!
   getPriceTableSimulation(data: SimulationInput!): [Installment!]!
   getSACSimulation(data: SimulationInput!): [Installment!]!
   login(data: AuthenticationCompanyInput!): Login!
@@ -333,6 +353,7 @@ type Mutation {
 type Query {
   getAdminData: GetAdminDataResponse!
   getBasicCompanies: [BasicCompany!]
+  getBitrixDealFields: [BitrixDealField!]
   getBitrixDealsCategories: [BitrixDealCategory!]!
   getCompanyInfo(data: GetCompanyInfoInput!): Company!
   getCompanyRole: Role!
@@ -404,7 +425,7 @@ type Simulation {
 
   """Created date of the model"""
   createdAt: DateTime
-  dealType: DealType!
+  dealType: DealProduct!
   email: String!
   id: ID!
   name: String!

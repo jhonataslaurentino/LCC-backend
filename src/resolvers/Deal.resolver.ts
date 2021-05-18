@@ -21,11 +21,15 @@ import PermissionRequired from '../middlewares/PermissionRequired';
 import permissions from '../config/permissions';
 import CreateDealCategoryInput from './types/Deal/CreateDealCategoryInput';
 import CreateDealCategoryService from '../Services/deals/dealsCategories/CreateDealCategoryService';
-import DealType from '../Schemas/DealType';
-import CreateDealTypeInput from './types/Deal/CreateDealTypeInput';
-import CreateDealTypeService from '../Services/deals/dealsCategories/CreateDealTypeService';
+import DealProduct from '../Schemas/DealProduct';
+import CreateDealProductService from '../Services/deals/dealsCategories/CreateDealProductService';
 import GetBitrixDealsCategoriesService from '../Services/deals/dealsCategories/GetBitrixDealsCategoriesService';
 import GetDealsCategoriesService from '../Services/deals/dealsCategories/GetDealsCategoriesService';
+import CreateDealProductInput from './types/Deal/CreateDealProductInput';
+import GetBitrixDealFieldsService from '../Services/deals/dealsCategories/GetBitrixDealFieldsService';
+import BitrixDealField from '../Schemas/BitrixDealField';
+import DeleteDealCategoryInput from './types/Deal/DeleteDealCategoryInput';
+import DeleteDealCategoryService from '../Services/deals/dealsCategories/DeleteDealCategoryService';
 
 @Resolver()
 class DealsResolver {
@@ -92,13 +96,32 @@ class DealsResolver {
   @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
   async createDealCategory(
     @Arg('data')
-    { bitrix_id, isVisible, name }: CreateDealCategoryInput,
+    {
+      bitrix_id,
+      isVisible,
+      name,
+      bitrixProductsField,
+    }: CreateDealCategoryInput,
   ): Promise<DealCategory> {
     const createDealCategoryService = new CreateDealCategoryService();
     const dealCategory = await createDealCategoryService.execute({
       bitrix_id,
       isVisible,
       name,
+      bitrixProductsField,
+    });
+    return dealCategory;
+  }
+
+  @Mutation(() => DealCategory)
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  async deleteDealCategory(
+    @Arg('data')
+    { id }: DeleteDealCategoryInput,
+  ): Promise<DealCategory> {
+    const deleteDealCategoryService = new DeleteDealCategoryService();
+    const dealCategory = await deleteDealCategoryService.execute({
+      dealCategoryID: id,
     });
     return dealCategory;
   }
@@ -110,23 +133,31 @@ class DealsResolver {
     return dealsCategories;
   }
 
-  @Mutation(() => DealType)
+  @Query(() => [BitrixDealField], { nullable: true })
   @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
-  async createDealType(
+  async getBitrixDealFields(): Promise<BitrixDealField[]> {
+    const getBitrixDealFieldsService = new GetBitrixDealFieldsService();
+    const fields = await getBitrixDealFieldsService.execute();
+    return fields;
+  }
+
+  @Mutation(() => DealProduct)
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  async createDealProduct(
     @Arg('data')
     {
       bitrix_id,
       dealCategoryID,
       name,
-      creditType,
-      simulationRate,
-    }: CreateDealTypeInput,
-  ): Promise<DealType> {
-    const createDealTypeService = new CreateDealTypeService();
-    const dealType = await createDealTypeService.execute({
+      averageRate,
+      competitiveRate,
+    }: CreateDealProductInput,
+  ): Promise<DealProduct> {
+    const createDealProductService = new CreateDealProductService();
+    const dealType = await createDealProductService.execute({
       bitrix_id,
-      creditType,
-      simulationRate,
+      averageRate,
+      competitiveRate,
       name,
       dealCategoryID,
     });

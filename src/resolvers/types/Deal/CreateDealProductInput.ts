@@ -1,8 +1,8 @@
-import { IsInt, IsPositive, Min, Max } from 'class-validator';
+import { IsPositive } from 'class-validator';
 import { Field, Float, InputType, Int } from 'type-graphql';
 
 @InputType({ description: 'Create Deal Type Input' })
-class CreateDealTypeInput {
+class CreateDealProductInput {
   @Field()
   dealCategoryID: string;
 
@@ -19,21 +19,13 @@ class CreateDealTypeInput {
   @IsPositive({
     message: 'You should type a positive value',
   })
-  simulationRate: number;
+  averageRate: number;
 
-  @Field(() => Int, {
-    description:
-      'You should provide 0 for property credit either 1 for vehicular credit',
-  })
+  @Field(() => Float)
   @IsPositive({
     message: 'You should type a positive value',
   })
-  @IsInt({
-    message: 'You should provide an integer value',
-  })
-  @Min(0)
-  @Max(1)
-  creditType: 0 | 1;
+  competitiveRate: number;
 }
 
-export default CreateDealTypeInput;
+export default CreateDealProductInput;

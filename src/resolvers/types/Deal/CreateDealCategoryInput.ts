@@ -14,6 +14,9 @@ class CreateDealCategoryInput {
 
   @Field(() => Boolean)
   isVisible: boolean;
+
+  @Field()
+  bitrixProductsField: string;
 }
 
 export default CreateDealCategoryInput;

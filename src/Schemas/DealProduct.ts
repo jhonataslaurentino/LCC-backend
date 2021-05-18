@@ -3,7 +3,7 @@ import { prop as Property, Ref } from '@typegoose/typegoose';
 import DealCategory from './DealCategory';
 
 @ObjectType()
-class DealType {
+class DealProduct {
   @Field(() => ID)
   id: string;
 
@@ -17,7 +17,11 @@ class DealType {
 
   @Field(() => Float, { defaultValue: 0 })
   @Property()
-  simulationRate: number;
+  averageRate: number;
+
+  @Field(() => Float, { defaultValue: 0 })
+  @Property()
+  competitiveRate: number;
 
   @Field(() => Date, {
     description: 'Created date of the model',
@@ -40,4 +44,4 @@ class DealType {
   updatedAt: Date;
 }
 
-export default DealType;
+export default DealProduct;
