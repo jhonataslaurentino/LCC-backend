@@ -39,7 +39,7 @@ class CreateDealProductService {
       bitrixDealField =>
         bitrixDealField.key === dealCategory.bitrixProductsField,
     );
-    if (bitrixDealFieldsFiltered.length === -1) {
+    if (bitrixDealFieldsFiltered.length === 0) {
       throw new Error(
         `There is not a bitrix deal field with the key ${dealCategory.bitrixProductsField}. Please contact the support to update the field at ${dealCategory.name} deal category`,
       );

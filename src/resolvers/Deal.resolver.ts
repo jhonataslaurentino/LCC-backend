@@ -30,6 +30,9 @@ import GetBitrixDealFieldsService from '../Services/deals/dealsCategories/GetBit
 import BitrixDealField from '../Schemas/BitrixDealField';
 import DeleteDealCategoryInput from './types/Deal/DeleteDealCategoryInput';
 import DeleteDealCategoryService from '../Services/deals/dealsCategories/DeleteDealCategoryService';
+import BitrixDealFieldItem from '../Schemas/BitrixDealFieldItem';
+import GetBitrixDealFieldItemsInput from './types/Deal/GetBitrixDealFieldItemsInput';
+import GetBitrixDealFieldItemsService from '../Services/deals/dealsCategories/GetBitrixDealFieldItemsService';
 
 @Resolver()
 class DealsResolver {
@@ -139,6 +142,18 @@ class DealsResolver {
     const getBitrixDealFieldsService = new GetBitrixDealFieldsService();
     const fields = await getBitrixDealFieldsService.execute();
     return fields;
+  }
+
+  @Query(() => [BitrixDealFieldItem], { nullable: true })
+  async getBitrixDealFieldItems(
+    @Arg('data')
+    { dealFieldKey }: GetBitrixDealFieldItemsInput,
+  ): Promise<BitrixDealFieldItem[]> {
+    const getBitrixDealFieldItemsService = new GetBitrixDealFieldItemsService();
+    const bitrixDealFieldItems = await getBitrixDealFieldItemsService.execute({
+      dealFieldKey,
+    });
+    return bitrixDealFieldItems;
   }
 
   @Mutation(() => DealProduct)

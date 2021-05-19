@@ -261,6 +261,11 @@ type GetAdminDataResponse {
   numberOfPlatformAccess: Int!
 }
 
+"""Get Bitrix Deal Field Items Input"""
+input GetBitrixDealFieldItemsInput {
+  dealFieldKey: String!
+}
+
 """Get Company Info Args"""
 input GetCompanyInfoInput {
   id: String!
@@ -353,6 +358,7 @@ type Mutation {
 type Query {
   getAdminData: GetAdminDataResponse!
   getBasicCompanies: [BasicCompany!]
+  getBitrixDealFieldItems(data: GetBitrixDealFieldItemsInput!): [BitrixDealFieldItem!]
   getBitrixDealFields: [BitrixDealField!]
   getBitrixDealsCategories: [BitrixDealCategory!]!
   getCompanyInfo(data: GetCompanyInfoInput!): Company!
