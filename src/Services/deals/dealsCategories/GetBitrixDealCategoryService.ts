@@ -3,7 +3,7 @@ import bitrixApi from '../../../api/bitrix';
 import BitrixDealCategory from '../../../Schemas/BitrixDealCategory';
 
 interface Request {
-  id: number;
+  id: string;
 }
 
 class GetBitrixDealCategoryService {

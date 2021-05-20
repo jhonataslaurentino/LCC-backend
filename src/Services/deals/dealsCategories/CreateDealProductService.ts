@@ -5,7 +5,7 @@ import GetBitrixDealFieldsService from './GetBitrixDealFieldsService';
 
 interface Request {
   name?: string;
-  bitrix_id: number;
+  bitrix_id: string;
   averageRate: number;
   competitiveRate: number;
   dealCategoryID: string;

@@ -9,11 +9,8 @@ class CreateDealProductInput {
   @Field({ nullable: true })
   name: string;
 
-  @Field(() => Int)
-  @IsPositive({
-    message: 'You should type a positive value',
-  })
-  bitrix_id: number;
+  @Field()
+  bitrix_id: string;
 
   @Field(() => Float)
   @IsPositive({

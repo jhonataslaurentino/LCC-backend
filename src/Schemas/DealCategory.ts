@@ -13,7 +13,7 @@ class DealCategory {
 
   @Field(() => Int)
   @Property()
-  bitrix_id: number;
+  bitrix_id: string;
 
   @Field(() => Boolean, { defaultValue: true })
   @Property({ default: true })

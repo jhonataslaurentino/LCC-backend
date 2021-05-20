@@ -3,7 +3,7 @@ import { Field, ID, Int, ObjectType } from 'type-graphql';
 @ObjectType({ description: 'Deal Category' })
 class BitrixDealCategory {
   @Field(() => ID)
-  ID: number;
+  ID: string;
 
   @Field()
   NAME: string;

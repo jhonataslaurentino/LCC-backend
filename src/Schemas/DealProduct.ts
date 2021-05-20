@@ -13,7 +13,7 @@ class DealProduct {
 
   @Field(() => Int)
   @Property()
-  bitrix_id: number;
+  bitrix_id: string;
 
   @Field(() => Float, { defaultValue: 0 })
   @Property()

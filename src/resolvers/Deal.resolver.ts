@@ -33,6 +33,8 @@ import DeleteDealCategoryService from '../Services/deals/dealsCategories/DeleteD
 import BitrixDealFieldItem from '../Schemas/BitrixDealFieldItem';
 import GetBitrixDealFieldItemsInput from './types/Deal/GetBitrixDealFieldItemsInput';
 import GetBitrixDealFieldItemsService from '../Services/deals/dealsCategories/GetBitrixDealFieldItemsService';
+import SwitchDealCategoryVisibilityInput from './types/Deal/SwitchDealCategoryVisibilityInput';
+import SwitchDealCategoryVisibilityService from '../Services/deals/dealsCategories/SwitchDealCategoryVisibilityService';
 
 @Resolver()
 class DealsResolver {
@@ -154,6 +156,19 @@ class DealsResolver {
       dealFieldKey,
     });
     return bitrixDealFieldItems;
+  }
+
+  @Mutation(() => DealCategory)
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  async switchDealCategoryVisibility(
+    @Arg('data')
+    { dealCategoryID }: SwitchDealCategoryVisibilityInput,
+  ): Promise<DealCategory> {
+    const switchDealCategoryVisibilityService = new SwitchDealCategoryVisibilityService();
+    const dealCategory = await switchDealCategoryVisibilityService.execute({
+      dealCategoryID,
+    });
+    return dealCategory;
   }
 
   @Mutation(() => DealProduct)

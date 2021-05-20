@@ -1,16 +1,12 @@
-import { IsPositive } from 'class-validator';
-import { Field, InputType, Int } from 'type-graphql';
+import { Field, InputType } from 'type-graphql';
 
 @InputType({ description: 'Create Deal Category Input' })
 class CreateDealCategoryInput {
   @Field({ nullable: true })
   name: string;
 
-  @Field(() => Int)
-  @IsPositive({
-    message: 'You should type a positive value',
-  })
-  bitrix_id: number;
+  @Field()
+  bitrix_id: string;
 
   @Field(() => Boolean)
   isVisible: boolean;

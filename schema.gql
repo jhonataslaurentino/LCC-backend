@@ -179,7 +179,7 @@ input CreateCompanyInput {
 """Create Deal Category Input"""
 input CreateDealCategoryInput {
   bitrixProductsField: String!
-  bitrix_id: Int!
+  bitrix_id: String!
   isVisible: Boolean!
   name: String
 }
@@ -187,7 +187,7 @@ input CreateDealCategoryInput {
 """Create Deal Type Input"""
 input CreateDealProductInput {
   averageRate: Float!
-  bitrix_id: Int!
+  bitrix_id: String!
   competitiveRate: Float!
   dealCategoryID: String!
   name: String
@@ -243,6 +243,17 @@ type DealProduct {
 """Delete Deal Category Input"""
 input DeleteDealCategoryInput {
   id: String!
+}
+
+input DeleteDealProductInput {
+  id: String!
+}
+
+input EditDealProductInput {
+  averageRate: Float!
+  competitiveRate: Float!
+  id: String!
+  name: String
 }
 
 """Files to store at our system"""
@@ -344,6 +355,8 @@ type Mutation {
   createDealProduct(data: CreateDealProductInput!): DealProduct!
   createSimulation(data: CreateSimulationInput!): Simulation!
   deleteDealCategory(data: DeleteDealCategoryInput!): DealCategory!
+  deleteDealProduct(data: DeleteDealProductInput!): DealProduct!
+  editDealProduct(data: EditDealProductInput!): DealProduct!
   getPriceTableSimulation(data: SimulationInput!): [Installment!]!
   getSACSimulation(data: SimulationInput!): [Installment!]!
   login(data: AuthenticationCompanyInput!): Login!
@@ -352,6 +365,7 @@ type Mutation {
   requestCreateCompany(data: RequestCreateCompanyInput!): Boolean!
   requestRecoverPassword(data: RequestRecoverPasswordInput!): RequestRecoverPasswordResponse!
   setProfilePicture(data: FileInput!): Boolean!
+  switchDealCategoryVisibility(data: SwitchDealCategoryVisibilityInput!): DealCategory!
   updateProfile(data: UpdateCompanyProfileInput!): Company!
 }
 
@@ -367,6 +381,7 @@ type Query {
   getDeal(data: GetDealInput!): BitrixDeal
   getDeals(data: GetDealsInput!): GetDealsResponse
   getDealsCategories: [DealCategory!]
+  getDealsProducts: [DealProduct!]
   getRoles: [Role!]
   getSELICRate: SELICRate!
   getVehicularDeals(data: GetDealsInput!): GetDealsResponse
@@ -451,6 +466,11 @@ input SimulationInput {
   """A percentage value"""
   loanInterest: Float!
   numberOfInstallments: Int!
+}
+
+"""Switch deal category visibility input"""
+input SwitchDealCategoryVisibilityInput {
+  dealCategoryID: String!
 }
 
 """Update Company Profile Args"""

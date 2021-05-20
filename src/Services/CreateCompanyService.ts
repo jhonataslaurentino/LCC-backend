@@ -78,6 +78,7 @@ class CreateCompanyService {
         roleId: userRole.id,
         createdAt: Date.now(),
         updatedAt: Date.now(),
+        simulations: [],
       })
     ).save();
     return company;

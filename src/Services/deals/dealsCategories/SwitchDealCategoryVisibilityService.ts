@@ -1,21 +1,20 @@
 import DealCategoryModel from '../../../Entities/DealCategory';
-import DealProductModel from '../../../Entities/DealProduct';
 import DealCategory from '../../../Schemas/DealCategory';
 
 interface Request {
   dealCategoryID: string;
 }
 
-class DeleteDealCategoryService {
+class SwitchDealCategoryVisibilityService {
   public async execute({ dealCategoryID }: Request): Promise<DealCategory> {
     const dealCategory = await DealCategoryModel.findById(dealCategoryID);
     if (!dealCategory) {
-      throw new Error('Deal category do not exists');
+      throw new Error('Deal category not found');
     }
-    await DealProductModel.deleteMany({ _id: dealCategory.products });
-    await dealCategory.deleteOne();
+    dealCategory.isVisible = !dealCategory.isVisible;
+    await dealCategory.save();
     return dealCategory;
   }
 }
 
-export default DeleteDealCategoryService;
+export default SwitchDealCategoryVisibilityService;
