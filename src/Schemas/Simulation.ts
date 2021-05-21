@@ -3,6 +3,7 @@ import { prop as Property, Ref } from '@typegoose/typegoose';
 import DealProduct from './DealProduct';
 import SELICRate from './SELICRate';
 import Company from './Company';
+import DealCategory from './DealCategory';
 
 @ObjectType({ description: 'Simulation Schema' })
 class Simulation {
@@ -33,13 +34,25 @@ class Simulation {
   @Property()
   phone: string;
 
-  @Field(() => DealProduct)
-  @Property(() => DealProduct)
-  dealType: DealProduct;
+  @Field(() => Float)
+  @Property()
+  averageRate: number;
 
-  @Field(() => SELICRate)
-  @Property(() => SELICRate)
-  selicRate: SELICRate;
+  @Field(() => Float)
+  @Property()
+  competitiveRate: number;
+
+  @Field(() => String)
+  @Property({ ref: () => DealCategory })
+  dealCategory: Ref<DealCategory>;
+
+  @Field(() => String)
+  @Property({ ref: () => DealProduct })
+  dealProduct: Ref<DealProduct>;
+
+  @Field(() => Float)
+  @Property()
+  selicRate: number;
 
   @Field(() => Date, {
     description: 'Created date of the model',

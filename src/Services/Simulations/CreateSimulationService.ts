@@ -1,4 +1,5 @@
 import CompanyModel from '../../Entities/Company';
+import DealCategoryModel from '../../Entities/DealCategory';
 import DealProductModel from '../../Entities/DealProduct';
 import SimulationModel from '../../Entities/Simulation';
 import Simulation from '../../Schemas/Simulation';
@@ -11,7 +12,8 @@ interface Request {
   cpf: string;
   email: string;
   phone: string;
-  dealTypeID: string;
+  dealCategoryID: string;
+  dealProductID: string;
   companyID: string;
 }
 
@@ -23,33 +25,51 @@ class CreateSimulationService {
     cpf,
     email,
     phone,
-    dealTypeID,
     companyID,
+    dealCategoryID,
+    dealProductID,
   }: Request): Promise<Simulation> {
     const company = await CompanyModel.findById(companyID);
     if (!company) {
       throw new Error('Company does not exists');
     }
+    const dealCategory = await DealCategoryModel.findById(dealCategoryID);
+    if (!dealCategory) {
+      throw new Error('Deal Category does not exists');
+    }
+    const dealProduct = await DealProductModel.findById(dealProductID);
+    if (!dealProduct) {
+      throw new Error('Deal product not ');
+    }
+    const doesDealCategoryIncludesThisProduct = dealCategory.products.includes(
+      dealProduct.id,
+    );
+    if (!doesDealCategoryIncludesThisProduct) {
+      throw new Error(
+        `The ${dealCategory.name} does not includes ${dealProduct.name}`,
+      );
+    }
     const getSELICRateService = new GetSELICRateService();
     const SELICRate = await getSELICRateService.execute();
-    const dealType = await DealProductModel.findById(dealTypeID);
     const simulation = await SimulationModel.create({
       name,
       value,
       cpf,
       email,
       phone,
-      dealType,
       numberOfInstallments,
-      selicRate: SELICRate,
+      selicRate: SELICRate.value,
       createdAt: Date.now(),
       updatedAt: Date.now(),
       company: companyID,
+      averageRate: dealProduct.averageRate,
+      competitiveRate: dealProduct.competitiveRate,
+      dealCategory: dealCategory.id,
+      dealProduct: dealProduct.id,
     });
 
     company.simulations.push(simulation.id);
     await company.save();
-
     return simulation;
   }
 }

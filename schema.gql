@@ -196,7 +196,8 @@ input CreateDealProductInput {
 """Create simulation input data"""
 input CreateSimulationInput {
   cpf: String!
-  dealTypeID: String!
+  dealCategoryID: String!
+  dealProductID: String!
   email: String!
   name: String!
   numberOfInstallments: Int!
@@ -246,6 +247,11 @@ input DeleteDealCategoryInput {
 }
 
 input DeleteDealProductInput {
+  id: String!
+}
+
+"""Delete Simulation Mutation Input"""
+input DeleteSimulationInput {
   id: String!
 }
 
@@ -356,6 +362,7 @@ type Mutation {
   createSimulation(data: CreateSimulationInput!): Simulation!
   deleteDealCategory(data: DeleteDealCategoryInput!): DealCategory!
   deleteDealProduct(data: DeleteDealProductInput!): DealProduct!
+  deleteSimulation(data: DeleteSimulationInput!): Simulation
   editDealProduct(data: EditDealProductInput!): DealProduct!
   getPriceTableSimulation(data: SimulationInput!): [Installment!]!
   getSACSimulation(data: SimulationInput!): [Installment!]!
@@ -384,6 +391,7 @@ type Query {
   getDealsProducts: [DealProduct!]
   getRoles: [Role!]
   getSELICRate: SELICRate!
+  getSimulations: [Simulation!]
   getVehicularDeals(data: GetDealsInput!): GetDealsResponse
   hasPermission(data: HasPermissionInput!): Boolean!
   verifyIfCompanySawTutorial: Boolean!
@@ -441,18 +449,21 @@ type SELICRate {
 
 """Simulation Schema"""
 type Simulation {
+  averageRate: Float!
   company: String
+  competitiveRate: Float!
   cpf: String!
 
   """Created date of the model"""
   createdAt: DateTime
-  dealType: DealProduct!
+  dealCategory: String!
+  dealProduct: String!
   email: String!
   id: ID!
   name: String!
   numberOfInstallments: Int!
   phone: String!
-  selicRate: SELICRate!
+  selicRate: Float!
 
   """Created date of the model"""
   updatedAt: DateTime

@@ -29,7 +29,10 @@ class CreateSimulationInput {
   phone: string;
 
   @Field()
-  dealTypeID: string;
+  dealCategoryID: string;
+
+  @Field()
+  dealProductID: string;
 }
 
 export default CreateSimulationInput;

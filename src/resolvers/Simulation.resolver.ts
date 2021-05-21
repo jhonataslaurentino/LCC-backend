@@ -13,9 +13,12 @@ import SELICRate from '../Schemas/SELICRate';
 import Simulation from '../Schemas/Simulation';
 import GetSELICRateService from '../Services/bcb/GetSELICRateService';
 import CreateSimulationService from '../Services/Simulations/CreateSimulationService';
+import DeleteSimulationService from '../Services/Simulations/DeleteSimulationService';
 import GetPriceTableSimulationService from '../Services/Simulations/GetPriceTableSimulationService';
 import GetSACTableSimulationService from '../Services/Simulations/GetSACTableSimulationService';
+import GetSimulationsService from '../Services/Simulations/GetSimulationsService';
 import CreateSimulationInput from './types/Simulation/CreateSimulationInput';
+import DeleteSimulationInput from './types/Simulation/DeleteSimulationInput';
 import SimulationInput from './types/Simulation/PriceTable/SimulationInput';
 
 @Resolver()
@@ -55,6 +58,20 @@ class SimulationsResolver {
     return selicRate;
   }
 
+  @Query(() => [Simulation], { nullable: true })
+  @UseMiddleware(AuthenticatedChecker)
+  async getSimulations(
+    @Ctx()
+    context: ContextData,
+  ): Promise<Simulation[]> {
+    const { id: companyID } = context;
+    const getSimulationsService = new GetSimulationsService();
+    const simulations = await getSimulationsService.execute({
+      companyID,
+    });
+    return simulations;
+  }
+
   @Mutation(() => Simulation)
   @UseMiddleware(AuthenticatedChecker)
   async createSimulation(
@@ -68,7 +85,8 @@ class SimulationsResolver {
       cpf,
       email,
       phone,
-      dealTypeID,
+      dealCategoryID,
+      dealProductID,
     }: CreateSimulationInput,
   ): Promise<Simulation> {
     const { id: companyID } = context;
@@ -76,12 +94,30 @@ class SimulationsResolver {
     const simulation = await createSimulationService.execute({
       companyID,
       cpf,
-      dealTypeID,
       email,
       name,
       numberOfInstallments,
       phone,
       value,
+      dealCategoryID,
+      dealProductID,
+    });
+    return simulation;
+  }
+
+  @Mutation(() => Simulation, { nullable: true })
+  @UseMiddleware(AuthenticatedChecker)
+  async deleteSimulation(
+    @Ctx()
+    context: ContextData,
+    @Arg('data')
+    { id }: DeleteSimulationInput,
+  ): Promise<Simulation> {
+    const { id: companyID } = context;
+    const deleteSimulationService = new DeleteSimulationService();
+    const simulation = await deleteSimulationService.execute({
+      companyID,
+      simulationID: id,
     });
     return simulation;
   }
