@@ -8,9 +8,34 @@ import GetDealsProductsService from '../Services/deals/dealsCategories/GetDealsP
 import DeleteDealProductService from '../Services/deals/dealsCategories/DeleteDealProductService';
 import DeleteDealProductInput from './types/Deal/DeleteDealProductInput';
 import EditDealProductInput from './types/Deal/EditDealProductInput';
+import CreateDealProductInput from './types/Deal/CreateDealProductInput';
+import CreateDealProductService from '../Services/deals/dealsCategories/CreateDealProductService';
 
 @Resolver()
 class DealProductResolver {
+  @Mutation(() => DealProduct)
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  async createDealProduct(
+    @Arg('data')
+    {
+      bitrix_id,
+      dealCategoryID,
+      name,
+      averageRate,
+      competitiveRate,
+    }: CreateDealProductInput,
+  ): Promise<DealProduct> {
+    const createDealProductService = new CreateDealProductService();
+    const dealType = await createDealProductService.execute({
+      bitrix_id,
+      averageRate,
+      competitiveRate,
+      name,
+      dealCategoryID,
+    });
+    return dealType;
+  }
+
   @Query(() => [DealProduct], { nullable: true })
   async getDealsProducts(): Promise<DealProduct[]> {
     const getDealsProductsService = new GetDealsProductsService();

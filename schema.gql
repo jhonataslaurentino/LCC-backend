@@ -195,12 +195,14 @@ input CreateDealProductInput {
 
 """Create simulation input data"""
 input CreateSimulationInput {
+  amortizationType: Int!
   cpf: String!
   dealCategoryID: String!
   dealProductID: String!
   email: String!
   name: String!
   numberOfInstallments: Int!
+  personType: String!
   phone: String!
   value: Float!
 }
@@ -331,6 +333,21 @@ type GetDealsResponse {
   total: Int!
 }
 
+"""Get Deals Input Arguments"""
+input GetDealsUpdatedInput {
+  dealCategoryID: String!
+  page: Int
+}
+
+"""Get Simulation Installments Input"""
+input GetSimulationInstallmentsInput {
+  loanAmount: Float!
+
+  """A percentage value"""
+  loanInterest: Float!
+  numberOfInstallments: Int!
+}
+
 """Verify if has permission query args"""
 input HasPermissionInput {
   permissionName: String!
@@ -364,8 +381,8 @@ type Mutation {
   deleteDealProduct(data: DeleteDealProductInput!): DealProduct!
   deleteSimulation(data: DeleteSimulationInput!): Simulation
   editDealProduct(data: EditDealProductInput!): DealProduct!
-  getPriceTableSimulation(data: SimulationInput!): [Installment!]!
-  getSACSimulation(data: SimulationInput!): [Installment!]!
+  getPriceTableSimulation(data: GetSimulationInstallmentsInput!): [Installment!]!
+  getSACSimulation(data: GetSimulationInstallmentsInput!): [Installment!]!
   login(data: AuthenticationCompanyInput!): Login!
   recoverPassword(data: RecoverPasswordInput!): Company!
   removeProfilePicture: Company!
@@ -385,10 +402,15 @@ type Query {
   getCompanyInfo(data: GetCompanyInfoInput!): Company!
   getCompanyRole: Role!
   getContacts(data: GetContactsInput!): GetContactsResponse!
+
+  """Deprecated"""
   getDeal(data: GetDealInput!): BitrixDeal
   getDeals(data: GetDealsInput!): GetDealsResponse
   getDealsCategories: [DealCategory!]
   getDealsProducts: [DealProduct!]
+
+  """The company should use this resolver to get your deals"""
+  getDealsUpdated(data: GetDealsUpdatedInput!): GetDealsResponse
   getRoles: [Role!]
   getSELICRate: SELICRate!
   getSimulations: [Simulation!]
@@ -449,6 +471,7 @@ type SELICRate {
 
 """Simulation Schema"""
 type Simulation {
+  amortizationType: Int!
   averageRate: Float!
   company: String
   competitiveRate: Float!
@@ -462,21 +485,13 @@ type Simulation {
   id: ID!
   name: String!
   numberOfInstallments: Int!
+  personType: String!
   phone: String!
   selicRate: Float!
 
   """Created date of the model"""
   updatedAt: DateTime
   value: Float!
-}
-
-"""Get Price Table Simulation Input"""
-input SimulationInput {
-  loanAmount: Float!
-
-  """A percentage value"""
-  loanInterest: Float!
-  numberOfInstallments: Int!
 }
 
 """Switch deal category visibility input"""

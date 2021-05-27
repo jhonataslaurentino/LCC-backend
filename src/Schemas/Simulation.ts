@@ -73,6 +73,14 @@ class Simulation {
   @Field(() => String, { nullable: true })
   @Property({ ref: () => Company })
   company: Ref<Company>;
+
+  @Field(() => Int)
+  @Property()
+  amortizationType: number;
+
+  @Field()
+  @Property()
+  personType: string;
 }
 
 export default Simulation;

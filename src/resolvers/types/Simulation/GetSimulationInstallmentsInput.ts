@@ -1,8 +1,8 @@
 import { Field, InputType, Float, Int } from 'type-graphql';
 import { IsPositive } from 'class-validator';
 
-@InputType({ description: 'Get Price Table Simulation Input' })
-class SimulationInput {
+@InputType({ description: 'Get Simulation Installments Input' })
+class GetSimulationInstallmentsInput {
   @Field(() => Float)
   @IsPositive({
     message: 'You should type a positive value',
@@ -22,4 +22,4 @@ class SimulationInput {
   loanInterest: number;
 }
 
-export default SimulationInput;
+export default GetSimulationInstallmentsInput;

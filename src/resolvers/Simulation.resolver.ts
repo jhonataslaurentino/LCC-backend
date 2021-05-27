@@ -19,14 +19,19 @@ import GetSACTableSimulationService from '../Services/Simulations/GetSACTableSim
 import GetSimulationsService from '../Services/Simulations/GetSimulationsService';
 import CreateSimulationInput from './types/Simulation/CreateSimulationInput';
 import DeleteSimulationInput from './types/Simulation/DeleteSimulationInput';
-import SimulationInput from './types/Simulation/PriceTable/SimulationInput';
+import GetSimulationInstallmentsInput from './types/Simulation/GetSimulationInstallmentsInput';
 
 @Resolver()
 class SimulationsResolver {
   @Mutation(() => [Installment])
+  @UseMiddleware(AuthenticatedChecker)
   getPriceTableSimulation(
     @Arg('data', { validate: true })
-    { loanAmount, loanInterest, numberOfInstallments }: SimulationInput,
+    {
+      loanAmount,
+      loanInterest,
+      numberOfInstallments,
+    }: GetSimulationInstallmentsInput,
   ): Installment[] {
     const getPriceTableSimulationService = new GetPriceTableSimulationService();
     const priceTableInstallments = getPriceTableSimulationService.execute({
@@ -40,7 +45,11 @@ class SimulationsResolver {
   @Mutation(() => [Installment])
   getSACSimulation(
     @Arg('data', { validate: true })
-    { loanAmount, loanInterest, numberOfInstallments }: SimulationInput,
+    {
+      loanAmount,
+      loanInterest,
+      numberOfInstallments,
+    }: GetSimulationInstallmentsInput,
   ): Installment[] {
     const getSACTableSimulationService = new GetSACTableSimulationService();
     const SACInstallments = getSACTableSimulationService.execute({
@@ -87,6 +96,8 @@ class SimulationsResolver {
       phone,
       dealCategoryID,
       dealProductID,
+      amortizationType,
+      personType,
     }: CreateSimulationInput,
   ): Promise<Simulation> {
     const { id: companyID } = context;
@@ -101,6 +112,8 @@ class SimulationsResolver {
       value,
       dealCategoryID,
       dealProductID,
+      amortizationType,
+      personType,
     });
     return simulation;
   }

@@ -50,7 +50,7 @@ class CreateDealProductService {
     if (bitrixDealFieldsItemsFiltered.length === 0) {
       throw new Error('There is not a deal type with this bitrix id');
     }
-    const dealType = await DealProductModel.create({
+    const dealProduct = await DealProductModel.create({
       bitrix_id: bitrixDealFieldsItemsFiltered[0].ID,
       createdAt: Date.now(),
       updatedAt: Date.now(),
@@ -60,10 +60,10 @@ class CreateDealProductService {
       dealCategory: dealCategory.id,
     });
 
-    dealCategory.products.push(dealType.id);
+    dealCategory.products.push(dealProduct.id);
 
     await dealCategory.save();
-    return dealType;
+    return dealProduct;
   }
 }
 

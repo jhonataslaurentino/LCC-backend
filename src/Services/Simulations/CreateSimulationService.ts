@@ -15,6 +15,8 @@ interface Request {
   dealCategoryID: string;
   dealProductID: string;
   companyID: string;
+  amortizationType: number;
+  personType: string;
 }
 
 class CreateSimulationService {
@@ -28,7 +30,13 @@ class CreateSimulationService {
     companyID,
     dealCategoryID,
     dealProductID,
+    amortizationType,
+    personType,
   }: Request): Promise<Simulation> {
+    if (!['pf', 'pj'].includes(personType)) {
+      throw new Error('You should provide pf or pj on personType field');
+    }
+
     const company = await CompanyModel.findById(companyID);
     if (!company) {
       throw new Error('Company does not exists');
@@ -66,6 +74,8 @@ class CreateSimulationService {
       competitiveRate: dealProduct.competitiveRate,
       dealCategory: dealCategory.id,
       dealProduct: dealProduct.id,
+      amortizationType,
+      personType,
     });
 
     company.simulations.push(simulation.id);

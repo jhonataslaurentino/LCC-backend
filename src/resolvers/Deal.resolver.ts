@@ -21,11 +21,8 @@ import PermissionRequired from '../middlewares/PermissionRequired';
 import permissions from '../config/permissions';
 import CreateDealCategoryInput from './types/Deal/CreateDealCategoryInput';
 import CreateDealCategoryService from '../Services/deals/dealsCategories/CreateDealCategoryService';
-import DealProduct from '../Schemas/DealProduct';
-import CreateDealProductService from '../Services/deals/dealsCategories/CreateDealProductService';
 import GetBitrixDealsCategoriesService from '../Services/deals/dealsCategories/GetBitrixDealsCategoriesService';
 import GetDealsCategoriesService from '../Services/deals/dealsCategories/GetDealsCategoriesService';
-import CreateDealProductInput from './types/Deal/CreateDealProductInput';
 import GetBitrixDealFieldsService from '../Services/deals/dealsCategories/GetBitrixDealFieldsService';
 import BitrixDealField from '../Schemas/BitrixDealField';
 import DeleteDealCategoryInput from './types/Deal/DeleteDealCategoryInput';
@@ -35,10 +32,13 @@ import GetBitrixDealFieldItemsInput from './types/Deal/GetBitrixDealFieldItemsIn
 import GetBitrixDealFieldItemsService from '../Services/deals/dealsCategories/GetBitrixDealFieldItemsService';
 import SwitchDealCategoryVisibilityInput from './types/Deal/SwitchDealCategoryVisibilityInput';
 import SwitchDealCategoryVisibilityService from '../Services/deals/dealsCategories/SwitchDealCategoryVisibilityService';
+import GetDealsUpdatedInput from './types/Deal/GetDealsUpdatedInput';
+import GetDealsUpdatedService from '../Services/deals/GetDealsUpdatedService';
 
 @Resolver()
 class DealsResolver {
-  @Query(() => BitrixDeal, { nullable: true })
+  // TODO: Remove it
+  @Query(() => BitrixDeal, { nullable: true, description: 'Deprecated' })
   @UseMiddleware(AuthenticatedChecker)
   async getDeal(
     @Ctx()
@@ -55,6 +55,7 @@ class DealsResolver {
     return deal;
   }
 
+  // TODO: update it
   @Query(() => GetDealsResponse, { nullable: true })
   @UseMiddleware(AuthenticatedChecker)
   async getDeals(
@@ -70,6 +71,28 @@ class DealsResolver {
       companyID,
     });
     return dealsGathered;
+  }
+
+  // TODO: change it on frontend and backend
+  @Query(() => GetDealsResponse, {
+    nullable: true,
+    description: 'The company should use this resolver to get your deals',
+  })
+  @UseMiddleware(AuthenticatedChecker)
+  async getDealsUpdated(
+    @Ctx()
+    ctx: ContextData,
+    @Arg('data')
+    { dealCategoryID, page }: GetDealsUpdatedInput,
+  ): Promise<GetDealsResponse> {
+    const { id: companyID } = ctx;
+    const getDealsUpdatedService = new GetDealsUpdatedService();
+    const deals = await getDealsUpdatedService.execute({
+      companyID,
+      dealCategoryID,
+      page,
+    });
+    return deals;
   }
 
   @Query(() => GetDealsResponse, { nullable: true })
@@ -169,29 +192,6 @@ class DealsResolver {
       dealCategoryID,
     });
     return dealCategory;
-  }
-
-  @Mutation(() => DealProduct)
-  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
-  async createDealProduct(
-    @Arg('data')
-    {
-      bitrix_id,
-      dealCategoryID,
-      name,
-      averageRate,
-      competitiveRate,
-    }: CreateDealProductInput,
-  ): Promise<DealProduct> {
-    const createDealProductService = new CreateDealProductService();
-    const dealType = await createDealProductService.execute({
-      bitrix_id,
-      averageRate,
-      competitiveRate,
-      name,
-      dealCategoryID,
-    });
-    return dealType;
   }
 }
 
