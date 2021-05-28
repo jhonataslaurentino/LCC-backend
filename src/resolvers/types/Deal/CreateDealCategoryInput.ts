@@ -13,6 +13,12 @@ class CreateDealCategoryInput {
 
   @Field()
   bitrixProductsField: string;
+
+  @Field({ nullable: true })
+  url: string;
+
+  @Field(() => Boolean)
+  isInDevelopment: boolean;
 }
 
 export default CreateDealCategoryInput;

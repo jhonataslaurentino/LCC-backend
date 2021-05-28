@@ -34,6 +34,9 @@ import SwitchDealCategoryVisibilityInput from './types/Deal/SwitchDealCategoryVi
 import SwitchDealCategoryVisibilityService from '../Services/deals/dealsCategories/SwitchDealCategoryVisibilityService';
 import GetDealsUpdatedInput from './types/Deal/GetDealsUpdatedInput';
 import GetDealsUpdatedService from '../Services/deals/GetDealsUpdatedService';
+import DealCategoryStage from '../Schemas/DealCategoryStage';
+import GetDealCategoryStageInput from './types/Deal/GetDealCategoryStagesInput';
+import GetDealCategoryStagesService from '../Services/deals/dealsCategories/GetDealCategoryStagesService';
 
 @Resolver()
 class DealsResolver {
@@ -129,6 +132,8 @@ class DealsResolver {
       isVisible,
       name,
       bitrixProductsField,
+      isInDevelopment,
+      url,
     }: CreateDealCategoryInput,
   ): Promise<DealCategory> {
     const createDealCategoryService = new CreateDealCategoryService();
@@ -137,6 +142,8 @@ class DealsResolver {
       isVisible,
       name,
       bitrixProductsField,
+      isInDevelopment,
+      url,
     });
     return dealCategory;
   }
@@ -167,6 +174,18 @@ class DealsResolver {
     const getBitrixDealFieldsService = new GetBitrixDealFieldsService();
     const fields = await getBitrixDealFieldsService.execute();
     return fields;
+  }
+
+  @Query(() => [DealCategoryStage], { nullable: true })
+  async getDealCategoryStages(
+    @Arg('data')
+    { dealCategoryID }: GetDealCategoryStageInput,
+  ): Promise<DealCategoryStage[]> {
+    const getDealCategoryStagesService = new GetDealCategoryStagesService();
+    const dealCategoryStages = await getDealCategoryStagesService.execute({
+      dealCategoryID,
+    });
+    return dealCategoryStages;
   }
 
   @Query(() => [BitrixDealFieldItem], { nullable: true })

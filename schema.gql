@@ -187,8 +187,10 @@ input CreateCompanyInput {
 input CreateDealCategoryInput {
   bitrixProductsField: String!
   bitrix_id: String!
+  isInDevelopment: Boolean!
   isVisible: Boolean!
   name: String
+  url: String
 }
 
 """Create Deal Type Input"""
@@ -227,12 +229,25 @@ type DealCategory {
   """Created date of the model"""
   createdAt: DateTime
   id: ID!
+
+  """Information if the deal wether is in development or not"""
+  isInDevelopment: Boolean
   isVisible: Boolean
   name: String!
   products: [String!]
 
   """Created date of the model"""
   updatedAt: DateTime
+
+  """Url to do a deal request"""
+  url: String
+}
+
+"""Deal Category Stage"""
+type DealCategoryStage {
+  NAME: String!
+  SORT: Int!
+  STATUS_ID: String!
 }
 
 type DealProduct {
@@ -314,6 +329,11 @@ type GetContactsResponse {
 
   """The number of deals gathered."""
   total: Int
+}
+
+"""Input for get deal category stages"""
+input GetDealCategoryStageInput {
+  dealCategoryID: String!
 }
 
 """Get Deal Input Arguments"""
@@ -412,6 +432,7 @@ type Query {
 
   """Deprecated"""
   getDeal(data: GetDealInput!): BitrixDeal
+  getDealCategoryStages(data: GetDealCategoryStageInput!): [DealCategoryStage!]
   getDeals(data: GetDealsInput!): GetDealsResponse
   getDealsCategories: [DealCategory!]
   getDealsProducts: [DealProduct!]

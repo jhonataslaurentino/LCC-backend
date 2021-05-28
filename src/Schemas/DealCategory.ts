@@ -42,6 +42,17 @@ class DealCategory {
   @Field()
   @Property()
   bitrixProductsField: string;
+
+  @Field({ description: 'Url to do a deal request', nullable: true })
+  @Property()
+  url: string;
+
+  @Field(() => Boolean, {
+    description: 'Information if the deal wether is in development or not',
+    nullable: true,
+  })
+  @Property()
+  isInDevelopment: boolean;
 }
 
 export default DealCategory;

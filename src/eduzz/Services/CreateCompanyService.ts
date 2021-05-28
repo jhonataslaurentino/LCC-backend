@@ -1,11 +1,11 @@
 import { hash } from 'bcryptjs';
 import { verify } from 'jsonwebtoken';
-import authConfig from '../config/authConfig';
-import { SentEmailToCreateCompanyData } from '../eduzz/Services/SendEmailToCreateCompanyService';
-import CompanyModel from '../Entities/Company';
-import Company from '../Schemas/Company';
-import { TokenPayload } from './RecoverPasswordService';
-import GetDefaultRoleService from './Roles/GetDefaultRoleService';
+import authConfig from '../../config/authConfig';
+import CompanyModel from '../../Entities/Company';
+import Company from '../../Schemas/Company';
+import { TokenPayload } from '../../Services/RecoverPasswordService';
+import GetDefaultRoleService from '../../Services/Roles/GetDefaultRoleService';
+import { SentEmailToCreateCompanyData } from './SendEmailToCreateCompanyService';
 
 interface Request {
   name: string;
@@ -39,15 +39,6 @@ class CreateCompanyService {
     } catch (error) {
       throw new Error(`Invalid JWT token: ${error}`);
     }
-
-    const isThereAnyCompanyUsingThatToken = await CompanyModel.findOne({
-      accessToken: token,
-    });
-
-    if (isThereAnyCompanyUsingThatToken) {
-      throw new Error('Token Already used');
-    }
-
     const isThereAnyCompanyWithSameEmail = await CompanyModel.findOne({
       email,
     }).exec();

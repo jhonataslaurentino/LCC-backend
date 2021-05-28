@@ -8,6 +8,8 @@ interface Request {
   bitrix_id: string;
   isVisible?: boolean;
   bitrixProductsField: string;
+  isInDevelopment: boolean;
+  url?: string;
 }
 
 class CreateDealCategoryService {
@@ -16,6 +18,8 @@ class CreateDealCategoryService {
     bitrix_id,
     isVisible = true,
     bitrixProductsField,
+    isInDevelopment,
+    url,
   }: Request): Promise<DealCategory> {
     const isThereAnyCompanyWithSameBitrixID = await DealCategoryModel.findOne({
       bitrix_id,
@@ -45,6 +49,8 @@ class CreateDealCategoryService {
       products: [],
       isVisible,
       bitrixProductsField,
+      isInDevelopment,
+      url,
     });
 
     return dealCategory;
