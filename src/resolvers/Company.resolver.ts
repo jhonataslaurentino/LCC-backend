@@ -68,9 +68,9 @@ class CompaniesResolver {
   }
 
   @Mutation(() => Boolean)
-  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  @UseMiddleware()
   async requestCreateCompany(
-    @Arg('data') { name, email }: RequestCreateCompanyInput,
+    @Arg('data') { name, email, expiresIn }: RequestCreateCompanyInput,
   ): Promise<boolean> {
     const emailInLowerCase = email.toLowerCase();
 
@@ -79,6 +79,7 @@ class CompaniesResolver {
       name,
       email: emailInLowerCase,
       template: 'SingUp',
+      expiresIn,
     });
     return wasEmailSent;
   }

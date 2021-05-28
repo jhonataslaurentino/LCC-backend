@@ -12,4 +12,5 @@ export default {
   mailPassword: String(process.env.MAIL_PASSWORD),
   frontendURL: String(process.env.FRONTEND_URL),
   administratorsEmails: String(process.env.ADMINISTRATORS).split(' '),
+  eduzzApiKey: String(process.env.EDUZZ_API_KEY),
 };

@@ -3,7 +3,6 @@ import { verify } from 'jsonwebtoken';
 import authConfig from '../config/authConfig';
 import CompanyModel from '../Entities/Company';
 import Company from '../Schemas/Company';
-import { TokenPayload } from './RecoverPasswordService';
 import GetDefaultRoleService from './Roles/GetDefaultRoleService';
 
 interface Request {
@@ -31,13 +30,17 @@ class CreateCompanyService {
     token,
   }: Request): Promise<Company> {
     try {
-      const tokenDecoded = verify(token, authConfig.jwt.secret);
-      const { sub: emailInsideToken } = tokenDecoded as TokenPayload;
-      if (emailInsideToken !== email) {
-        throw new Error('Email invalid for this token');
-      }
+      verify(token, authConfig.jwt.secret);
     } catch (error) {
       throw new Error(`Invalid JWT token: ${error}`);
+    }
+
+    const isThereAnyCompanyUsingThatToken = await CompanyModel.findOne({
+      accessToken: token,
+    });
+
+    if (isThereAnyCompanyUsingThatToken) {
+      throw new Error('Invalid Token');
     }
 
     const isThereAnyCompanyWithSameEmail = await CompanyModel.findOne({
@@ -74,11 +77,14 @@ class CreateCompanyService {
         sawTutorial: false,
         avatarBitrixFileID: null,
         logoBitrixFileID: null,
-        accessToken: '',
+        accessToken: token,
         roleId: userRole.id,
         createdAt: Date.now(),
         updatedAt: Date.now(),
         simulations: [],
+        eduzzBillID: 0,
+        eduzzRecurrenceCode: 0,
+        isSuspended: false,
       })
     ).save();
     return company;

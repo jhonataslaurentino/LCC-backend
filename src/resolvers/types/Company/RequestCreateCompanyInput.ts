@@ -10,4 +10,7 @@ export default class RequestCreateCompanyInput {
   @Field()
   @IsEmail()
   email: string;
+
+  @Field({ nullable: true })
+  expiresIn: string;
 }

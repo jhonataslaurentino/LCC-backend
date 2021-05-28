@@ -11,7 +11,7 @@ class GetDefaultRoleService {
   public async execute({ companyEmail }: Request): Promise<Role> {
     const isAdmin = endpointsConfig.administratorsEmails.includes(companyEmail);
     const UserRole = await RoleModel.findOne({
-      name: isAdmin ? 'Admin' : 'User',
+      name: isAdmin ? 'Administrator' : 'User',
     });
     if (!UserRole) {
       const insertDefaultRolesService = new InsertDefaultRolesService();

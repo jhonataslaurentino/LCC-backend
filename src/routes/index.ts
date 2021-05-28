@@ -1,6 +1,6 @@
 import { Router } from 'express';
+import eduzzRouter from '../eduzz/Routes/Eduzz';
 import companiesRouter from './company';
-import eduzzRouter from './eduzzRouter';
 import simulationsRouter from './Simulation';
 
 const routes = Router();

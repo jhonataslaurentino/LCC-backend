@@ -25,6 +25,22 @@ export default class Company {
   email: string;
 
   @Field({
+    description: 'Eduzz Bill ID',
+    nullable: true,
+    defaultValue: 0,
+  })
+  @Property()
+  eduzzBillID: number;
+
+  @Field({
+    description: 'Eduzz recurrence code',
+    nullable: true,
+    defaultValue: 0,
+  })
+  @Property()
+  eduzzRecurrenceCode: number;
+
+  @Field({
     description:
       "The hashed company's password. it should not be returned at any request",
     nullable: true,
@@ -86,4 +102,8 @@ export default class Company {
   @Field(() => [String], { nullable: true })
   @Property({ ref: () => Simulation })
   simulations: Ref<Simulation>[];
+
+  @Field(() => Boolean, { nullable: true })
+  @Property()
+  isSuspended: boolean;
 }

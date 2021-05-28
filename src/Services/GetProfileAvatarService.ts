@@ -1,5 +1,5 @@
 import CompanyModel from '../Entities/Company';
-import ExpressError from '../errors/ExpressError';
+import AppError from '../errors/AppError';
 import GetFileFromBitrixStorageService from './GetFileFromBitrixStorageService';
 
 interface Request {
@@ -15,10 +15,10 @@ class GetProfileAvatarService {
   public async execute({ companyID }: Request): Promise<Response> {
     const company = await CompanyModel.findById(companyID).exec();
     if (!company) {
-      throw new ExpressError('Company does not exists');
+      throw new AppError('Company does not exists', 404);
     }
     if (!company.avatarBitrixFileID) {
-      throw new ExpressError('Company does not have a profile avatar yet');
+      throw new AppError('Company does not have a profile avatar yet', 404);
     }
     const getFileFromBitrixStorageService = new GetFileFromBitrixStorageService();
     const {

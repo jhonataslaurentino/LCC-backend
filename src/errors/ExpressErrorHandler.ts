@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import ExpressError from './ExpressError';
+import AppError from './AppError';
 
 const ExpressErrorHandler = (
   error: Error,
@@ -7,7 +7,7 @@ const ExpressErrorHandler = (
   response: Response,
   next: NextFunction,
 ): Response => {
-  if (error instanceof ExpressError) {
+  if (error instanceof AppError) {
     return response.status(error.statusCode).json({
       status: 'error',
       message: error.message,

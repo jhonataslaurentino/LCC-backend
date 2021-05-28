@@ -112,9 +112,16 @@ type Company {
   cpf_cnpj: String!
   createdAt: DateTime
 
+  """Eduzz Bill ID"""
+  eduzzBillID: Float
+
+  """Eduzz recurrence code"""
+  eduzzRecurrenceCode: Float
+
   """The company email"""
   email: String!
   id: ID!
+  isSuspended: Boolean
   logoBitrixFileID: Float
 
   """The company name"""
@@ -431,6 +438,7 @@ input RecoverPasswordInput {
 """Request create company service args"""
 input RequestCreateCompanyInput {
   email: String!
+  expiresIn: String
   name: String!
 }
 

@@ -8,10 +8,16 @@ interface Request {
   email: string;
   name: string;
   template: string;
+  expiresIn?: string;
 }
 
 class SendEmailToCreateCompanyService {
-  public async execute({ email, name, template }: Request): Promise<boolean> {
+  public async execute({
+    email,
+    name,
+    template,
+    expiresIn,
+  }: Request): Promise<boolean> {
     const company = await CompanyModel.findOne({
       email,
     }).exec();
@@ -21,11 +27,15 @@ class SendEmailToCreateCompanyService {
     }
 
     const { secret } = authConfig.jwt;
-
-    const token = sign({}, secret, {
-      subject: email,
-      expiresIn: '48h',
-    });
+    let token = '';
+    try {
+      token = sign({}, secret, {
+        subject: email,
+        expiresIn: expiresIn || '7d',
+      });
+    } catch (error) {
+      throw new Error('Invalid expires date');
+    }
 
     const sendEmailService = new SendEmailService();
     const wasEmailSent = await sendEmailService.execute({

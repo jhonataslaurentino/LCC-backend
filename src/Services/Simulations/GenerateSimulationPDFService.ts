@@ -2,7 +2,7 @@ import path from 'path';
 import ejs from 'ejs';
 import { launch } from 'puppeteer';
 import { Installment } from './GetPriceTableSimulationService';
-import ExpressError from '../../errors/ExpressError';
+import AppError from '../../errors/AppError';
 
 interface Request {
   installments: Installment[];
@@ -20,7 +20,7 @@ class GenerateSimulationPDFService {
     const pageContent: string = await new Promise(resolve => {
       ejs.renderFile(templateFilePath, { installments }, (error, html) => {
         if (error) {
-          throw new ExpressError('read file error');
+          throw new AppError('read file error');
         }
         resolve(html);
       });
