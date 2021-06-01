@@ -8,12 +8,12 @@ import {
 } from 'type-graphql';
 import { ContextData } from '../Context/context';
 import AuthenticatedChecker from '../middlewares/AuthenticatedChecker';
+import { listContactsUseCase } from '../Modules/Bitrix/usecases/ListContacts';
 import BitrixDeal from '../Schemas/BitrixDeal';
 import GetContactsResponse from '../Schemas/GetContactsResponse';
 import CreateContactService from '../Services/CreateContactService';
 import CreateDealService from '../Services/CreateDealService';
 import CreateVehicleDealService from '../Services/CreateVehicularDealService';
-import GetContactsService from '../Services/GetContactsService';
 import GetDealService from '../Services/GetDealService';
 import { AddContactInput } from './types/Contact/AddContactInput';
 import { AddVehicularCreditContactInput } from './types/Contact/AddVehicularCreditContactInput';
@@ -147,8 +147,7 @@ class ContactResolver {
     @Arg('data') { page }: GetContactsInput,
   ): Promise<GetContactsResponse> {
     const { id: companyID } = ctx;
-    const getContactsService = new GetContactsService();
-    const response = await getContactsService.execute({
+    const response = await listContactsUseCase.execute({
       companyID,
       page,
     });

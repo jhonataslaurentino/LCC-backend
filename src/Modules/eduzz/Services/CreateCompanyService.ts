@@ -1,9 +1,11 @@
 import { hash } from 'bcryptjs';
 import { verify } from 'jsonwebtoken';
-import authConfig from '../config/authConfig';
-import CompanyModel from '../Entities/Company';
-import Company from '../Schemas/Company';
-import GetDefaultRoleService from './Roles/GetDefaultRoleService';
+import authConfig from '../../../config/authConfig';
+import CompanyModel from '../../../Entities/Company';
+import Company from '../../../Schemas/Company';
+import GetDefaultRoleService from '../../../Services/Roles/GetDefaultRoleService';
+import { createBitrixCompanyUseCase } from '../../Bitrix/usecases/CreateBitrixCompany';
+import { findBitrixCompanyByEmailUseCase } from '../../Bitrix/usecases/FindBitrixCompanyByEmail';
 
 interface Request {
   name: string;
@@ -11,7 +13,6 @@ interface Request {
   email: string;
   password: string;
   cpf_cnpj: string;
-  bitrix_id?: number;
   phone?: string;
   token: string;
   userName?: string;
@@ -37,7 +38,6 @@ class CreateCompanyService {
     email,
     password,
     cpf_cnpj,
-    bitrix_id,
     phone,
     token,
   }: Request): Promise<Company> {
@@ -49,15 +49,6 @@ class CreateCompanyService {
     } catch (error) {
       throw new Error(`Invalid JWT token: ${error}`);
     }
-
-    const isThereAnyCompanyUsingThatToken = await CompanyModel.findOne({
-      accessToken: token,
-    });
-
-    if (isThereAnyCompanyUsingThatToken) {
-      throw new Error('Token Already used');
-    }
-
     const isThereAnyCompanyWithSameEmail = await CompanyModel.findOne({
       email,
     }).exec();
@@ -78,6 +69,20 @@ class CreateCompanyService {
       throw new Error('User role not found');
     }
 
+    let bitrixCompanyID;
+    try {
+      bitrixCompanyID = await createBitrixCompanyUseCase.execute({
+        email,
+        name,
+        phone,
+      });
+    } catch (error) {
+      const bitrixCompany = await findBitrixCompanyByEmailUseCase.execute(
+        email,
+      );
+      bitrixCompanyID = bitrixCompany.ID;
+    }
+
     const company = (
       await CompanyModel.create({
         name,
@@ -86,7 +91,7 @@ class CreateCompanyService {
         email,
         password: hashedPassword,
         cpf_cnpj,
-        bitrix_id,
+        bitrix_id: bitrixCompanyID,
         phone: phone || '',
         avatarFile: '',
         sawTutorial: false,

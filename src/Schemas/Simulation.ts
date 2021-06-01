@@ -1,7 +1,6 @@
 import { Field, Float, ID, Int, ObjectType } from 'type-graphql';
 import { prop as Property, Ref } from '@typegoose/typegoose';
 import DealProduct from './DealProduct';
-import SELICRate from './SELICRate';
 import Company from './Company';
 import DealCategory from './DealCategory';
 

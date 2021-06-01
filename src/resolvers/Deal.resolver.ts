@@ -33,10 +33,10 @@ import GetBitrixDealFieldItemsService from '../Services/deals/dealsCategories/Ge
 import SwitchDealCategoryVisibilityInput from './types/Deal/SwitchDealCategoryVisibilityInput';
 import SwitchDealCategoryVisibilityService from '../Services/deals/dealsCategories/SwitchDealCategoryVisibilityService';
 import GetDealsUpdatedInput from './types/Deal/GetDealsUpdatedInput';
-import GetDealsUpdatedService from '../Services/deals/GetDealsUpdatedService';
 import DealCategoryStage from '../Schemas/DealCategoryStage';
 import GetDealCategoryStageInput from './types/Deal/GetDealCategoryStagesInput';
 import GetDealCategoryStagesService from '../Services/deals/dealsCategories/GetDealCategoryStagesService';
+import { listBitrixDealsByCompanyIDUseCase } from '../Modules/Bitrix/usecases/ListDeals';
 
 @Resolver()
 class DealsResolver {
@@ -89,8 +89,8 @@ class DealsResolver {
     { dealCategoryID, page }: GetDealsUpdatedInput,
   ): Promise<GetDealsResponse> {
     const { id: companyID } = ctx;
-    const getDealsUpdatedService = new GetDealsUpdatedService();
-    const deals = await getDealsUpdatedService.execute({
+
+    const deals = await listBitrixDealsByCompanyIDUseCase.execute({
       companyID,
       dealCategoryID,
       page,

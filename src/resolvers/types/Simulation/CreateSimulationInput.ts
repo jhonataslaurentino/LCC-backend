@@ -7,7 +7,6 @@ import {
   Validate,
   Min,
   Max,
-  Contains,
 } from 'class-validator';
 import CPFValidator from '../../../Validators/CPFValidator';
 

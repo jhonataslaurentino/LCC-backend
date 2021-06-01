@@ -3,12 +3,17 @@ import GenerateSimulationPDFService from '../Services/Simulations/GenerateSimula
 
 const simulationsRouter = Router();
 
-simulationsRouter.post('/pdf', async (request: Request, response: Response) => {
-  const { installments } = request.body;
-  const generateSimulationPDFService = new GenerateSimulationPDFService();
-  const pdfFile = await generateSimulationPDFService.execute({ installments });
-  response.contentType('application/pdf');
-  return response.send(pdfFile);
-});
+simulationsRouter.post(
+  '/pdf/:id',
+  async (request: Request, response: Response) => {
+    const { id } = request.params;
+    const generateSimulationPDFService = new GenerateSimulationPDFService();
+    const pdfFile = await generateSimulationPDFService.execute({
+      simulationID: id,
+    });
+    response.contentType('application/pdf');
+    return response.status(200).send(pdfFile);
+  },
+);
 
 export default simulationsRouter;
