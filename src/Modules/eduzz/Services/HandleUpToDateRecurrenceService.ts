@@ -1,5 +1,5 @@
 import { resolve } from 'path';
-import CompanyModel from '../../../Entities/Company';
+import { CompanyModel } from '../../company/models/Company';
 import { SendMailService } from '../../global/SendMailService';
 import CreateCompanyService from './CreateCompanyService';
 import { CreateCompanyTokenService } from './CreateCompanyTokenService';

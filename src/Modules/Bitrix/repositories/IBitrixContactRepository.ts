@@ -1,4 +1,4 @@
-import { BitrixContact } from '../models/BitrixContact';
+import { BitrixContact } from '../schemas/BitrixContact';
 
 interface ICreateBitrixContactData {
   name: string;

@@ -60,6 +60,8 @@ type BasicCompany {
 
 """The company deal's schema"""
 type BitrixDeal {
+  ADDITIONAL_INFO: String
+  COMMENTS: String
   COMPANY_ID: Int
   CONTACT_ID: Int
   CURRENCY_ID: String
@@ -337,11 +339,6 @@ input GetDealCategoryStageInput {
 }
 
 """Get Deal Input Arguments"""
-input GetDealInput {
-  dealID: Int!
-}
-
-"""Get Deal Input Arguments"""
 input GetDealsInput {
   page: Int
 }
@@ -417,6 +414,7 @@ type Mutation {
   requestRecoverPassword(data: RequestRecoverPasswordInput!): RequestRecoverPasswordResponse!
   setProfilePicture(data: FileInput!): Boolean!
   switchDealCategoryVisibility(data: SwitchDealCategoryVisibilityInput!): DealCategory!
+  updateDealComment(data: UpdateBitrixDealCommentsInput!): BitrixDeal!
   updateProfile(data: UpdateCompanyProfileInput!): Company!
 }
 
@@ -429,9 +427,6 @@ type Query {
   getCompanyInfo(data: GetCompanyInfoInput!): Company!
   getCompanyRole: Role!
   getContacts(data: GetContactsInput!): GetContactsResponse!
-
-  """Deprecated"""
-  getDeal(data: GetDealInput!): BitrixDeal
   getDealCategoryStages(data: GetDealCategoryStageInput!): [DealCategoryStage!]
   getDeals(data: GetDealsInput!): GetDealsResponse
   getDealsCategories: [DealCategory!]
@@ -526,6 +521,12 @@ type Simulation {
 """Switch deal category visibility input"""
 input SwitchDealCategoryVisibilityInput {
   dealCategoryID: String!
+}
+
+"""Update Bitrix Deal Comments Arguments"""
+input UpdateBitrixDealCommentsInput {
+  comment: String!
+  id: Int!
 }
 
 """Update Company Profile Args"""

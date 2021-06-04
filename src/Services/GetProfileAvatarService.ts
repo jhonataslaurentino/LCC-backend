@@ -1,5 +1,5 @@
-import CompanyModel from '../Entities/Company';
 import AppError from '../errors/AppError';
+import { CompanyModel } from '../Modules/company/models/Company';
 import GetFileFromBitrixStorageService from './GetFileFromBitrixStorageService';
 
 interface Request {

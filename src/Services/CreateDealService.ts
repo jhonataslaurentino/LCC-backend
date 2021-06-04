@@ -2,7 +2,7 @@ import bitrixApi from '../api/bitrix';
 import bitrixApiMethods from '../api/Bitrix/bitrixMethods';
 import createAddDealRequestBody from '../api/Bitrix/createAddDealRequestBody';
 import getBitrixProperty from '../api/Bitrix/getBitrixProperty';
-import CompanyModel from '../Entities/Company';
+import { CompanyModel } from '../Modules/company/models/Company';
 
 interface Request {
   name: string;

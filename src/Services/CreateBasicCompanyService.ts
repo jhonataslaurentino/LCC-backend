@@ -1,5 +1,5 @@
 import BasicCompanyModel from '../Entities/BasicCompany';
-import CompanyModel from '../Entities/Company';
+import { CompanyModel } from '../Modules/company/models/Company';
 import BasicCompany from '../Schemas/BasicCompany';
 
 interface Request {

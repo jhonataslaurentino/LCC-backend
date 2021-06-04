@@ -6,7 +6,6 @@ import {
   UseMiddleware,
   Ctx,
 } from 'type-graphql';
-import Company from '../Schemas/Company';
 import Login from '../Schemas/Login';
 import RequestRecoverPasswordResponse from '../Schemas/RequestRecoverPasswordResponse';
 import AuthenticateCompanyService from '../Services/AuthenticateCompanyService';
@@ -36,6 +35,7 @@ import ChangeCompanyRoleInput from './types/Company/ChangeCompanyRoleInput';
 import ChangeCompanyRoleService from '../Services/ChangeCompanyRoleService';
 import PermissionRequired from '../middlewares/PermissionRequired';
 import permissions from '../config/permissions';
+import Company from '../Modules/company/schemas/Company';
 
 @Resolver()
 class CompaniesResolver {

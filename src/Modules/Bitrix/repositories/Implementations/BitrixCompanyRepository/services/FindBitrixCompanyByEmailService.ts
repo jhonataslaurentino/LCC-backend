@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import qs from 'qs';
-import { BitrixCompany } from '../../../../models/BitrixCompany';
+import { BitrixCompany } from '../../../../schemas/BitrixCompany';
 
 class FindBitrixCompanyByEmailService {
   constructor(private api: AxiosInstance) {}

@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import qs from 'qs';
-import { BitrixDeal } from '../../../../models/BitrixDeal';
+import { BitrixDeal } from '../../../../schemas/BitrixDeal';
 
 interface Request {
   page: number;

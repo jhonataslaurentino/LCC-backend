@@ -1,6 +1,6 @@
 import DealCategoryModel from '../../../Entities/DealCategory';
+import { findBitrixDealCategoryByIDUseCase } from '../../../Modules/Bitrix/usecases/FindBitrixDealCategoryByID';
 import DealCategory from '../../../Schemas/DealCategory';
-import GetBitrixDealCategoryService from './GetBitrixDealCategoryService';
 import GetBitrixDealFieldsService from './GetBitrixDealFieldsService';
 
 interface Request {
@@ -37,10 +37,9 @@ class CreateDealCategoryService {
         `There is not a field called ${bitrixProductsField} in the bitrix deal fields`,
       );
     }
-    const getBitrixDealCategoryService = new GetBitrixDealCategoryService();
-    const bitrixDealCategory = await getBitrixDealCategoryService.execute({
-      id: bitrix_id,
-    });
+    const bitrixDealCategory = await findBitrixDealCategoryByIDUseCase.execute(
+      bitrix_id,
+    );
     const dealCategory = await DealCategoryModel.create({
       name: name || bitrixDealCategory.NAME,
       bitrix_id: bitrixDealCategory.ID,

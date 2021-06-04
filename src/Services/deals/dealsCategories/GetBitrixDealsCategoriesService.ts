@@ -1,5 +1,5 @@
 import bitrixApi from '../../../api/bitrix';
-import BitrixDealCategory from '../../../Schemas/BitrixDealCategory';
+import BitrixDealCategory from '../../../Modules/Bitrix/schemas/BitrixDealCategory';
 
 export interface BitrixApiResponse {
   result: BitrixDealCategory[];

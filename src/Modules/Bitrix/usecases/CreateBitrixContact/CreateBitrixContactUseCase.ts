@@ -1,10 +1,10 @@
-import CompanyModel from '../../../../Entities/Company';
 import AppError from '../../../../errors/AppError';
-import { BitrixContact } from '../../models/BitrixContact';
+import { BitrixContact } from '../../schemas/BitrixContact';
 import {
   IBitrixContactRepository,
   ICreateBitrixContactData,
 } from '../../repositories/IBitrixContactRepository';
+import { CompanyModel } from '../../../company/models/Company';
 
 interface IRequest extends Omit<ICreateBitrixContactData, 'companyID'> {
   companyID: string;

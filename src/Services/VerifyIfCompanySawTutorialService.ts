@@ -1,4 +1,4 @@
-import CompanyModel from '../Entities/Company';
+import { CompanyModel } from '../Modules/company/models/Company';
 
 interface Request {
   companyID: string;

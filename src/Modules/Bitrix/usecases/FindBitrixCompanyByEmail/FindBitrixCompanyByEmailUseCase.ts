@@ -1,5 +1,5 @@
 import AppError from '../../../../errors/AppError';
-import { BitrixCompany } from '../../models/BitrixCompany';
+import { BitrixCompany } from '../../schemas/BitrixCompany';
 import { IBitrixCompanyRepository } from '../../repositories/IBitrixCompanyRepository';
 
 class FindBitrixCompanyByEmailUseCase {

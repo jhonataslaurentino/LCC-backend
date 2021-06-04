@@ -1,7 +1,7 @@
 import { MiddlewareFn, NextFn, ResolverData } from 'type-graphql';
 import { ContextData } from '../Context/context';
-import CompanyModel from '../Entities/Company';
 import RoleModel from '../Entities/Role';
+import { CompanyModel } from '../Modules/company/models/Company';
 import GetDefaultRoleService from '../Services/Roles/GetDefaultRoleService';
 import VerifyIfHasPermissionService from '../Services/Roles/VerifyIfHasPermissionService';
 
@@ -19,7 +19,7 @@ function PermissionRequired(
       const defaultRole = await getDefaultRoleService.execute({
         companyEmail: company.email,
       });
-      company.roleId = defaultRole.id;
+      company.roleId = defaultRole;
       await company.save();
     }
     const companyRole = await RoleModel.findById(company.roleId);

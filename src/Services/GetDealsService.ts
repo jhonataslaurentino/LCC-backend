@@ -1,8 +1,8 @@
 import qs from 'qs';
 import bitrixApi from '../api/bitrix';
 import bitrixApiMethods from '../api/Bitrix/bitrixMethods';
-import { IDeal } from '../dtos/IDeal';
-import CompanyModel from '../Entities/Company';
+import { BitrixDeal } from '../Modules/Bitrix/schemas/BitrixDeal';
+import { CompanyModel } from '../Modules/company/models/Company';
 
 interface Request {
   page?: number;
@@ -10,7 +10,7 @@ interface Request {
 }
 
 interface Response {
-  result: IDeal[];
+  result: BitrixDeal[];
   total: number;
   next: number;
 }

@@ -1,5 +1,5 @@
 import { Field, ObjectType } from 'type-graphql';
-import Company from './Company';
+import Company from '../Modules/company/schemas/Company';
 
 @ObjectType({ description: 'Login Schema' })
 export default class Login {

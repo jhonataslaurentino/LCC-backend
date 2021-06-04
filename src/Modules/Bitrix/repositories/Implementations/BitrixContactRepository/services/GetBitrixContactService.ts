@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import qs from 'qs';
-import { BitrixContact } from '../../../../models/BitrixContact';
+import { BitrixContact } from '../../../../schemas/BitrixContact';
 
 class GetBitrixContactService {
   constructor(private api: AxiosInstance) {}

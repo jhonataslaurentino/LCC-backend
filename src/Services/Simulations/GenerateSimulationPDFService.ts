@@ -2,9 +2,9 @@ import path from 'path';
 import ejs from 'ejs';
 import { launch } from 'puppeteer';
 import AppError from '../../errors/AppError';
-import SimulationModel from '../../Entities/Simulation';
 import GetPriceTableSimulationService from './GetPriceTableSimulationService';
 import GetSACTableSimulationService from './GetSACTableSimulationService';
+import { SimulationModel } from '../../Modules/company/models/Simulation';
 
 interface Request {
   simulationID: string;
@@ -22,28 +22,39 @@ class GenerateSimulationPDFService {
       simulation.amortizationType === 0
         ? getSACTableSimulationService.execute({
             loanAmount: simulation.value,
-            loanInterest: simulation.competitiveRate,
+            loanInterest: simulation.averageRate,
             numberOfInstallments: simulation.numberOfInstallments,
           })
         : getPriceTableSimulationService.execute({
             loanAmount: simulation.value,
-            loanInterest: simulation.competitiveRate,
+            loanInterest: simulation.averageRate,
             numberOfInstallments: simulation.numberOfInstallments,
           });
     const sourceDirectory = path.resolve('.', 'src');
     const templateFilePath = path.join(
       sourceDirectory,
-      'templates',
+      'views',
       'pdf',
       'simulation.ejs',
     );
     const pageContent: string = await new Promise(resolve => {
-      ejs.renderFile(templateFilePath, { installments }, (error, html) => {
-        if (error) {
-          throw new AppError('read file error');
-        }
-        resolve(html);
-      });
+      ejs.renderFile(
+        templateFilePath,
+        {
+          installments,
+          name: simulation.name,
+          phone: simulation.phone,
+          email: simulation.email,
+          averageRate: simulation.averageRate,
+          betterRate: simulation.competitiveRate,
+        },
+        (error, html) => {
+          if (error) {
+            throw new AppError('read file error');
+          }
+          resolve(html);
+        },
+      );
     });
 
     const browser = await launch();

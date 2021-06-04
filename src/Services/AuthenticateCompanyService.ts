@@ -1,8 +1,8 @@
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
-import CompanyModel from '../Entities/Company';
-import Company from '../Schemas/Company';
 import authConfig from '../config/authConfig';
+import { CompanyModel } from '../Modules/company/models/Company';
+import Company from '../Modules/company/schemas/Company';
 
 interface Request {
   email: string;

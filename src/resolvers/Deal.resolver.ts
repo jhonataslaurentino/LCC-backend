@@ -8,20 +8,15 @@ import {
 } from 'type-graphql';
 import { ContextData } from '../Context/context';
 import AuthenticatedChecker from '../middlewares/AuthenticatedChecker';
-import BitrixDealCategory from '../Schemas/BitrixDealCategory';
 import GetDealsResponse from '../Schemas/GetDealsResponse';
-import GetDealService from '../Services/GetDealService';
 import GetDealsService from '../Services/GetDealsService';
 import GetVehicularDealsService from '../Services/GetVehicularDealsService';
-import GetDealInput from './types/Deal/GetDealInput';
 import GetDealsInput from './types/Deal/GetDealsInput';
-import BitrixDeal from '../Schemas/BitrixDeal';
 import DealCategory from '../Schemas/DealCategory';
 import PermissionRequired from '../middlewares/PermissionRequired';
 import permissions from '../config/permissions';
 import CreateDealCategoryInput from './types/Deal/CreateDealCategoryInput';
 import CreateDealCategoryService from '../Services/deals/dealsCategories/CreateDealCategoryService';
-import GetBitrixDealsCategoriesService from '../Services/deals/dealsCategories/GetBitrixDealsCategoriesService';
 import GetDealsCategoriesService from '../Services/deals/dealsCategories/GetDealsCategoriesService';
 import GetBitrixDealFieldsService from '../Services/deals/dealsCategories/GetBitrixDealFieldsService';
 import BitrixDealField from '../Schemas/BitrixDealField';
@@ -37,27 +32,14 @@ import DealCategoryStage from '../Schemas/DealCategoryStage';
 import GetDealCategoryStageInput from './types/Deal/GetDealCategoryStagesInput';
 import GetDealCategoryStagesService from '../Services/deals/dealsCategories/GetDealCategoryStagesService';
 import { listBitrixDealsByCompanyIDUseCase } from '../Modules/Bitrix/usecases/ListDeals';
+import BitrixDealCategory from '../Modules/Bitrix/schemas/BitrixDealCategory';
+import { listBitrixDealsCategoriesUseCase } from '../Modules/Bitrix/usecases/ListBitrixDealsCategories';
+import { BitrixDeal } from '../Modules/Bitrix/schemas/BitrixDeal';
+import { UpdateBitrixDealCommentsInput } from './types/Deal/UpdateBitrixDealCommentsInput';
+import { updateDealCommentUseCase } from '../Modules/Bitrix/usecases/UpdateDealComments';
 
 @Resolver()
 class DealsResolver {
-  // TODO: Remove it
-  @Query(() => BitrixDeal, { nullable: true, description: 'Deprecated' })
-  @UseMiddleware(AuthenticatedChecker)
-  async getDeal(
-    @Ctx()
-    ctx: ContextData,
-    @Arg('data')
-    { dealID }: GetDealInput,
-  ): Promise<BitrixDeal> {
-    const { id: companyID } = ctx;
-    const getDealService = new GetDealService();
-    const deal = getDealService.execute({
-      id: dealID,
-      companyID,
-    });
-    return deal;
-  }
-
   // TODO: update it
   @Query(() => GetDealsResponse, { nullable: true })
   @UseMiddleware(AuthenticatedChecker)
@@ -118,8 +100,7 @@ class DealsResolver {
   @Query(() => [BitrixDealCategory])
   @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
   async getBitrixDealsCategories(): Promise<BitrixDealCategory[]> {
-    const getBitrixDealsCategoriesService = new GetBitrixDealsCategoriesService();
-    const bitrixDealsCategories = await getBitrixDealsCategoriesService.execute();
+    const bitrixDealsCategories = await listBitrixDealsCategoriesUseCase.execute();
     return bitrixDealsCategories;
   }
 
@@ -211,6 +192,23 @@ class DealsResolver {
       dealCategoryID,
     });
     return dealCategory;
+  }
+
+  @Mutation(() => BitrixDeal)
+  @UseMiddleware(AuthenticatedChecker)
+  async updateDealComment(
+    @Ctx()
+    ctx: ContextData,
+    @Arg('data')
+    { comment, id }: UpdateBitrixDealCommentsInput,
+  ): Promise<BitrixDeal> {
+    const { id: companyID } = ctx;
+    const updatedDeal = await updateDealCommentUseCase.execute({
+      comment,
+      id,
+      companyID,
+    });
+    return updatedDeal;
   }
 }
 

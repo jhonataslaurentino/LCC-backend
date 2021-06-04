@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import endpointsConfig from '../../../../../config/endpoints.config';
-import { BitrixContact } from '../../../models/BitrixContact';
+import { BitrixContact } from '../../../schemas/BitrixContact';
 import {
   ICreateBitrixContactData,
   IBitrixContactRepository,

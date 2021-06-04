@@ -13,7 +13,8 @@
     <title>Simulation Table</title>
     <style>
       html,
-      body {
+      body,* {
+        font-family: Roboto;
         padding: 0;
         margin: 0;
         box-sizing: border-box;
@@ -36,7 +37,7 @@
         justify-content: flex-start;
         flex-direction: column;
 
-        gap: 0.5rem;
+        gap: 1rem;
 
         padding: 0.5rem;
       }
@@ -45,9 +46,100 @@
         font-family: Roboto;
         font-style: normal;
         font-weight: bold;
-        font-size: 10.7246px;
+        font-size: 1.25rem;
         line-height: 9px;
         color: #363c4c;
+        padding: 1rem 0;
+      }
+
+      .TitleSection {
+        font-family: Roboto;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        background-color: rgba(34, 44, 59, 0.05);
+        font-size: 1rem;
+        line-height: 0.875rem;
+        font-weight: 500;
+        padding: 1rem;
+        color: rgba(0, 0, 0, 0.87);
+      }
+
+      .InfoSection {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .Info {
+        width: min-content;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 1rem;
+        flex-direction: column;
+        white-space: nowrap;
+      }
+
+      .Info>h1{
+        font-size: 1rem;
+        color: #3F9177;
+        font-weight: 400;
+      }
+
+      .Info>h2{
+        font-size: .9rem;
+        color: #071620;
+        font-weight: normal;
+      }
+
+      .ResultSection {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .BetterRate{
+        width: min-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        white-space: nowrap;
+        border-radius: 1px;
+        border: 1px solid #246C9F;
+        flex-direction: row;
+      }
+
+      .BetterRate>article{
+        padding: 0.5rem;
+        color: #246C9F;
+        background-color: rgba(36, 108, 159, 0.1);
+        border-radius: 1px;
+      }
+
+      .AverageRate{
+        width: min-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        white-space: nowrap;
+        border-radius: 1px;
+        border: 1px solid #46A184;
+        flex-direction: row;
+      }
+
+      .AverageRate>article{
+        padding: 0.5rem;
+        color: #46A184;
+        background-color: rgba(70, 161, 132, 0.1);
+        border-radius: 1px;
       }
 
       .Table {
@@ -117,7 +209,33 @@
   <body>
     <section class="Container">
       <section class="Content">
-        <h1 class="Title">Resultado da Simulação</h1>
+        <h1 class="Title">Simulação de Crédito</h1>
+        <article class="TitleSection">Dados do cliente</article>
+        <section class="InfoSection">
+          <article class="Info">
+            <h1>Nome</h1>
+            <h2><%= name %></h2>
+          </article>
+          <article class="Info">
+            <h1>E-mail</h1>
+            <h2><%= email %></h2>
+          </article>
+          <article class="Info">
+            <h1>telefone</h1>
+            <h2><%= phone %></h2>
+          </article>
+        </section>
+        <article class="TitleSection">Resultado da Simulação</article>
+        <section class="ResultSection">
+          <section class="BetterRate">
+            <article>Melhor Taxa:</article>
+            <p><%= betterRate %>%</p>
+          </section>
+          <section class="AverageRate">
+            <article>Taxa Média:</article>
+            <p><%= averageRate %>%</p>
+          </section>
+        </section>
         <table class="Table">
           <thead>
             <tr>

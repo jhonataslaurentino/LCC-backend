@@ -1,6 +1,6 @@
 import { prop as Property, Ref } from '@typegoose/typegoose';
 import { Field, ID, ObjectType, Int } from 'type-graphql';
-import Company from './Company';
+import Company from '../Modules/company/schemas/Company';
 
 @ObjectType({ description: 'The user role schema' })
 class Role {

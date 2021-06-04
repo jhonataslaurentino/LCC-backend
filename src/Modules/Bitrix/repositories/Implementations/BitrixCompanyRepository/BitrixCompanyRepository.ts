@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import endpointsConfig from '../../../../../config/endpoints.config';
-import { BitrixCompany } from '../../../models/BitrixCompany';
+import { BitrixCompany } from '../../../schemas/BitrixCompany';
 import {
   IBitrixCompanyRepository,
   ICreateBitrixCompanyDTO,

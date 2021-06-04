@@ -1,7 +1,7 @@
 import bitrixApi from '../api/bitrix';
 import bitrixApiMethods from '../api/Bitrix/bitrixMethods';
 import createAddContactRequestBody from '../api/Bitrix/createAddContactRequestBody';
-import CompanyModel from '../Entities/Company';
+import { CompanyModel } from '../Modules/company/models/Company';
 
 interface Request {
   name: string;

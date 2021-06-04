@@ -1,11 +1,11 @@
 import { hash } from 'bcryptjs';
 import { verify } from 'jsonwebtoken';
 import authConfig from '../../../config/authConfig';
-import CompanyModel from '../../../Entities/Company';
-import Company from '../../../Schemas/Company';
 import GetDefaultRoleService from '../../../Services/Roles/GetDefaultRoleService';
 import { createBitrixCompanyUseCase } from '../../Bitrix/usecases/CreateBitrixCompany';
 import { findBitrixCompanyByEmailUseCase } from '../../Bitrix/usecases/FindBitrixCompanyByEmail';
+import { CompanyModel } from '../../company/models/Company';
+import Company from '../../company/schemas/Company';
 
 interface Request {
   name: string;

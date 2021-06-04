@@ -1,5 +1,5 @@
-import CompanyModel from '../../../Entities/Company';
-import Company from '../../../Schemas/Company';
+import { CompanyModel } from '../../company/models/Company';
+import Company from '../../company/schemas/Company';
 
 interface Request {
   eduzzBillID: number;

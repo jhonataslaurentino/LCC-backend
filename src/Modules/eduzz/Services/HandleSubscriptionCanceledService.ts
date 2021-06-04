@@ -1,4 +1,4 @@
-import CompanyModel from '../../../Entities/Company';
+import { CompanyModel } from '../../company/models/Company';
 
 interface Request {
   recurrence_code: number;

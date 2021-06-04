@@ -1,4 +1,4 @@
-import { BitrixCompany } from '../models/BitrixCompany';
+import { BitrixCompany } from '../schemas/BitrixCompany';
 
 interface ICreateBitrixCompanyDTO {
   name: string;

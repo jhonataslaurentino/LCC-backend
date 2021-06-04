@@ -1,9 +1,9 @@
-import CompanyModel from '../../Entities/Company';
-import DealCategoryModel from '../../Entities/DealCategory';
-import DealProductModel from '../../Entities/DealProduct';
-import SimulationModel from '../../Entities/Simulation';
-import Simulation from '../../Schemas/Simulation';
-import GetSELICRateService from '../bcb/GetSELICRateService';
+import DealCategoryModel from '../../../../../Entities/DealCategory';
+import DealProductModel from '../../../../../Entities/DealProduct';
+import { getCurrentSELICRateUseCase } from '../../../../BCB/useCases/GetCurrentSELICRate';
+import { CompanyModel } from '../../../models/Company';
+import { SimulationModel } from '../../../models/Simulation';
+import Simulation from '../../../schemas/Simulation';
 
 interface Request {
   value: number;
@@ -57,8 +57,7 @@ class CreateSimulationService {
         `The ${dealCategory.name} does not includes ${dealProduct.name}`,
       );
     }
-    const getSELICRateService = new GetSELICRateService();
-    const SELICRate = await getSELICRateService.execute();
+    const SELICRate = await getCurrentSELICRateUseCase.execute();
     const simulation = await SimulationModel.create({
       name,
       value,

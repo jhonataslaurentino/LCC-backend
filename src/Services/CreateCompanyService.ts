@@ -1,8 +1,8 @@
 import { hash } from 'bcryptjs';
 import { verify } from 'jsonwebtoken';
 import authConfig from '../config/authConfig';
-import CompanyModel from '../Entities/Company';
-import Company from '../Schemas/Company';
+import { CompanyModel } from '../Modules/company/models/Company';
+import Company from '../Modules/company/schemas/Company';
 import GetDefaultRoleService from './Roles/GetDefaultRoleService';
 
 interface Request {

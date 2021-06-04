@@ -1,5 +1,5 @@
-import CompanyModel from '../../../Entities/Company';
 import AppError from '../../../errors/AppError';
+import { CompanyModel } from '../../company/models/Company';
 
 interface Request {
   recurrence_code: number;

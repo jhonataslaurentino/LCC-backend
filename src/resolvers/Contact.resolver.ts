@@ -8,8 +8,8 @@ import {
 } from 'type-graphql';
 import { ContextData } from '../Context/context';
 import AuthenticatedChecker from '../middlewares/AuthenticatedChecker';
+import { BitrixDeal } from '../Modules/Bitrix/schemas/BitrixDeal';
 import { listContactsUseCase } from '../Modules/Bitrix/usecases/ListContacts';
-import BitrixDeal from '../Schemas/BitrixDeal';
 import GetContactsResponse from '../Schemas/GetContactsResponse';
 import CreateContactService from '../Services/CreateContactService';
 import CreateDealService from '../Services/CreateDealService';

@@ -1,6 +1,6 @@
-import CompanyModel from '../../../../Entities/Company';
 import DealCategoryModel from '../../../../Entities/DealCategory';
 import AppError from '../../../../errors/AppError';
+import { CompanyModel } from '../../../company/models/Company';
 import { IFindByCompanyIDResponse } from '../../repositories/IBitrixDealRepository';
 import { BitrixDealRepository } from '../../repositories/Implementations/BitrixDealRepository/BitrixDealRepository';
 

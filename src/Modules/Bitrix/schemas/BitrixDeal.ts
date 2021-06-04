@@ -1,7 +1,7 @@
 import { Field, Float, Int, ObjectType } from 'type-graphql';
 
 @ObjectType({ description: "The company deal's schema" })
-export default class BitrixDeal {
+class BitrixDeal {
   @Field(() => Int)
   ID: number;
 
@@ -28,4 +28,12 @@ export default class BitrixDeal {
 
   @Field({ nullable: true })
   DATE_MODIFY: string;
+
+  @Field({ nullable: true })
+  COMMENTS: string;
+
+  @Field({ nullable: true })
+  ADDITIONAL_INFO: string;
 }
+
+export { BitrixDeal };

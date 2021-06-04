@@ -8,15 +8,15 @@ import {
 } from 'type-graphql';
 import { ContextData } from '../Context/context';
 import AuthenticatedChecker from '../middlewares/AuthenticatedChecker';
+import { getCurrentSELICRateUseCase } from '../Modules/BCB/useCases/GetCurrentSELICRate';
+import Simulation from '../Modules/company/schemas/Simulation';
+import { createSimulationUseCase } from '../Modules/company/useCases/CreateSimulation';
+import { deleteSimulationUseCase } from '../Modules/company/useCases/DeleteSimulation';
+import { listSimulationsByCompanyIDUseCase } from '../Modules/company/useCases/ListSimulationsByCompanyID';
 import Installment from '../Schemas/Installment';
 import SELICRate from '../Schemas/SELICRate';
-import Simulation from '../Schemas/Simulation';
-import GetSELICRateService from '../Services/bcb/GetSELICRateService';
-import CreateSimulationService from '../Services/Simulations/CreateSimulationService';
-import DeleteSimulationService from '../Services/Simulations/DeleteSimulationService';
 import GetPriceTableSimulationService from '../Services/Simulations/GetPriceTableSimulationService';
 import GetSACTableSimulationService from '../Services/Simulations/GetSACTableSimulationService';
-import GetSimulationsService from '../Services/Simulations/GetSimulationsService';
 import CreateSimulationInput from './types/Simulation/CreateSimulationInput';
 import DeleteSimulationInput from './types/Simulation/DeleteSimulationInput';
 import GetSimulationInstallmentsInput from './types/Simulation/GetSimulationInstallmentsInput';
@@ -62,8 +62,7 @@ class SimulationsResolver {
 
   @Query(() => SELICRate)
   async getSELICRate(): Promise<SELICRate> {
-    const getSELICRateService = new GetSELICRateService();
-    const selicRate = await getSELICRateService.execute();
+    const selicRate = await getCurrentSELICRateUseCase.execute();
     return selicRate;
   }
 
@@ -74,10 +73,9 @@ class SimulationsResolver {
     context: ContextData,
   ): Promise<Simulation[]> {
     const { id: companyID } = context;
-    const getSimulationsService = new GetSimulationsService();
-    const simulations = await getSimulationsService.execute({
+    const simulations = await listSimulationsByCompanyIDUseCase.execute(
       companyID,
-    });
+    );
     return simulations;
   }
 
@@ -101,8 +99,7 @@ class SimulationsResolver {
     }: CreateSimulationInput,
   ): Promise<Simulation> {
     const { id: companyID } = context;
-    const createSimulationService = new CreateSimulationService();
-    const simulation = await createSimulationService.execute({
+    const simulation = await createSimulationUseCase.execute({
       companyID,
       cpf,
       email,
@@ -127,8 +124,7 @@ class SimulationsResolver {
     { id }: DeleteSimulationInput,
   ): Promise<Simulation> {
     const { id: companyID } = context;
-    const deleteSimulationService = new DeleteSimulationService();
-    const simulation = await deleteSimulationService.execute({
+    const simulation = await deleteSimulationUseCase.execute({
       companyID,
       simulationID: id,
     });

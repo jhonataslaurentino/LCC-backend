@@ -1,4 +1,4 @@
-import SimulationModel from '../../Entities/Simulation';
+import { SimulationModel } from '../../Modules/company/models/Simulation';
 import Installment from '../../Schemas/Installment';
 import GetPriceTableSimulationService from './GetPriceTableSimulationService';
 import GetSACTableSimulationService from './GetSACTableSimulationService';

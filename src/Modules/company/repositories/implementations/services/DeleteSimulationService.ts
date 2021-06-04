@@ -1,17 +1,13 @@
-import CompanyModel from '../../Entities/Company';
-import SimulationModel from '../../Entities/Simulation';
-import Simulation from '../../Schemas/Simulation';
-
-interface Request {
-  companyID: string;
-  simulationID: string;
-}
+import { CompanyModel } from '../../../models/Company';
+import { SimulationModel } from '../../../models/Simulation';
+import Simulation from '../../../schemas/Simulation';
+import { IDeleteSimulationDTO } from '../../ISimulationRepository';
 
 class DeleteSimulationService {
   public async execute({
     companyID,
     simulationID,
-  }: Request): Promise<Simulation> {
+  }: IDeleteSimulationDTO): Promise<Simulation> {
     const company = await CompanyModel.findById(companyID);
     if (!company) {
       throw new Error('Company does not exists');
@@ -31,4 +27,4 @@ class DeleteSimulationService {
   }
 }
 
-export default DeleteSimulationService;
+export { DeleteSimulationService };

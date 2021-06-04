@@ -1,8 +1,8 @@
 import { Field, Float, ID, Int, ObjectType } from 'type-graphql';
 import { prop as Property, Ref } from '@typegoose/typegoose';
-import DealProduct from './DealProduct';
+import DealCategory from '../../../Schemas/DealCategory';
+import DealProduct from '../../../Schemas/DealProduct';
 import Company from './Company';
-import DealCategory from './DealCategory';
 
 @ObjectType({ description: 'Simulation Schema' })
 class Simulation {
