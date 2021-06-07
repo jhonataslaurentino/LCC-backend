@@ -9,8 +9,6 @@ import {
 import { ContextData } from '../Context/context';
 import AuthenticatedChecker from '../middlewares/AuthenticatedChecker';
 import GetDealsResponse from '../Schemas/GetDealsResponse';
-import GetDealsService from '../Services/GetDealsService';
-import GetVehicularDealsService from '../Services/GetVehicularDealsService';
 import GetDealsInput from './types/Deal/GetDealsInput';
 import DealCategory from '../Schemas/DealCategory';
 import PermissionRequired from '../middlewares/PermissionRequired';
@@ -18,8 +16,6 @@ import permissions from '../config/permissions';
 import CreateDealCategoryInput from './types/Deal/CreateDealCategoryInput';
 import CreateDealCategoryService from '../Services/deals/dealsCategories/CreateDealCategoryService';
 import GetDealsCategoriesService from '../Services/deals/dealsCategories/GetDealsCategoriesService';
-import GetBitrixDealFieldsService from '../Services/deals/dealsCategories/GetBitrixDealFieldsService';
-import BitrixDealField from '../Schemas/BitrixDealField';
 import DeleteDealCategoryInput from './types/Deal/DeleteDealCategoryInput';
 import DeleteDealCategoryService from '../Services/deals/dealsCategories/DeleteDealCategoryService';
 import BitrixDealFieldItem from '../Schemas/BitrixDealFieldItem';
@@ -37,6 +33,8 @@ import { listBitrixDealsCategoriesUseCase } from '../Modules/Bitrix/usecases/Lis
 import { BitrixDeal } from '../Modules/Bitrix/schemas/BitrixDeal';
 import { UpdateBitrixDealCommentsInput } from './types/Deal/UpdateBitrixDealCommentsInput';
 import { updateDealCommentUseCase } from '../Modules/Bitrix/usecases/UpdateDealComments';
+import BitrixDealField from '../Modules/Bitrix/schemas/BitrixDealField';
+import { getBitrixDealFieldsUseCase } from '../Modules/Bitrix/usecases/GetBitrixDealFields';
 
 @Resolver()
 class DealsResolver {
@@ -50,10 +48,10 @@ class DealsResolver {
     { page }: GetDealsInput,
   ): Promise<GetDealsResponse> {
     const { id: companyID } = ctx;
-    const getDealsService = new GetDealsService();
-    const dealsGathered = await getDealsService.execute({
+    const dealsGathered = await listBitrixDealsByCompanyIDUseCase.execute({
       page,
       companyID,
+      dealCategoryID: String(1),
     });
     return dealsGathered;
   }
@@ -89,10 +87,10 @@ class DealsResolver {
     { page }: GetDealsInput,
   ): Promise<GetDealsResponse> {
     const { id: companyID } = ctx;
-    const getVehicularDealsService = new GetVehicularDealsService();
-    const dealsGathered = await getVehicularDealsService.execute({
+    const dealsGathered = await listBitrixDealsByCompanyIDUseCase.execute({
       page,
       companyID,
+      dealCategoryID: String(5),
     });
     return dealsGathered;
   }
@@ -152,8 +150,7 @@ class DealsResolver {
   @Query(() => [BitrixDealField], { nullable: true })
   @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
   async getBitrixDealFields(): Promise<BitrixDealField[]> {
-    const getBitrixDealFieldsService = new GetBitrixDealFieldsService();
-    const fields = await getBitrixDealFieldsService.execute();
+    const fields = await getBitrixDealFieldsUseCase.execute();
     return fields;
   }
 

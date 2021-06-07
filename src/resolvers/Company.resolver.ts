@@ -27,7 +27,6 @@ import UpdateCompanyProfileInput from './types/Company/UpdateCompanyProfileInput
 import UpdateProfileService from '../Services/UpdateProfileService';
 import RequestCreateCompanyInput from './types/Company/RequestCreateCompanyInput';
 import SendEmailToCreateCompanyService from '../Services/SendEmailToCreateCompanyService';
-import RemoveCompanyProfileAvatarService from '../Services/RemoveCompanyProfileAvatarService';
 import ConfirmTutorialHasBeenViewedService from '../Services/ConfirmTutorialHasBeenViewedService';
 import VerifyIfCompanySawTutorialService from '../Services/VerifyIfCompanySawTutorialService';
 import { ContextData } from '../Context/context';
@@ -36,6 +35,7 @@ import ChangeCompanyRoleService from '../Services/ChangeCompanyRoleService';
 import PermissionRequired from '../middlewares/PermissionRequired';
 import permissions from '../config/permissions';
 import Company from '../Modules/company/schemas/Company';
+import { removeCompanyAvatarUseCase } from '../Modules/company/useCases/RemoveCompanyAvatar';
 
 @Resolver()
 class CompaniesResolver {
@@ -219,10 +219,7 @@ class CompaniesResolver {
     ctx: ContextData,
   ): Promise<Company> {
     const { id: companyID } = ctx;
-    const removeCompanyProfileAvatarService = new RemoveCompanyProfileAvatarService();
-    const company = await removeCompanyProfileAvatarService.execute({
-      companyID,
-    });
+    const company = await removeCompanyAvatarUseCase.execute(companyID);
     delete company.password;
     return company;
   }

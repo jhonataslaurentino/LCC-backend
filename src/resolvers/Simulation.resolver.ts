@@ -9,14 +9,13 @@ import {
 import { ContextData } from '../Context/context';
 import AuthenticatedChecker from '../middlewares/AuthenticatedChecker';
 import { getCurrentSELICRateUseCase } from '../Modules/BCB/useCases/GetCurrentSELICRate';
+import { SimulationRepository } from '../Modules/company/repositories/implementations/SimulationsRepository/SimulationRepository';
+import Installment from '../Modules/company/schemas/Installment';
 import Simulation from '../Modules/company/schemas/Simulation';
 import { createSimulationUseCase } from '../Modules/company/useCases/CreateSimulation';
 import { deleteSimulationUseCase } from '../Modules/company/useCases/DeleteSimulation';
 import { listSimulationsByCompanyIDUseCase } from '../Modules/company/useCases/ListSimulationsByCompanyID';
-import Installment from '../Schemas/Installment';
 import SELICRate from '../Schemas/SELICRate';
-import GetPriceTableSimulationService from '../Services/Simulations/GetPriceTableSimulationService';
-import GetSACTableSimulationService from '../Services/Simulations/GetSACTableSimulationService';
 import CreateSimulationInput from './types/Simulation/CreateSimulationInput';
 import DeleteSimulationInput from './types/Simulation/DeleteSimulationInput';
 import GetSimulationInstallmentsInput from './types/Simulation/GetSimulationInstallmentsInput';
@@ -33,13 +32,13 @@ class SimulationsResolver {
       numberOfInstallments,
     }: GetSimulationInstallmentsInput,
   ): Installment[] {
-    const getPriceTableSimulationService = new GetPriceTableSimulationService();
-    const priceTableInstallments = getPriceTableSimulationService.execute({
+    const simulationsRepository = new SimulationRepository();
+    const installments = simulationsRepository.generatePRICETable({
       loanAmount,
       loanInterest: loanInterest / 100,
       numberOfInstallments,
     });
-    return priceTableInstallments;
+    return installments;
   }
 
   @Mutation(() => [Installment])
@@ -51,8 +50,8 @@ class SimulationsResolver {
       numberOfInstallments,
     }: GetSimulationInstallmentsInput,
   ): Installment[] {
-    const getSACTableSimulationService = new GetSACTableSimulationService();
-    const SACInstallments = getSACTableSimulationService.execute({
+    const simulationsRepository = new SimulationRepository();
+    const SACInstallments = simulationsRepository.generateSACTable({
       loanAmount,
       loanInterest: loanInterest / 100,
       numberOfInstallments,

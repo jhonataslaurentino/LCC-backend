@@ -9,9 +9,9 @@ import endpoint from './config/endpoints.config';
 import configureSchema from './Schemas';
 import connectToDatabase from './database';
 import context from './Context/context';
-import routes from './routes';
 import ExpressErrorHandler from './errors/ExpressErrorHandler';
 import InsertDefaultRolesService from './Services/Roles/InsertDefaultRolesService';
+import routes from './Modules/global/routes';
 
 const main = async () => {
   await connectToDatabase();

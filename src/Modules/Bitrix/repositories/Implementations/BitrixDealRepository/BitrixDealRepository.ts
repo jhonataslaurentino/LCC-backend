@@ -2,14 +2,18 @@ import axios, { AxiosInstance } from 'axios';
 import endpointsConfig from '../../../../../config/endpoints.config';
 import AppError from '../../../../../errors/AppError';
 import { BitrixDeal } from '../../../schemas/BitrixDeal';
+import BitrixDealField from '../../../schemas/BitrixDealField';
 import {
   IBitrixDealRepository,
+  ICreateVehicularDealDTO,
   IFindByCompanyIDDTO,
   IFindByCompanyIDResponse,
   IUpdateDealDTO,
 } from '../../IBitrixDealRepository';
+import { CreateVehicularDealService } from './service/CreateVehicularDealService';
 import { FindBitrixDealByIDService } from './service/FindBitrixDealByIDService';
 import { GetBitrixDealsByCompanyIDService } from './service/GetBitrixDealByCompanyIDService';
+import { GetBitrixDealFieldsService } from './service/GetBitrixDealFieldsService';
 import { UpdateBitrixDealFieldService } from './service/UpdateBitrixDealFieldService';
 
 class BitrixDealRepository implements IBitrixDealRepository {
@@ -23,10 +27,13 @@ class BitrixDealRepository implements IBitrixDealRepository {
     });
   }
 
-  async findByID(id: string): Promise<BitrixDeal> {
-    const findBitrixDealByIDService = new FindBitrixDealByIDService(this.api);
-    const deal = await findBitrixDealByIDService.execute(id);
-    return deal;
+  async CreateVehicularDeal(
+    data: ICreateVehicularDealDTO,
+  ): Promise<BitrixDeal> {
+    const createVehicularDealService = new CreateVehicularDealService(this.api);
+    const dealID = await createVehicularDealService.execute(data);
+    const bitrixDeal = await this.findByID(String(dealID));
+    return bitrixDeal;
   }
 
   public static getInstance(): BitrixDealRepository {
@@ -34,6 +41,18 @@ class BitrixDealRepository implements IBitrixDealRepository {
       BitrixDealRepository.INSTANCE = new BitrixDealRepository();
     }
     return BitrixDealRepository.INSTANCE;
+  }
+
+  async listFields(): Promise<BitrixDealField[]> {
+    const getBitrixDealFieldsService = new GetBitrixDealFieldsService(this.api);
+    const bitrixDealFields = await getBitrixDealFieldsService.execute();
+    return bitrixDealFields;
+  }
+
+  async findByID(id: string): Promise<BitrixDeal> {
+    const findBitrixDealByIDService = new FindBitrixDealByIDService(this.api);
+    const deal = await findBitrixDealByIDService.execute(id);
+    return deal;
   }
 
   async UpdateDealField({

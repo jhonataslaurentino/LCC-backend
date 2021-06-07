@@ -1,7 +1,7 @@
 import { BitrixDealCategoryRepository } from '../../repositories/Implementations/BitrixDealCategoryRepository/BitrixDealCategoryRepository';
 import { FindBitrixDealCategoryByIDUseCase } from './FindBitrixDealCategoryByIDUseCase';
 
-const bitrixDealCategoryRepository = BitrixDealCategoryRepository.getInstance();
+const bitrixDealCategoryRepository = new BitrixDealCategoryRepository();
 const findBitrixDealCategoryByIDUseCase = new FindBitrixDealCategoryByIDUseCase(
   bitrixDealCategoryRepository,
 );

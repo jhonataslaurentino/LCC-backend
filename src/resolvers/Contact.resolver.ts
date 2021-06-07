@@ -9,12 +9,12 @@ import {
 import { ContextData } from '../Context/context';
 import AuthenticatedChecker from '../middlewares/AuthenticatedChecker';
 import { BitrixDeal } from '../Modules/Bitrix/schemas/BitrixDeal';
+import { createVehicularDealUseCase } from '../Modules/Bitrix/usecases/CreateVehicularDeal';
+import { getBitrixDealUseCase } from '../Modules/Bitrix/usecases/GetBitrixDeal';
 import { listContactsUseCase } from '../Modules/Bitrix/usecases/ListContacts';
 import GetContactsResponse from '../Schemas/GetContactsResponse';
 import CreateContactService from '../Services/CreateContactService';
 import CreateDealService from '../Services/CreateDealService';
-import CreateVehicleDealService from '../Services/CreateVehicularDealService';
-import GetDealService from '../Services/GetDealService';
 import { AddContactInput } from './types/Contact/AddContactInput';
 import { AddVehicularCreditContactInput } from './types/Contact/AddVehicularCreditContactInput';
 import GetContactsInput from './types/Contact/GetContactsInput';
@@ -46,8 +46,7 @@ class ContactResolver {
   ): Promise<BitrixDeal> {
     const emailInLoweCase = email.toLowerCase();
 
-    const createContactService = new CreateContactService();
-    const contactID = await createContactService.execute({
+    const deal = await createVehicularDealUseCase.execute({
       companyID,
       name,
       email: emailInLoweCase,
@@ -55,15 +54,8 @@ class ContactResolver {
       cnpj,
       phone,
       birthday,
-    });
-
-    const createVehicleDealService = new CreateVehicleDealService();
-    const vehicleDealID = await createVehicleDealService.execute({
       clientSituation,
-      companyID,
-      contactID,
       contactMonthlyIncome,
-      name,
       opportunityValue,
       vehicleManufacturedDate,
       vehicleModel,
@@ -72,11 +64,6 @@ class ContactResolver {
       vehicleValue,
       vehicularCreditType,
       address,
-    });
-    const getDealService = new GetDealService();
-    const deal = await getDealService.execute({
-      id: vehicleDealID,
-      companyID,
     });
 
     return deal;
@@ -130,9 +117,8 @@ class ContactResolver {
       creditType,
     });
 
-    const getDealService = new GetDealService();
-    const deal = await getDealService.execute({
-      id: dealID,
+    const deal = await getBitrixDealUseCase.execute({
+      dealID: String(dealID),
       companyID,
     });
 

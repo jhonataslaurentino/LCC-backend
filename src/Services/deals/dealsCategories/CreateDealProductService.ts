@@ -1,7 +1,7 @@
 import DealCategoryModel from '../../../Entities/DealCategory';
 import DealProductModel from '../../../Entities/DealProduct';
+import { getBitrixDealFieldsUseCase } from '../../../Modules/Bitrix/usecases/GetBitrixDealFields';
 import DealProduct from '../../../Schemas/DealProduct';
-import GetBitrixDealFieldsService from './GetBitrixDealFieldsService';
 
 interface Request {
   name?: string;
@@ -32,8 +32,7 @@ class CreateDealProductService {
       throw new Error('Deal category does not exists');
     }
 
-    const getBitrixDealFieldsService = new GetBitrixDealFieldsService();
-    const bitrixDealFields = await getBitrixDealFieldsService.execute();
+    const bitrixDealFields = await getBitrixDealFieldsUseCase.execute();
 
     const bitrixDealFieldsFiltered = bitrixDealFields.filter(
       bitrixDealField =>

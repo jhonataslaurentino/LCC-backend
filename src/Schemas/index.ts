@@ -22,7 +22,7 @@ const configureSchema = async (): Promise<GraphQLSchema> => {
       AdminResolver,
     ],
     emitSchemaFile: true,
-    validate: false,
+    validate: true,
   });
   return schema;
 };

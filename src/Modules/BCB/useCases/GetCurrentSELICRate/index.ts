@@ -1,7 +1,7 @@
 import { BCBRepository } from '../../repositories/Implementations/BCBRepository';
 import { GetCurrentSELICRateUseCase } from './GetCurrentSELICRateUseCase';
 
-const bcbRepository = BCBRepository.getInstance();
+const bcbRepository = new BCBRepository();
 const getCurrentSELICRateUseCase = new GetCurrentSELICRateUseCase(
   bcbRepository,
 );

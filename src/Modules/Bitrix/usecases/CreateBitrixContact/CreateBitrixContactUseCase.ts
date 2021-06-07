@@ -19,6 +19,7 @@ class CreateBitrixContactUseCase {
     name,
     phone,
     personType,
+    birthday,
   }: IRequest): Promise<BitrixContact> {
     const company = await CompanyModel.findById(companyID);
     if (!company) {
@@ -30,6 +31,7 @@ class CreateBitrixContactUseCase {
       name,
       phone,
       personType,
+      birthday,
     });
 
     const contact = await this.bitrixContactRepository.findByID(contactID);

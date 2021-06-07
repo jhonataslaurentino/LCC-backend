@@ -1,5 +1,5 @@
+import { getBitrixDealFieldsUseCase } from '../../../Modules/Bitrix/usecases/GetBitrixDealFields';
 import BitrixDealFieldItem from '../../../Schemas/BitrixDealFieldItem';
-import GetBitrixDealFieldsService from './GetBitrixDealFieldsService';
 
 interface Request {
   dealFieldKey: string;
@@ -9,8 +9,7 @@ class GetBitrixDealFieldItemsService {
   public async execute({
     dealFieldKey,
   }: Request): Promise<BitrixDealFieldItem[]> {
-    const getBitrixDealFieldsService = new GetBitrixDealFieldsService();
-    const bitrixDealFields = await getBitrixDealFieldsService.execute();
+    const bitrixDealFields = await getBitrixDealFieldsUseCase.execute();
 
     const bitrixDealFieldsFiltered = bitrixDealFields.filter(
       bitrixDealField => bitrixDealField.key === dealFieldKey,

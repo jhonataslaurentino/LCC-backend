@@ -3,11 +3,12 @@ import { BitrixContact } from '../schemas/BitrixContact';
 interface ICreateBitrixContactData {
   name: string;
   email: string;
-  personType: string;
+  personType?: string;
   companyID: number;
   cpf?: string;
   cnpj?: string;
   phone?: string;
+  birthday: Date;
 }
 
 interface IListByCompanyID {

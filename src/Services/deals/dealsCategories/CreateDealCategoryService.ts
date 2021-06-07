@@ -1,7 +1,7 @@
 import DealCategoryModel from '../../../Entities/DealCategory';
 import { findBitrixDealCategoryByIDUseCase } from '../../../Modules/Bitrix/usecases/FindBitrixDealCategoryByID';
+import { getBitrixDealFieldsUseCase } from '../../../Modules/Bitrix/usecases/GetBitrixDealFields';
 import DealCategory from '../../../Schemas/DealCategory';
-import GetBitrixDealFieldsService from './GetBitrixDealFieldsService';
 
 interface Request {
   name?: string;
@@ -27,8 +27,7 @@ class CreateDealCategoryService {
     if (isThereAnyCompanyWithSameBitrixID) {
       throw new Error('There is a Deal Category using this bitrix ID');
     }
-    const getBitrixDealFieldsService = new GetBitrixDealFieldsService();
-    const bitrixDealFields = await getBitrixDealFieldsService.execute();
+    const bitrixDealFields = await getBitrixDealFieldsUseCase.execute();
     const bitrixDealFieldsFiltered = bitrixDealFields.filter(
       ({ key }) => key === bitrixProductsField,
     );

@@ -1,7 +1,7 @@
-import { SimulationRepository } from '../../repositories/implementations/SimulationRepository';
+import { SimulationRepository } from '../../repositories/implementations/SimulationsRepository/SimulationRepository';
 import { CreateSimulationUseCase } from './CreateSimulationUseCase';
 
-const simulationsRepository = SimulationRepository.getInstance();
+const simulationsRepository = new SimulationRepository();
 const createSimulationUseCase = new CreateSimulationUseCase(
   simulationsRepository,
 );
