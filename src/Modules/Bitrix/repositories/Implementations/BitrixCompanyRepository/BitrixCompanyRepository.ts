@@ -30,12 +30,14 @@ class BitrixCompanyRepository implements IBitrixCompanyRepository {
     email,
     phone,
     name,
+    cpf_cnpj,
   }: ICreateBitrixCompanyDTO): Promise<number> {
     const createBitrixCompanyService = new CreateBitrixCompanyService(this.api);
     const bitrixCompanyID = await createBitrixCompanyService.execute({
       email,
       name,
       phone,
+      cpf_cnpj,
     });
     return bitrixCompanyID;
   }

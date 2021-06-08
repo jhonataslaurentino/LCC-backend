@@ -1,23 +1,31 @@
 import { AxiosInstance } from 'axios';
-import createAddCompanyRequestBody from '../../../../../../api/Bitrix/createAddCompanyRequestBody';
 import AppError from '../../../../../../errors/AppError';
+import { ICreateBitrixCompanyDTO } from '../../../IBitrixCompanyRepository';
 
-interface IRequest {
-  name: string;
-  phone: string;
-  email: string;
-}
 class CreateBitrixCompanyService {
   constructor(private api: AxiosInstance) {}
 
-  async execute({ email, name, phone }: IRequest): Promise<number> {
-    const addCompanyRequestBody = createAddCompanyRequestBody({
-      title: name,
-      phone,
-      email,
-    });
+  async execute({
+    email,
+    name,
+    phone,
+    cpf_cnpj,
+  }: ICreateBitrixCompanyDTO): Promise<number> {
     const response = await this.api.post('/crm.company.add', {
-      addCompanyRequestBody,
+      fields: {
+        TITLE: name,
+        COMPANY_TYPE: 'CUSTOMER',
+        CURRENCY_ID: 'BRL',
+        OPENED: 'Y',
+        PHONE: [phone],
+        EMAIL: [
+          {
+            VALUE_TYPE: 'WORK',
+            VALUE: email,
+          },
+        ],
+        UF_CRM_1602185703: cpf_cnpj,
+      },
     });
     const { result } = response.data;
     if (!result) {

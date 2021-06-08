@@ -1,4 +1,4 @@
-import BitwiseAnd from '../../utils/BitwiseAnd';
+import BitwiseAnd from '../../../../../../utils/BitwiseAnd';
 
 interface Request {
   rolePermissionValue: number;

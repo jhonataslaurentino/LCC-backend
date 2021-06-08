@@ -10,13 +10,13 @@ import configureSchema from './Schemas';
 import connectToDatabase from './database';
 import context from './Context/context';
 import ExpressErrorHandler from './errors/ExpressErrorHandler';
-import InsertDefaultRolesService from './Services/Roles/InsertDefaultRolesService';
 import routes from './Modules/global/routes';
+import { RoleRepository } from './Modules/company/repositories/implementations/RoleRepository/RoleRepository';
 
 const main = async () => {
   await connectToDatabase();
-  const insertDefaultRolesService = new InsertDefaultRolesService();
-  await insertDefaultRolesService.execute();
+  const rolesRepository = new RoleRepository();
+  await rolesRepository.insertDefaultRoles();
   const schema = await configureSchema();
   const server = new ApolloServer({
     schema,

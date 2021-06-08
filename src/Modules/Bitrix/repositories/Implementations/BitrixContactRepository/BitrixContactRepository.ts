@@ -57,7 +57,8 @@ class BitrixContactRepository implements IBitrixContactRepository {
     cnpj,
     cpf,
     phone,
-  }: ICreateBitrixContactData): Promise<number> {
+    birthday,
+  }: ICreateBitrixContactData): Promise<BitrixContact> {
     const createBitrixContactService = new CreateBitrixContactService(this.api);
     const contactID = await createBitrixContactService.execute({
       companyID,
@@ -67,8 +68,10 @@ class BitrixContactRepository implements IBitrixContactRepository {
       cpf,
       personType,
       phone,
+      birthday,
     });
-    return contactID;
+    const contact = await this.findByID(contactID);
+    return contact;
   }
 }
 

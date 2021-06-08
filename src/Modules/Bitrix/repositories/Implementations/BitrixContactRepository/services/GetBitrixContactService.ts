@@ -14,7 +14,7 @@ class GetBitrixContactService {
         return qs.stringify(params);
       },
     });
-    return response.data;
+    return response.data.result;
   }
 }
 

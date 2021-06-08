@@ -9,12 +9,10 @@ import {
 import { ContextData } from '../Context/context';
 import AuthenticatedChecker from '../middlewares/AuthenticatedChecker';
 import { BitrixDeal } from '../Modules/Bitrix/schemas/BitrixDeal';
-import { createVehicularDealUseCase } from '../Modules/Bitrix/usecases/CreateVehicularDeal';
-import { getBitrixDealUseCase } from '../Modules/Bitrix/usecases/GetBitrixDeal';
-import { listContactsUseCase } from '../Modules/Bitrix/usecases/ListContacts';
+import { createRealEstateDealUseCase } from '../Modules/Bitrix/useCases/CreateRealEstateDeal';
+import { createVehicularDealUseCase } from '../Modules/Bitrix/useCases/CreateVehicularDeal';
+import { listContactsUseCase } from '../Modules/Bitrix/useCases/ListContacts';
 import GetContactsResponse from '../Schemas/GetContactsResponse';
-import CreateContactService from '../Services/CreateContactService';
-import CreateDealService from '../Services/CreateDealService';
 import { AddContactInput } from './types/Contact/AddContactInput';
 import { AddVehicularCreditContactInput } from './types/Contact/AddVehicularCreditContactInput';
 import GetContactsInput from './types/Contact/GetContactsInput';
@@ -42,6 +40,7 @@ class ContactResolver {
       vehicularCreditType,
       opportunityValue,
       address,
+      personType,
     }: AddVehicularCreditContactInput,
   ): Promise<BitrixDeal> {
     const emailInLoweCase = email.toLowerCase();
@@ -54,6 +53,7 @@ class ContactResolver {
       cnpj,
       phone,
       birthday,
+      personType,
       clientSituation,
       contactMonthlyIncome,
       opportunityValue,
@@ -70,7 +70,7 @@ class ContactResolver {
   }
 
   @Mutation(() => BitrixDeal)
-  async addContact(
+  async addRealEstateContact(
     @Arg('data')
     {
       name,
@@ -84,42 +84,28 @@ class ContactResolver {
       propertyValue,
       opportunityValue,
       term,
-      propertyType,
       companyID,
+      birthday,
+      propertyID,
     }: AddContactInput,
   ): Promise<BitrixDeal> {
-    const emailInLoweCase = email.toLowerCase();
+    const emailInLowerCase = email.toLowerCase();
 
-    const createContactService = new CreateContactService();
-    const contactID = await createContactService.execute({
-      companyID,
-      name,
-      email: emailInLoweCase,
-      personType,
-      cpf,
-      cnpj,
-      phone,
-    });
-
-    const createDealService = new CreateDealService();
-    const dealID = await createDealService.execute({
-      name,
-      companyID,
-      contactID,
-      opportunityValue,
-      term,
-      phone,
-      email: emailInLoweCase,
-      propertyValue,
-      propertyType,
-      personType,
+    const deal = await createRealEstateDealUseCase.execute({
       address,
-      creditType,
-    });
-
-    const deal = await getBitrixDealUseCase.execute({
-      dealID: String(dealID),
+      birthday,
       companyID,
+      creditType,
+      email: emailInLowerCase,
+      name,
+      opportunityValue,
+      personType,
+      phone,
+      propertyID,
+      propertyValue,
+      term,
+      cnpj,
+      cpf,
     });
 
     return deal;

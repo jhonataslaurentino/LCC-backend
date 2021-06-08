@@ -1,6 +1,6 @@
 import DealCategoryModel from '../../../Entities/DealCategory';
 import DealProductModel from '../../../Entities/DealProduct';
-import { getBitrixDealFieldsUseCase } from '../../../Modules/Bitrix/usecases/GetBitrixDealFields';
+import { getBitrixDealFieldsUseCase } from '../../../Modules/Bitrix/useCases/GetBitrixDealFields';
 import DealProduct from '../../../Schemas/DealProduct';
 
 interface Request {

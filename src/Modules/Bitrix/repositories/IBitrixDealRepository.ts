@@ -20,16 +20,11 @@ interface IUpdateDealDTO {
 
 interface ICreateVehicularDealDTO {
   name: string;
-  contactID: number;
+  contactID: string;
   companyID: string;
   opportunityValue: number;
-  vehicularCreditType: 'Refin' | 'Aquisição';
-  clientSituation:
-    | 'Assalariado'
-    | 'Empresário'
-    | 'Funcionário Público'
-    | 'Aposentado'
-    | 'Autônomo';
+  vehicularCreditType: string;
+  clientSituation: string;
   contactMonthlyIncome: number;
   vehicleName: string;
   vehicleManufacturedDate: string;
@@ -37,6 +32,22 @@ interface ICreateVehicularDealDTO {
   vehicleValue: number;
   vehicleTargetValue: number;
   address: string;
+}
+
+interface ICreateRealEstateDealDTO {
+  name: string;
+  companyID: string;
+  contactID: string;
+  opportunityValue: number;
+  term: number;
+  phone: string;
+  email: string;
+  // propertyType: string;
+  propertyValue: number;
+  personType: string;
+  address: string;
+  creditType: string;
+  propertyID: string;
 }
 
 interface IBitrixDealRepository {
@@ -49,12 +60,14 @@ interface IBitrixDealRepository {
   findByID(id: string): Promise<BitrixDeal>;
   listFields(): Promise<BitrixDealField[]>;
   CreateVehicularDeal(data: ICreateVehicularDealDTO): Promise<BitrixDeal>;
+  CreateRealEstateDeal(data: ICreateRealEstateDealDTO): Promise<BitrixDeal>;
 }
 
 export {
   IBitrixDealRepository,
   IFindByCompanyIDDTO,
   ICreateVehicularDealDTO,
+  ICreateRealEstateDealDTO,
   IFindByCompanyIDResponse,
   IUpdateDealDTO,
 };

@@ -2,7 +2,7 @@ import qs from 'qs';
 
 import bitrixApi from '../api/bitrix';
 import bitrixApiMethods from '../api/Bitrix/bitrixMethods';
-import CompanyModel from '../Entities/Company';
+import { CompanyModel } from '../Modules/company/models/Company';
 import GetContactsResponse from '../Schemas/GetContactsResponse';
 
 interface Request {

@@ -25,7 +25,7 @@ class CreateBitrixContactUseCase {
     if (!company) {
       throw new AppError('Company not found', 404);
     }
-    const contactID = await this.bitrixContactRepository.create({
+    const contact = await this.bitrixContactRepository.create({
       companyID: company.bitrix_id,
       email,
       name,
@@ -34,7 +34,6 @@ class CreateBitrixContactUseCase {
       birthday,
     });
 
-    const contact = await this.bitrixContactRepository.findByID(contactID);
     return contact;
   }
 }

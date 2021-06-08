@@ -3,20 +3,17 @@ import { ICompanyRepository } from '../../../company/repositories/ICompanyReposi
 import { IBitrixContactRepository } from '../../repositories/IBitrixContactRepository';
 import {
   IBitrixDealRepository,
-  ICreateVehicularDealDTO,
+  ICreateRealEstateDealDTO,
 } from '../../repositories/IBitrixDealRepository';
 import { BitrixDeal } from '../../schemas/BitrixDeal';
 
-interface ICreateVehicularDealUseCaseDTO
-  extends Omit<ICreateVehicularDealDTO, 'contactID'> {
-  email: string;
+interface IRequest extends Omit<ICreateRealEstateDealDTO, 'contactID'> {
+  birthday: Date;
   cpf?: string;
   cnpj?: string;
-  phone?: string;
-  birthday: Date;
 }
 
-class CreateVehicularDealUseCase {
+class CreateRealEstateDealUseCase {
   constructor(
     private bitrixDealsRepository: IBitrixDealRepository,
     private bitrixContactsRepository: IBitrixContactRepository,
@@ -24,55 +21,51 @@ class CreateVehicularDealUseCase {
   ) {}
 
   async execute({
-    companyID,
-    email,
-    name,
-    cpf,
-    cnpj,
-    phone,
-    clientSituation,
-    contactMonthlyIncome,
-    opportunityValue,
-    vehicleManufacturedDate,
-    vehicleModel,
-    vehicleName,
-    vehicleTargetValue,
-    vehicleValue,
-    vehicularCreditType,
     address,
     birthday,
-  }: ICreateVehicularDealUseCaseDTO): Promise<BitrixDeal> {
+    cnpj,
+    companyID,
+    cpf,
+    creditType,
+    email,
+    name,
+    opportunityValue,
+    personType,
+    phone,
+    propertyID,
+    propertyValue,
+    term,
+  }: IRequest): Promise<BitrixDeal> {
     const company = await this.companiesRepository.findByID(companyID);
     if (!company) {
       throw new AppError('Company does not exists', 404);
     }
-    const contactID = await this.bitrixContactsRepository.create({
+    const contact = await this.bitrixContactsRepository.create({
+      birthday,
       companyID: company.bitrix_id,
       email,
       name,
-      cpf,
       cnpj,
+      cpf,
+      personType,
       phone,
-      birthday,
     });
-
-    const deal = await this.bitrixDealsRepository.CreateVehicularDeal({
-      clientSituation,
+    const deal = await this.bitrixDealsRepository.CreateRealEstateDeal({
+      address,
       companyID: String(company.bitrix_id),
-      contactID,
-      contactMonthlyIncome,
+      contactID: contact.ID,
+      creditType,
+      email,
       name,
       opportunityValue,
-      vehicleManufacturedDate,
-      vehicleModel,
-      vehicleName,
-      vehicleTargetValue,
-      vehicleValue,
-      vehicularCreditType,
-      address,
+      personType,
+      phone,
+      propertyID,
+      propertyValue,
+      term,
     });
     return deal;
   }
 }
 
-export { CreateVehicularDealUseCase };
+export { CreateRealEstateDealUseCase };

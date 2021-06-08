@@ -27,14 +27,14 @@ import GetDealsUpdatedInput from './types/Deal/GetDealsUpdatedInput';
 import DealCategoryStage from '../Schemas/DealCategoryStage';
 import GetDealCategoryStageInput from './types/Deal/GetDealCategoryStagesInput';
 import GetDealCategoryStagesService from '../Services/deals/dealsCategories/GetDealCategoryStagesService';
-import { listBitrixDealsByCompanyIDUseCase } from '../Modules/Bitrix/usecases/ListDeals';
+import { listBitrixDealsByCompanyIDUseCase } from '../Modules/Bitrix/useCases/ListDeals';
 import BitrixDealCategory from '../Modules/Bitrix/schemas/BitrixDealCategory';
-import { listBitrixDealsCategoriesUseCase } from '../Modules/Bitrix/usecases/ListBitrixDealsCategories';
+import { listBitrixDealsCategoriesUseCase } from '../Modules/Bitrix/useCases/ListBitrixDealsCategories';
 import { BitrixDeal } from '../Modules/Bitrix/schemas/BitrixDeal';
 import { UpdateBitrixDealCommentsInput } from './types/Deal/UpdateBitrixDealCommentsInput';
-import { updateDealCommentUseCase } from '../Modules/Bitrix/usecases/UpdateDealComments';
+import { updateDealCommentUseCase } from '../Modules/Bitrix/useCases/UpdateDealComments';
 import BitrixDealField from '../Modules/Bitrix/schemas/BitrixDealField';
-import { getBitrixDealFieldsUseCase } from '../Modules/Bitrix/usecases/GetBitrixDealFields';
+import { getBitrixDealFieldsUseCase } from '../Modules/Bitrix/useCases/GetBitrixDealFields';
 
 @Resolver()
 class DealsResolver {

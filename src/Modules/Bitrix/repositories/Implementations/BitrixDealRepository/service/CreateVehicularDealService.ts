@@ -27,6 +27,10 @@ class CreateVehicularDealService {
       TITLE: name,
       CONTACT_ID: contactID,
       COMPANY_ID: companyID,
+      STAGE_ID: 'C5:NEW',
+      CATEGORY_ID: '5',
+      CURRENCY_ID: 'BRL',
+      IS_NEW: 'Y',
       OPPORTUNITY: opportunityValue,
       UF_CRM_1612805901: vehicularCreditType,
       UF_CRM_1612806099: clientSituation,
@@ -37,14 +41,13 @@ class CreateVehicularDealService {
       UF_CRM_1612806255: vehicleValue,
       UF_CRM_1612806274: vehicleTargetValue,
       UF_CRM_1602612650306: address,
-      CATEGORY_ID: 5,
     };
   }
 
   async execute(data: ICreateVehicularDealDTO): Promise<number> {
     const requestBody = this.getFieldsFormatted(data);
-    const response = await this.api.post('crm.deal.add', {
-      requestBody,
+    const response = await this.api.post('/crm.deal.add', {
+      fields: requestBody,
     });
     const dealID = response.data.result;
     return dealID;

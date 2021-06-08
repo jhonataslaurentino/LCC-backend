@@ -48,8 +48,8 @@ ICreateAddDealRequestBody): Object => {
       UF_CRM_1602185558: term,
       UF_CRM_5F7F69C6D493F: phone,
       UF_CRM_5F7F69C6D9350: email,
-      UF_CRM_1602186057: propertyType,
-      UF_CRM_1602186083: propertyID,
+      UF_CRM_1602186057: propertyID,
+      UF_CRM_1602186083: propertyType,
       UF_CRM_1602186227: creditType,
     },
   };

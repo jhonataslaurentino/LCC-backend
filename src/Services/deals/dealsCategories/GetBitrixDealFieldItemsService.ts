@@ -1,4 +1,4 @@
-import { getBitrixDealFieldsUseCase } from '../../../Modules/Bitrix/usecases/GetBitrixDealFields';
+import { getBitrixDealFieldsUseCase } from '../../../Modules/Bitrix/useCases/GetBitrixDealFields';
 import BitrixDealFieldItem from '../../../Schemas/BitrixDealFieldItem';
 
 interface Request {

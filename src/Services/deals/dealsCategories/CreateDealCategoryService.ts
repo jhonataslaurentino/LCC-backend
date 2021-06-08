@@ -1,6 +1,6 @@
 import DealCategoryModel from '../../../Entities/DealCategory';
-import { findBitrixDealCategoryByIDUseCase } from '../../../Modules/Bitrix/usecases/FindBitrixDealCategoryByID';
-import { getBitrixDealFieldsUseCase } from '../../../Modules/Bitrix/usecases/GetBitrixDealFields';
+import { findBitrixDealCategoryByIDUseCase } from '../../../Modules/Bitrix/useCases/FindBitrixDealCategoryByID';
+import { getBitrixDealFieldsUseCase } from '../../../Modules/Bitrix/useCases/GetBitrixDealFields';
 import DealCategory from '../../../Schemas/DealCategory';
 
 interface Request {

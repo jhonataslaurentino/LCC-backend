@@ -1,6 +1,6 @@
 import { prop as Property, Ref } from '@typegoose/typegoose';
 import { Field, ID, ObjectType, Int } from 'type-graphql';
-import Company from '../Modules/company/schemas/Company';
+import Company from './Company';
 
 @ObjectType({ description: 'The user role schema' })
 class Role {
@@ -16,7 +16,7 @@ class Role {
   permissions: number;
 
   @Field(() => [String], { nullable: true })
-  @Property({ ref: () => Company, default: [] })
+  @Property({ ref: () => Company, default: [], type: () => [String] })
   companies: Ref<Company>[];
 
   @Field(() => Date, {

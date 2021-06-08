@@ -1,6 +1,6 @@
 import { prop as Property, Ref } from '@typegoose/typegoose';
 import { Field, ID, Int, ObjectType } from 'type-graphql';
-import Role from '../../../Schemas/Role';
+import Role from './Role';
 import Simulation from './Simulation';
 
 @ObjectType({ description: 'The company schema' })
@@ -80,7 +80,7 @@ export default class Company {
   sawTutorial: boolean;
 
   @Field(() => String, { nullable: true })
-  @Property({ ref: () => Role })
+  @Property({ ref: () => Role, type: () => String })
   roleId: Ref<Role>;
 
   @Field(() => Date, { nullable: true })
@@ -100,7 +100,7 @@ export default class Company {
   accessToken: string;
 
   @Field(() => [String], { nullable: true })
-  @Property({ ref: () => Simulation })
+  @Property({ ref: () => Simulation, type: () => String })
   simulations: Ref<Simulation>[];
 
   @Field(() => Boolean, { nullable: true })

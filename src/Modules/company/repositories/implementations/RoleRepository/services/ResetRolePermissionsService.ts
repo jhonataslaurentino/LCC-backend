@@ -1,12 +1,8 @@
-import RoleModel from '../../Entities/Role';
-import Role from '../../Schemas/Role';
-
-interface Request {
-  roleID: string;
-}
+import RoleModel from '../../../../models/Role';
+import Role from '../../../../schemas/Role';
 
 class ResetRolePermissionsService {
-  public async execute({ roleID }: Request): Promise<Role> {
+  public async execute(roleID: string): Promise<Role> {
     const role = await RoleModel.findById(roleID);
     if (!role) {
       throw new Error('Role does not exists');
@@ -17,4 +13,4 @@ class ResetRolePermissionsService {
   }
 }
 
-export default ResetRolePermissionsService;
+export { ResetRolePermissionsService };

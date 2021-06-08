@@ -31,6 +31,9 @@ class AddContactInput {
   @Length(1, 255)
   phone: string;
 
+  @Field(() => Date)
+  birthday: Date;
+
   @Field({ nullable: true })
   @Length(1, 255)
   creditType: string;
@@ -49,7 +52,7 @@ class AddContactInput {
 
   @Field({ nullable: true })
   @Length(1, 255)
-  propertyType: string;
+  propertyID: string;
 }
 
 export { AddContactInput };

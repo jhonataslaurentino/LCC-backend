@@ -27,6 +27,7 @@ class HandleSubscriptionService {
         customerEmail,
         customerName,
         recurrence_code,
+        bill_id,
       });
     }
     // Suspenso

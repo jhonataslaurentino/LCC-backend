@@ -3,7 +3,7 @@ import { verify } from 'jsonwebtoken';
 import authConfig from '../config/authConfig';
 import { CompanyModel } from '../Modules/company/models/Company';
 import Company from '../Modules/company/schemas/Company';
-import GetDefaultRoleService from './Roles/GetDefaultRoleService';
+import { getDefaultRoleForCompanyByEmailUseCase } from '../Modules/company/useCases/GetDefaultRoleForCompanyByEmail';
 
 interface Request {
   name: string;
@@ -68,11 +68,9 @@ class CreateCompanyService {
 
     const hashedPassword = await hash(password, 8);
 
-    const getDefaultRoleService = new GetDefaultRoleService();
-
-    const userRole = await getDefaultRoleService.execute({
-      companyEmail: email,
-    });
+    const userRole = await getDefaultRoleForCompanyByEmailUseCase.execute(
+      email,
+    );
 
     if (!userRole) {
       throw new Error('User role not found');

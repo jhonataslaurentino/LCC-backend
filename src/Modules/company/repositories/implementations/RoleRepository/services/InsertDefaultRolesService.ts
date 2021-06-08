@@ -1,6 +1,6 @@
-import permissions from '../../config/permissions';
-import RoleModel from '../../Entities/Role';
-import BitwiseAnd from '../../utils/BitwiseAnd';
+import permissions from '../../../../../../config/permissions';
+import BitwiseAnd from '../../../../../../utils/BitwiseAnd';
+import RoleModel from '../../../../models/Role';
 
 class InsertDefaultRolesService {
   public async execute(): Promise<void> {
@@ -31,6 +31,7 @@ class InsertDefaultRolesService {
           permissions: 0,
           createdAt: Date.now(),
           updatedAt: Date.now(),
+          companies: [],
         });
         permissionValues.forEach(async permissionValue => {
           const hasPermission = BitwiseAnd(role.permissions, permissionValue);

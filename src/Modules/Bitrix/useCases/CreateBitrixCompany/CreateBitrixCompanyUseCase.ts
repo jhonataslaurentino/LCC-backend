@@ -5,12 +5,13 @@ interface IRequest {
   name: string;
   email: string;
   phone: string;
+  cpf_cnpj: string;
 }
 
 class CreateBitrixCompanyUseCase {
   constructor(private bitrixCompanyRepository: IBitrixCompanyRepository) {}
 
-  async execute({ email, name, phone }: IRequest): Promise<number> {
+  async execute({ email, name, phone, cpf_cnpj }: IRequest): Promise<number> {
     const companyAlreadyExists = await this.bitrixCompanyRepository.findByEmail(
       email,
     );
@@ -21,6 +22,7 @@ class CreateBitrixCompanyUseCase {
       email,
       name,
       phone,
+      cpf_cnpj,
     });
     return company;
   }

@@ -28,7 +28,7 @@ interface IBitrixContactRepository {
     page,
   }: IListByCompanyID): Promise<IListByCompanyIDResponse>;
   findByID(id: number): Promise<BitrixContact>;
-  create(data: ICreateBitrixContactData): Promise<number>;
+  create(data: ICreateBitrixContactData): Promise<BitrixContact>;
 }
 
 export {

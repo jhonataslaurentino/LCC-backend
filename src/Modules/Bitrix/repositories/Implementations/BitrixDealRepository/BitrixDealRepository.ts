@@ -5,11 +5,13 @@ import { BitrixDeal } from '../../../schemas/BitrixDeal';
 import BitrixDealField from '../../../schemas/BitrixDealField';
 import {
   IBitrixDealRepository,
+  ICreateRealEstateDealDTO,
   ICreateVehicularDealDTO,
   IFindByCompanyIDDTO,
   IFindByCompanyIDResponse,
   IUpdateDealDTO,
 } from '../../IBitrixDealRepository';
+import { CreateRealEstateDealService } from './service/CreateRealEstateDealService';
 import { CreateVehicularDealService } from './service/CreateVehicularDealService';
 import { FindBitrixDealByIDService } from './service/FindBitrixDealByIDService';
 import { GetBitrixDealsByCompanyIDService } from './service/GetBitrixDealByCompanyIDService';
@@ -25,6 +27,17 @@ class BitrixDealRepository implements IBitrixDealRepository {
     this.api = axios.create({
       baseURL: endpointsConfig.bitrixBaseURL,
     });
+  }
+
+  async CreateRealEstateDeal(
+    data: ICreateRealEstateDealDTO,
+  ): Promise<BitrixDeal> {
+    const createRealEstateDealService = new CreateRealEstateDealService(
+      this.api,
+    );
+    const dealID = await createRealEstateDealService.execute(data);
+    const deal = await this.findByID(dealID);
+    return deal;
   }
 
   async CreateVehicularDeal(

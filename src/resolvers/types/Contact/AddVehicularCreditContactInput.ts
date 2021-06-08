@@ -31,18 +31,16 @@ class AddVehicularCreditContactInput {
   birthday: Date;
 
   @Field()
-  vehicularCreditType: 'Refin' | 'Aquisição';
+  personType: string;
+
+  @Field()
+  vehicularCreditType: string;
 
   @Field({ nullable: true })
   address: string;
 
   @Field()
-  clientSituation:
-    | 'Assalariado'
-    | 'Empresário'
-    | 'Funcionário Público'
-    | 'Aposentado'
-    | 'Autônomo';
+  clientSituation: string;
 
   @Field(() => Float)
   contactMonthlyIncome: number;

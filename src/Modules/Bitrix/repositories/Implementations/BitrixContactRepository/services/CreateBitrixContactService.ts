@@ -24,6 +24,7 @@ class CreateBitrixContactService {
     cpf,
     personType,
     phone,
+    birthday,
   }: IRequest): Promise<number> {
     const addContactRequestBody = createAddContactRequestBody({
       email,
@@ -33,6 +34,7 @@ class CreateBitrixContactService {
       cpf,
       phone,
       companyBitrixID: Number(companyID),
+      birthday,
     });
     const response = await this.api.post(
       '/crm.contact.add',

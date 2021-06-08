@@ -1,6 +1,6 @@
 import { IsEmail, Length } from 'class-validator';
 import { Field, InputType } from 'type-graphql';
-import Company from '../../../Schemas/Company';
+import Company from '../../../Modules/company/schemas/Company';
 
 @InputType({ description: 'Create Company Args' })
 export default class CreateCompanyInput implements Partial<Company> {

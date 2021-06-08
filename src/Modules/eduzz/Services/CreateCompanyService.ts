@@ -1,11 +1,11 @@
 import { hash } from 'bcryptjs';
 import { verify } from 'jsonwebtoken';
 import authConfig from '../../../config/authConfig';
-import GetDefaultRoleService from '../../../Services/Roles/GetDefaultRoleService';
-import { createBitrixCompanyUseCase } from '../../Bitrix/usecases/CreateBitrixCompany';
-import { findBitrixCompanyByEmailUseCase } from '../../Bitrix/usecases/FindBitrixCompanyByEmail';
+import { createBitrixCompanyUseCase } from '../../Bitrix/useCases/CreateBitrixCompany';
+import { findBitrixCompanyByEmailUseCase } from '../../Bitrix/useCases/FindBitrixCompanyByEmail';
 import { CompanyModel } from '../../company/models/Company';
 import Company from '../../company/schemas/Company';
+import { getDefaultRoleForCompanyByEmailUseCase } from '../../company/useCases/GetDefaultRoleForCompanyByEmail';
 
 interface Request {
   name: string;
@@ -59,11 +59,9 @@ class CreateCompanyService {
 
     const hashedPassword = await hash(password, 8);
 
-    const getDefaultRoleService = new GetDefaultRoleService();
-
-    const userRole = await getDefaultRoleService.execute({
-      companyEmail: email,
-    });
+    const userRole = await getDefaultRoleForCompanyByEmailUseCase.execute(
+      email,
+    );
 
     if (!userRole) {
       throw new Error('User role not found');
@@ -75,6 +73,7 @@ class CreateCompanyService {
         email,
         name,
         phone,
+        cpf_cnpj,
       });
     } catch (error) {
       const bitrixCompany = await findBitrixCompanyByEmailUseCase.execute(

@@ -1,5 +1,5 @@
-import RoleModel from '../../Entities/Role';
-import Role from '../../Schemas/Role';
+import RoleModel from '../../../../models/Role';
+import Role from '../../../../schemas/Role';
 import VerifyIfHasPermissionService from './VerifyIfHasPermissionService';
 
 interface Request {

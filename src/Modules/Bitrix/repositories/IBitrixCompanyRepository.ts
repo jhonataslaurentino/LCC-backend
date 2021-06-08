@@ -4,6 +4,7 @@ interface ICreateBitrixCompanyDTO {
   name: string;
   phone: string;
   email: string;
+  cpf_cnpj: string;
 }
 
 interface IBitrixCompanyRepository {

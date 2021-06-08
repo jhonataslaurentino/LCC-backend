@@ -6,6 +6,7 @@ interface ICreateAddContactRequestBody {
   personType: string;
   cpf?: string;
   cnpj?: string;
+  birthday: Date;
 }
 
 const createAddContactRequestBody = ({
@@ -16,10 +17,12 @@ const createAddContactRequestBody = ({
   cpf,
   cnpj,
   companyBitrixID,
+  birthday,
 }: // eslint-disable-next-line @typescript-eslint/ban-types
 ICreateAddContactRequestBody): Object => {
   return {
     fields: {
+      BIRTHDATE: birthday,
       COMPANY_ID: companyBitrixID,
       NAME: name,
       PHONE: [

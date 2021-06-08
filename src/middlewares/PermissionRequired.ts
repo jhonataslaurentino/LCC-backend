@@ -1,9 +1,9 @@
 import { MiddlewareFn, NextFn, ResolverData } from 'type-graphql';
 import { ContextData } from '../Context/context';
-import RoleModel from '../Entities/Role';
 import { CompanyModel } from '../Modules/company/models/Company';
-import GetDefaultRoleService from '../Services/Roles/GetDefaultRoleService';
-import VerifyIfHasPermissionService from '../Services/Roles/VerifyIfHasPermissionService';
+import RoleModel from '../Modules/company/models/Role';
+import { RoleRepository } from '../Modules/company/repositories/implementations/RoleRepository/RoleRepository';
+import { getDefaultRoleForCompanyByEmailUseCase } from '../Modules/company/useCases/GetDefaultRoleForCompanyByEmail';
 
 function PermissionRequired(
   permissionValue: number,
@@ -15,16 +15,15 @@ function PermissionRequired(
       throw new Error('Company does not exists');
     }
     if (!company.roleId) {
-      const getDefaultRoleService = new GetDefaultRoleService();
-      const defaultRole = await getDefaultRoleService.execute({
-        companyEmail: company.email,
-      });
+      const defaultRole = await getDefaultRoleForCompanyByEmailUseCase.execute(
+        company.email,
+      );
       company.roleId = defaultRole;
       await company.save();
     }
+    const rolesRepository = new RoleRepository();
     const companyRole = await RoleModel.findById(company.roleId);
-    const verifyIfHasPermissionService = new VerifyIfHasPermissionService();
-    const hasPermission = verifyIfHasPermissionService.execute({
+    const hasPermission = rolesRepository.verifyIfHasPermission({
       permissionValue,
       rolePermissionValue: companyRole.permissions,
     });

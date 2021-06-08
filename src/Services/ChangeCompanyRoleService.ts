@@ -1,5 +1,5 @@
-import RoleModel from '../Entities/Role';
 import { CompanyModel } from '../Modules/company/models/Company';
+import { RoleRepository } from '../Modules/company/repositories/implementations/RoleRepository/RoleRepository';
 import Company from '../Modules/company/schemas/Company';
 
 interface Request {
@@ -13,11 +13,12 @@ class ChangeCompanyRoleService {
     if (!company) {
       throw new Error('Company does not exists');
     }
-    const role = await RoleModel.findById(roleID);
+    const rolesRepository = new RoleRepository();
+    const role = await rolesRepository.findByID(roleID);
     if (!role) {
       throw new Error('Role does not exists');
     }
-    company.roleId = role.id;
+    company.roleId = role;
     await company.save();
     return company;
   }
