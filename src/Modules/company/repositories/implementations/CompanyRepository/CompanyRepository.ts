@@ -1,22 +1,52 @@
 import Company from '../../../schemas/Company';
 import {
+  IChangePasswordDTO,
   ICompanyRepository,
   ICreateCompanyDTO,
   ICreateCompanyTokenDTO,
   IGenerateRandomPasswordDTO,
+  IPushSimulationForCompanyDTO,
   IUpdateCompanyTokenDTO,
 } from '../../ICompanyRepository';
+import { ChangeCompanyPasswordService } from './services/ChangeCompanyPasswordService';
 import { CreateCompanyService } from './services/CreateCompanyService';
 import { CreateCompanyTokenService } from './services/CreateCompanyTokenService';
 import { FindCompanyByEduzzBillIDService } from './services/FindCompanyByEduzzBillIDService';
 import { FindCompanyByEduzzRecurrenceCodeService } from './services/FindCompanyByEduzzRecurrenceCodeService';
+import { FindCompanyByEmailService } from './services/FindCompanyByEmailService';
 import { FindCompanyByIDService } from './services/FindCompanyByIDService';
 import { GenerateRandomPasswordService } from './services/GenerateRandomPasswordService';
+import { ListAllCompaniesService } from './services/ListAllCompaniesService';
+import { PushSimulationForCompanyService } from './services/PushSimulationForCompanyService';
 import { RemoveCompanyAvatarService } from './services/RemoveCompanyAvatarService';
 import { SuspendCompanyService } from './services/SuspendCompanyService';
 import { UpdateCompanyTokenService } from './services/UpdateCompanyTokenService';
 
 class CompanyRepository implements ICompanyRepository {
+  async list(): Promise<Company[]> {
+    const listAllCompaniesService = new ListAllCompaniesService();
+    const companies = await listAllCompaniesService.execute();
+    return companies;
+  }
+
+  async pushSimulation(data: IPushSimulationForCompanyDTO): Promise<Company> {
+    const pushSimulationForCompanyService = new PushSimulationForCompanyService();
+    const company = await pushSimulationForCompanyService.execute(data);
+    return company;
+  }
+
+  async changePassword(data: IChangePasswordDTO): Promise<Company> {
+    const changeCompanyPasswordService = new ChangeCompanyPasswordService();
+    const companyModified = await changeCompanyPasswordService.execute(data);
+    return companyModified;
+  }
+
+  async findByEmail(email: string): Promise<Company> {
+    const findCompanyByEmailService = new FindCompanyByEmailService();
+    const company = await findCompanyByEmailService.execute(email);
+    return company;
+  }
+
   async updateCompanyAccessToken(
     data: IUpdateCompanyTokenDTO,
   ): Promise<Company> {

@@ -382,6 +382,11 @@ type Installment {
   interest: Float!
 }
 
+"""Get Deal Input Arguments"""
+input ListDealTimelineCommentsInput {
+  id: Float!
+}
+
 """Login Schema"""
 type Login {
   company: Company!
@@ -412,6 +417,7 @@ type Mutation {
   setProfilePicture(data: FileInput!): Boolean!
   switchDealCategoryVisibility(data: SwitchDealCategoryVisibilityInput!): DealCategory!
   updateDealComment(data: UpdateBitrixDealCommentsInput!): BitrixDeal!
+  updateLeftingCompanyFields: Boolean!
   updateProfile(data: UpdateCompanyProfileInput!): Company!
 }
 
@@ -435,6 +441,7 @@ type Query {
   getSELICRate: SELICRate!
   getSimulations: [Simulation!]
   getVehicularDeals(data: GetDealsInput!): GetDealsResponse
+  listTimeLineComments(data: ListDealTimelineCommentsInput!): BitrixDeal!
   verifyIfCompanySawTutorial: Boolean!
 }
 

@@ -7,9 +7,17 @@ interface ICreateBitrixCompanyDTO {
   cpf_cnpj: string;
 }
 
+interface IUpdateCompanyDTO {
+  id: string;
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  [field: string]: string | number | Date | Object;
+}
+
 interface IBitrixCompanyRepository {
   findByEmail(email: string): Promise<BitrixCompany>;
   createBitrixCompany(data: ICreateBitrixCompanyDTO): Promise<number>;
+  updateField(data: IUpdateCompanyDTO): Promise<BitrixCompany>;
+  findById(id: string): Promise<BitrixCompany>;
 }
 
-export { IBitrixCompanyRepository, ICreateBitrixCompanyDTO };
+export { IBitrixCompanyRepository, ICreateBitrixCompanyDTO, IUpdateCompanyDTO };

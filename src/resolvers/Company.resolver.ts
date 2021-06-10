@@ -8,11 +8,8 @@ import {
 } from 'type-graphql';
 import Login from '../Schemas/Login';
 import RequestRecoverPasswordResponse from '../Schemas/RequestRecoverPasswordResponse';
-import AuthenticateCompanyService from '../Services/AuthenticateCompanyService';
 import CreateCompanyAtBitrixService from '../Services/CreateCompanyAtBitrixService';
 import CreateCompanyService from '../Services/CreateCompanyService';
-import RecoverPasswordService from '../Services/RecoverPasswordService';
-import RequestRecoverPasswordService from '../Services/RequestRecoverPasswordService';
 import UpdateBitrixIdService from '../Services/UpdateBitrixIdService';
 import AuthenticationCompanyInput from './types/Company/AuthenticationCompanyInput';
 import CreateCompanyInput from './types/Company/CreateCompanyInput';
@@ -36,6 +33,10 @@ import PermissionRequired from '../middlewares/PermissionRequired';
 import permissions from '../config/permissions';
 import Company from '../Modules/company/schemas/Company';
 import { removeCompanyAvatarUseCase } from '../Modules/company/useCases/RemoveCompanyAvatar';
+import { authenticateCompanyUseCase } from '../Modules/company/useCases/AuthenticateCompany';
+import { requestRecoverPasswordUseCase } from '../Modules/company/useCases/RecoverPassword/RequestRecoverPassword';
+import { recoverPasswordUseCase } from '../Modules/company/useCases/RecoverPassword/RecoverPassword';
+import { updateAllBitrixCompaniesCPFCNPJSUseCase } from '../Modules/Bitrix/useCases/UpdateAllBitrixCompaniesCPFCNPJ';
 
 @Resolver()
 class CompaniesResolver {
@@ -135,8 +136,7 @@ class CompaniesResolver {
   ): Promise<Login> {
     const emailInLowerCase = email.toLowerCase();
 
-    const authenticateCompanyService = new AuthenticateCompanyService();
-    const data = await authenticateCompanyService.execute({
+    const data = await authenticateCompanyUseCase.execute({
       email: emailInLowerCase,
       password,
     });
@@ -150,12 +150,8 @@ class CompaniesResolver {
     { email }: RequestRecoverPasswordInput,
   ): Promise<RequestRecoverPasswordResponse> {
     const emailInLowerCase = email.toLowerCase();
-
-    const requestRecoverPasswordService = new RequestRecoverPasswordService();
-    const wasMailSent = await requestRecoverPasswordService.execute({
-      email: emailInLowerCase,
-    });
-    return { wasMailSent } as RequestRecoverPasswordResponse;
+    await requestRecoverPasswordUseCase.execute(emailInLowerCase);
+    return { wasMailSent: true } as RequestRecoverPasswordResponse;
   }
 
   @Mutation(() => Company)
@@ -163,8 +159,7 @@ class CompaniesResolver {
     @Arg('data')
     { password, token }: RecoverPasswordInput,
   ): Promise<Company> {
-    const recoverPasswordService = new RecoverPasswordService();
-    const company = await recoverPasswordService.execute({
+    const company = await recoverPasswordUseCase.execute({
       token,
       password,
     });
@@ -255,6 +250,13 @@ class CompaniesResolver {
     });
     delete company.password;
     return company;
+  }
+
+  @Mutation(() => Boolean)
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  async updateLeftingCompanyFields(): Promise<boolean> {
+    await updateAllBitrixCompaniesCPFCNPJSUseCase.execute();
+    return true;
   }
 }
 

@@ -1,4 +1,4 @@
-import { IWebhookRequest } from '../handleWebhookUseCase';
+import { IWebhookRequest } from '../../HandleWebhookUseCase';
 import { paidBillUseCase } from './useCases/PaidBill';
 import { refundedBullUseCase } from './useCases/RefundedBill';
 

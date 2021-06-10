@@ -85,8 +85,7 @@ class BitrixDealRepository implements IBitrixDealRepository {
         500,
       );
     }
-    const findBitrixDealByIDService = new FindBitrixDealByIDService(this.api);
-    const bitrixDealUpdated = await findBitrixDealByIDService.execute(id);
+    const bitrixDealUpdated = await this.findByID(id);
     return bitrixDealUpdated;
   }
 

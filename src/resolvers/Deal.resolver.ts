@@ -35,6 +35,8 @@ import { UpdateBitrixDealCommentsInput } from './types/Deal/UpdateBitrixDealComm
 import { updateDealCommentUseCase } from '../Modules/Bitrix/useCases/UpdateDealComments';
 import BitrixDealField from '../Modules/Bitrix/schemas/BitrixDealField';
 import { getBitrixDealFieldsUseCase } from '../Modules/Bitrix/useCases/GetBitrixDealFields';
+import ListDealTimelineCommentsInput from './types/Deal/ListDealTimelineCommentsInput';
+import { listDealCommentsTimelineUseCase } from '../Modules/Bitrix/useCases/ListDealCommentsTimeline';
 
 @Resolver()
 class DealsResolver {
@@ -52,6 +54,7 @@ class DealsResolver {
       page,
       companyID,
       dealCategoryID: String(1),
+      bitrixDealCategoryID: '1',
     });
     return dealsGathered;
   }
@@ -91,6 +94,7 @@ class DealsResolver {
       page,
       companyID,
       dealCategoryID: String(5),
+      bitrixDealCategoryID: '5',
     });
     return dealsGathered;
   }
@@ -206,6 +210,15 @@ class DealsResolver {
       companyID,
     });
     return updatedDeal;
+  }
+
+  @Query(() => BitrixDeal)
+  async listTimeLineComments(
+    @Arg('data')
+    { id }: ListDealTimelineCommentsInput,
+  ): Promise<BitrixDeal> {
+    listDealCommentsTimelineUseCase.execute(id);
+    throw new Error('test');
   }
 }
 

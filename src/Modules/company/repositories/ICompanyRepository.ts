@@ -30,6 +30,15 @@ interface IUpdateCompanyTokenDTO {
   token: string;
 }
 
+interface IChangePasswordDTO {
+  id: string;
+  newPassword: string;
+}
+interface IPushSimulationForCompanyDTO {
+  simulationID: string;
+  companyID: string;
+}
+
 interface ICompanyRepository {
   findByID(id: string): Promise<Company>;
   removeAvatar(id: string): Promise<Company>;
@@ -40,6 +49,10 @@ interface ICompanyRepository {
   findByEduzzRecurrenceCode(recurrenceCode: number): Promise<Company>;
   updateCompanyAccessToken(data: IUpdateCompanyTokenDTO): Promise<Company>;
   suspend(id: string): Promise<Company>;
+  findByEmail(email: string): Promise<Company>;
+  changePassword(data: IChangePasswordDTO): Promise<Company>;
+  pushSimulation(data: IPushSimulationForCompanyDTO): Promise<Company>;
+  list(): Promise<Company[]>;
 }
 
 export {
@@ -48,4 +61,6 @@ export {
   ICreateCompanyTokenDTO,
   IGenerateRandomPasswordDTO,
   IUpdateCompanyTokenDTO,
+  IChangePasswordDTO,
+  IPushSimulationForCompanyDTO,
 };

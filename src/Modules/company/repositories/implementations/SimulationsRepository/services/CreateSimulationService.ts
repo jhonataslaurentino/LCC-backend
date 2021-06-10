@@ -1,9 +1,9 @@
 import DealCategoryModel from '../../../../../../Entities/DealCategory';
 import DealProductModel from '../../../../../../Entities/DealProduct';
 import { getCurrentSELICRateUseCase } from '../../../../../BCB/useCases/GetCurrentSELICRate';
-import { CompanyModel } from '../../../../models/Company';
 import { SimulationModel } from '../../../../models/Simulation';
 import Simulation from '../../../../schemas/Simulation';
+import { CompanyRepository } from '../../CompanyRepository/CompanyRepository';
 
 interface Request {
   value: number;
@@ -36,8 +36,8 @@ class CreateSimulationService {
     if (!['pf', 'pj'].includes(personType)) {
       throw new Error('You should provide pf or pj on personType field');
     }
-
-    const company = await CompanyModel.findById(companyID);
+    const companiesRepository = new CompanyRepository();
+    const company = await companiesRepository.findByID(companyID);
     if (!company) {
       throw new Error('Company does not exists');
     }
@@ -45,6 +45,7 @@ class CreateSimulationService {
     if (!dealCategory) {
       throw new Error('Deal Category does not exists');
     }
+
     const dealProduct = await DealProductModel.findById(dealProductID);
     if (!dealProduct) {
       throw new Error('Deal product not ');
@@ -77,8 +78,10 @@ class CreateSimulationService {
       personType,
     });
 
-    company.simulations.push(simulation.id);
-    await company.save();
+    await companiesRepository.pushSimulation({
+      companyID: company.id,
+      simulationID: simulation.id,
+    });
     return simulation;
   }
 }

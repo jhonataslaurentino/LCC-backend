@@ -1,5 +1,5 @@
 import { createCompanyUseCase } from '../../../../../../CreateCompany';
-import { IWebhookRequest } from '../../../handleWebhookUseCase';
+import { IWebhookRequest } from '../../../../HandleWebhookUseCase';
 
 class PaidBillUseCase {
   async execute({
