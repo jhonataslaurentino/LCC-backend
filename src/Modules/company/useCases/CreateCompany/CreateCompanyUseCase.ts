@@ -81,7 +81,6 @@ class CreateCompanyUseCase {
       userName: userName || '',
       eduzzRecurrenceCode: recurrence_code || 0,
     });
-
     if (sendMail) {
       const mailPath = resolve(
         '.',

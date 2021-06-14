@@ -1,12 +1,13 @@
 import { Field, Int, ObjectType } from 'type-graphql';
+import { BitrixFile } from './BitrixFile';
 
 @ObjectType({ description: 'Bitrix Timeline Comment' })
 class BitrixTimeLineComment {
   @Field(() => Int)
   ID: number;
 
-  @Field(() => Date)
-  CREATED: Date;
+  @Field()
+  CREATED: string;
 
   @Field()
   ENTITY_TYPE: string;
@@ -17,8 +18,8 @@ class BitrixTimeLineComment {
   @Field()
   COMMENT: string;
 
-  @Field(() => [String])
-  FILES: string[];
+  @Field(() => [BitrixFile], { nullable: true })
+  FILES: BitrixFile[];
 }
 
 export { BitrixTimeLineComment };

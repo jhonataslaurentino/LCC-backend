@@ -32,7 +32,7 @@ class RequestRecoverPasswordUseCase {
       path: mailPath,
       variables: {
         name: company.name,
-        link: `${endpointsConfig.frontendURL}//recover-password/${token}`,
+        link: `${endpointsConfig.frontendURL}/recover-password/${token}`,
         logo_url: 'https://api.lucrandocomcredito.com.br/LCC/logo',
       },
       subject: 'Recuperar Senha',

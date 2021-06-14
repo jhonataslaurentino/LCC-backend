@@ -37,6 +37,7 @@ import BitrixDealField from '../Modules/Bitrix/schemas/BitrixDealField';
 import { getBitrixDealFieldsUseCase } from '../Modules/Bitrix/useCases/GetBitrixDealFields';
 import ListDealTimelineCommentsInput from './types/Deal/ListDealTimelineCommentsInput';
 import { listDealCommentsTimelineUseCase } from '../Modules/Bitrix/useCases/ListDealCommentsTimeline';
+import { ListDealCommentsTimeLineSchema } from '../Modules/Bitrix/useCases/ListDealCommentsTimeline/ListDealCommentsTimeLineSchema';
 
 @Resolver()
 class DealsResolver {
@@ -212,13 +213,20 @@ class DealsResolver {
     return updatedDeal;
   }
 
-  @Query(() => BitrixDeal)
+  @Query(() => ListDealCommentsTimeLineSchema)
+  @UseMiddleware(AuthenticatedChecker)
   async listTimeLineComments(
+    @Ctx()
+    ctx: ContextData,
     @Arg('data')
     { id }: ListDealTimelineCommentsInput,
-  ): Promise<BitrixDeal> {
-    listDealCommentsTimelineUseCase.execute(id);
-    throw new Error('test');
+  ): Promise<ListDealCommentsTimeLineSchema> {
+    const { id: companyID } = ctx;
+    const comments = await listDealCommentsTimelineUseCase.execute({
+      companyID,
+      id,
+    });
+    return comments;
   }
 }
 

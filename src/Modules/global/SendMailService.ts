@@ -42,21 +42,21 @@ class SendMailService {
       subject,
       html,
       from: 'Lucrando com Crédito <noreply@lucrandocomcredito.com.br',
-      attachments: [
-        {
-          filename: 'Logo.png',
-          path: resolve(
-            __dirname,
-            '..',
-            '..',
-            '..',
-            '..',
-            'assets',
-            'logo.png',
-          ),
-          cid: 'logo',
-        },
-      ],
+      // attachments: [
+      //   {
+      //     filename: 'Logo.png',
+      //     path: resolve(
+      //       __dirname,
+      //       '..',
+      //       '..',
+      //       '..',
+      //       '..',
+      //       'assets',
+      //       'logo.png',
+      //     ),
+      //     cid: 'logo',
+      //   },
+      // ],
     });
   }
 }

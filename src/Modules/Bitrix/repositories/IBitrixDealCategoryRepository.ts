@@ -1,4 +1,3 @@
-import { BitrixDeal } from '../schemas/BitrixDeal';
 import BitrixDealCategory from '../schemas/BitrixDealCategory';
 
 interface IBitrixDealCategoryRepository {

@@ -1,8 +1,8 @@
-import { Field, InputType } from 'type-graphql';
+import { Field, InputType, Int } from 'type-graphql';
 
 @InputType({ description: 'Get Deal Input Arguments' })
 class ListDealTimelineCommentsInput {
-  @Field()
+  @Field(() => Int)
   id: number;
 }
 

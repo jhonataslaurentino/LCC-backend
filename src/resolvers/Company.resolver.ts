@@ -37,6 +37,8 @@ import { authenticateCompanyUseCase } from '../Modules/company/useCases/Authenti
 import { requestRecoverPasswordUseCase } from '../Modules/company/useCases/RecoverPassword/RequestRecoverPassword';
 import { recoverPasswordUseCase } from '../Modules/company/useCases/RecoverPassword/RecoverPassword';
 import { updateAllBitrixCompaniesCPFCNPJSUseCase } from '../Modules/Bitrix/useCases/UpdateAllBitrixCompaniesCPFCNPJ';
+import { CreateCompanyInputType } from '../Modules/company/useCases/CreateCompany/CreateCompanyInput';
+import { createCompanyUseCase } from '../Modules/company/useCases/CreateCompany';
 
 @Resolver()
 class CompaniesResolver {
@@ -257,6 +259,35 @@ class CompaniesResolver {
   async updateLeftingCompanyFields(): Promise<boolean> {
     await updateAllBitrixCompaniesCPFCNPJSUseCase.execute();
     return true;
+  }
+
+  @Mutation(() => Company)
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  async addCompany(
+    @Arg('data')
+    {
+      cpf_cnpj,
+      eduzzBillID,
+      email,
+      name,
+      personName,
+      phone,
+      recurrence_code,
+      timeToExpireToken,
+    }: CreateCompanyInputType,
+  ): Promise<Company> {
+    const company = await createCompanyUseCase.execute({
+      cpf_cnpj,
+      eduzzBillID,
+      email,
+      name,
+      phone,
+      recurrence_code,
+      timeToExpireToken,
+      sendMail: true,
+      personName,
+    });
+    return company;
   }
 }
 

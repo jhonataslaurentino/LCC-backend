@@ -97,6 +97,25 @@ type BitrixDealFieldItem {
   VALUE: String!
 }
 
+"""Bitrix File"""
+type BitrixFile {
+  date: String!
+  id: Int!
+  name: String!
+  type: String!
+  urlDownload: String!
+}
+
+"""Bitrix Timeline Comment"""
+type BitrixTimeLineComment {
+  AUTHOR_ID: Int!
+  COMMENT: String!
+  CREATED: String!
+  ENTITY_TYPE: String!
+  FILES: [BitrixFile!]
+  ID: Int!
+}
+
 """Change company role arguments"""
 input ChangeCompanyRoleInput {
   roleID: String!
@@ -185,6 +204,18 @@ input CreateCompanyInput {
   personName: String!
   phone: String!
   token: String!
+}
+
+"""Create Company Args"""
+input CreateCompanyInputType {
+  cpf_cnpj: String
+  eduzzBillID: Int!
+  email: String!
+  name: String!
+  personName: String!
+  phone: String!
+  recurrence_code: Int!
+  timeToExpireToken: String!
 }
 
 """Create Deal Category Input"""
@@ -382,9 +413,15 @@ type Installment {
   interest: Float!
 }
 
+"""List Deal Comments Timeline schema"""
+type ListDealCommentsTimeLineSchema {
+  result: [BitrixTimeLineComment!]
+  total: Int!
+}
+
 """Get Deal Input Arguments"""
 input ListDealTimelineCommentsInput {
-  id: Float!
+  id: Int!
 }
 
 """Login Schema"""
@@ -394,6 +431,7 @@ type Login {
 }
 
 type Mutation {
+  addCompany(data: CreateCompanyInputType!): Company!
   addRealEstateContact(data: AddContactInput!): BitrixDeal!
   addVehicularCreditContact(data: AddVehicularCreditContactInput!): BitrixDeal!
   changeCompanyRole(data: ChangeCompanyRoleInput!): Company!
@@ -441,7 +479,7 @@ type Query {
   getSELICRate: SELICRate!
   getSimulations: [Simulation!]
   getVehicularDeals(data: GetDealsInput!): GetDealsResponse
-  listTimeLineComments(data: ListDealTimelineCommentsInput!): BitrixDeal!
+  listTimeLineComments(data: ListDealTimelineCommentsInput!): ListDealCommentsTimeLineSchema!
   verifyIfCompanySawTutorial: Boolean!
 }
 
