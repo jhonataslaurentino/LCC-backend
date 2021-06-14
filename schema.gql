@@ -494,9 +494,15 @@ input RecoverPasswordInput {
 
 """Request create company service args"""
 input RequestCreateCompanyInput {
+  eduzzBillID: Int!
   email: String!
+
+  """
+  If you do not configure the time to expire token, the system will create a token to expire in 30 days
+  """
   expiresIn: String
   name: String!
+  recurrence_code: Int
 }
 
 """Request Recover Password Args"""

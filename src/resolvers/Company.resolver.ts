@@ -23,7 +23,6 @@ import AuthenticatedChecker from '../middlewares/AuthenticatedChecker';
 import UpdateCompanyProfileInput from './types/Company/UpdateCompanyProfileInput';
 import UpdateProfileService from '../Services/UpdateProfileService';
 import RequestCreateCompanyInput from './types/Company/RequestCreateCompanyInput';
-import SendEmailToCreateCompanyService from '../Services/SendEmailToCreateCompanyService';
 import ConfirmTutorialHasBeenViewedService from '../Services/ConfirmTutorialHasBeenViewedService';
 import VerifyIfCompanySawTutorialService from '../Services/VerifyIfCompanySawTutorialService';
 import { ContextData } from '../Context/context';
@@ -39,6 +38,7 @@ import { recoverPasswordUseCase } from '../Modules/company/useCases/RecoverPassw
 import { updateAllBitrixCompaniesCPFCNPJSUseCase } from '../Modules/Bitrix/useCases/UpdateAllBitrixCompaniesCPFCNPJ';
 import { CreateCompanyInputType } from '../Modules/company/useCases/CreateCompany/CreateCompanyInput';
 import { createCompanyUseCase } from '../Modules/company/useCases/CreateCompany';
+import { sendMailToCreateCompanyUseCase } from '../Modules/company/useCases/CreateCompanyUsingEmail/SendMailToCreateCompany';
 
 @Resolver()
 class CompaniesResolver {
@@ -73,18 +73,23 @@ class CompaniesResolver {
   @Mutation(() => Boolean)
   @UseMiddleware()
   async requestCreateCompany(
-    @Arg('data') { name, email, expiresIn }: RequestCreateCompanyInput,
-  ): Promise<boolean> {
-    const emailInLowerCase = email.toLowerCase();
-
-    const requestCreateCompany = new SendEmailToCreateCompanyService();
-    const wasEmailSent = await requestCreateCompany.execute({
+    @Arg('data')
+    {
       name,
-      email: emailInLowerCase,
-      template: 'SignUp',
+      email,
       expiresIn,
+      eduzzBillID,
+      recurrence_code,
+    }: RequestCreateCompanyInput,
+  ): Promise<boolean> {
+    const wasMailSent = await sendMailToCreateCompanyUseCase.execute({
+      eduzzBillID,
+      email,
+      name,
+      timeToExpireToken: expiresIn,
+      recurrence_code,
     });
-    return wasEmailSent;
+    return wasMailSent;
   }
 
   @Mutation(() => Company)
