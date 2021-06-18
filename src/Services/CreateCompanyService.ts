@@ -98,6 +98,7 @@ class CreateCompanyService {
         eduzzBillID: tokenData.eduzzBillID || 0,
         eduzzRecurrenceCode: tokenData.recurrence_code || 0,
         isSuspended: false,
+        haveLifetimeAccess: false,
       })
     ).save();
     return company;
