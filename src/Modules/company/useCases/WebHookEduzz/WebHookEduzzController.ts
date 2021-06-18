@@ -25,7 +25,7 @@ class WebHookEduzzController {
       recurrence_status: Number(recurrence_status),
       trans_cod: Number(trans_cod),
       trans_items,
-      trans_status,
+      trans_status: Number(trans_status),
     });
     return response.status(200).send();
   }

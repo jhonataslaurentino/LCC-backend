@@ -13,6 +13,7 @@ interface ICreateCompanyDTO {
   phone: string;
   accessToken: string;
   roleID: string;
+  haveLifeTimeAccess: boolean;
 }
 
 interface ICreateCompanyTokenDTO {

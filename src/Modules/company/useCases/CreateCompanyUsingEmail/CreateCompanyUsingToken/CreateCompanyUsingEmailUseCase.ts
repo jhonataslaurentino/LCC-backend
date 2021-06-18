@@ -27,6 +27,7 @@ interface ISubData {
   eduzzBillID: number;
   timeToExpireToken: string;
   recurrence_code: number;
+  haveLifetimeAccess: boolean;
 }
 
 class CreateCompanyUsingEmailUseCase {
@@ -54,7 +55,7 @@ class CreateCompanyUsingEmailUseCase {
     } catch (error) {
       throw new Error(`Invalid JWT token: ${error}`);
     }
-    const { eduzzBillID, recurrence_code } = tokenData;
+    const { eduzzBillID, recurrence_code, haveLifetimeAccess } = tokenData;
     const createdBitrixCompanyID = await this.bitrixCompaniesRepository.createBitrixCompany(
       {
         cpf_cnpj,
@@ -79,6 +80,7 @@ class CreateCompanyUsingEmailUseCase {
       roleID: role.id,
       userName: userName || '',
       eduzzRecurrenceCode: recurrence_code || 0,
+      haveLifetimeAccess,
     });
 
     return company;

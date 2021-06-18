@@ -80,6 +80,7 @@ class CompaniesResolver {
       expiresIn,
       eduzzBillID,
       recurrence_code,
+      haveLifetimeAccess,
     }: RequestCreateCompanyInput,
   ): Promise<boolean> {
     const wasMailSent = await sendMailToCreateCompanyUseCase.execute({
@@ -88,6 +89,7 @@ class CompaniesResolver {
       name,
       timeToExpireToken: expiresIn,
       recurrence_code,
+      haveLifetimeAccess,
     });
     return wasMailSent;
   }

@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { getCompanyAvatarController } from '../useCases/GetCompanyAvatar';
-import { webhookEduzzController } from '../useCases/WebHookEduzz/index.ts';
+import { webhookEduzzController } from '../useCases/WebHookEduzz';
 
 const companiesRouter = Router();
 

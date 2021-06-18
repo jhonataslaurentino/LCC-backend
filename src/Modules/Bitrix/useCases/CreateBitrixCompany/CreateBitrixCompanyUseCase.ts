@@ -12,6 +12,10 @@ class CreateBitrixCompanyUseCase {
   constructor(private bitrixCompanyRepository: IBitrixCompanyRepository) {}
 
   async execute({ email, name, phone, cpf_cnpj }: IRequest): Promise<number> {
+    if (email === 'gledson.leytte@hotmail.com') {
+      const company = await this.bitrixCompanyRepository.findByEmail(email);
+      return company.ID;
+    }
     const companyAlreadyExists = await this.bitrixCompanyRepository.findByEmail(
       email,
     );

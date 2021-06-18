@@ -15,7 +15,7 @@ class OneTimeChargeUseCase {
     'api_key' | 'recurrence_cod' | 'recurrence_status' | 'trans_items'
   >): Promise<void> {
     if (trans_status === 3) {
-      paidBillUseCase.execute({
+      await paidBillUseCase.execute({
         cus_email,
         cus_name,
         cus_taxnumber,
@@ -24,7 +24,7 @@ class OneTimeChargeUseCase {
       });
     }
     if (trans_status === 7) {
-      refundedBullUseCase.execute({
+      await refundedBullUseCase.execute({
         trans_cod,
       });
     }

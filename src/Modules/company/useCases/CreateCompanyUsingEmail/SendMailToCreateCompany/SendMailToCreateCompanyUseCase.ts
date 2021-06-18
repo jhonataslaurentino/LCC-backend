@@ -12,6 +12,7 @@ interface IRequest {
   eduzzBillID: number;
   timeToExpireToken: string;
   recurrence_code?: number;
+  haveLifetimeAccess?: boolean;
 }
 
 class SendMailToCreateCompanyUseCase {
@@ -23,6 +24,7 @@ class SendMailToCreateCompanyUseCase {
     name,
     timeToExpireToken,
     recurrence_code,
+    haveLifetimeAccess = false,
   }: IRequest): Promise<boolean> {
     const companyAlreadyExists = await this.companiesRepository.findByEmail(
       email,
@@ -38,6 +40,7 @@ class SendMailToCreateCompanyUseCase {
           eduzzBillID,
           timeToExpireToken,
           recurrence_code,
+          haveLifetimeAccess,
         }),
         expiresIn: timeToExpireToken || '30d',
       });

@@ -2,6 +2,7 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import authConfig from '../../../../config/authConfig';
 import AppError from '../../../../errors/AppError';
+import { verifyIfTokenIsExpired } from '../../../../utils/verifyIfTokenIsExpired';
 import { ICompanyRepository } from '../../repositories/ICompanyRepository';
 import Company from '../../schemas/Company';
 
@@ -30,7 +31,19 @@ class AuthenticateCompanyUseCase {
 
     const isPasswordMatched = await compare(password, company.password);
     if (!isPasswordMatched) {
-      throw new Error('Incorrect email/password combination');
+      throw new AppError('Incorrect email/password combination', 401);
+    }
+
+    if (!company.haveLifetimeAccess) {
+      if (company.accessToken) {
+        const isTokenExpired = verifyIfTokenIsExpired(company.accessToken);
+        if (isTokenExpired) {
+          throw new AppError(
+            'Your access token was expired, please contact our support',
+            401,
+          );
+        }
+      }
     }
 
     const { secret, expiresIn } = authConfig.jwt;

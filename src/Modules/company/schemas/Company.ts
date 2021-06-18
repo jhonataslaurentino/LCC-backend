@@ -106,4 +106,8 @@ export default class Company {
   @Field(() => Boolean, { nullable: true })
   @Property()
   isSuspended: boolean;
+
+  @Field(() => Boolean, { nullable: true })
+  @Property({ default: false })
+  haveLifetimeAccess: boolean;
 }

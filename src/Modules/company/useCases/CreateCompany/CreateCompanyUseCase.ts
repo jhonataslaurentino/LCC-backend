@@ -29,6 +29,7 @@ interface IRequest {
   userName?: string;
   sendMail?: boolean;
   mailOptions?: IMailOptionsDTO;
+  haveLifetimeAccess?: boolean;
 }
 
 class CreateCompanyUseCase {
@@ -50,12 +51,14 @@ class CreateCompanyUseCase {
     personName,
     userName,
     sendMail = false,
+    haveLifetimeAccess = false,
   }: IRequest): Promise<Company> {
     const accessToken = this.companiesRepository.createCompanyToken({
       eduzzBillID,
       recurrence_code: recurrence_code || 0,
       timeToExpireToken,
     });
+
     const createdBitrixCompanyID = await this.bitrixCompaniesRepository.createBitrixCompany(
       {
         cpf_cnpj,
@@ -80,6 +83,7 @@ class CreateCompanyUseCase {
       roleID: role.id,
       userName: userName || '',
       eduzzRecurrenceCode: recurrence_code || 0,
+      haveLifetimeAccess,
     });
     if (sendMail) {
       const mailPath = resolve(

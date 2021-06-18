@@ -18,13 +18,16 @@ class CreateCompanyService {
     phone,
     roleID,
     userName,
+    haveLifetimeAccess,
   }: ICreateCompanyDTO): Promise<Company> {
     const companyAlreadyExists = await CompanyModel.findOne({
       email,
     });
+
     if (companyAlreadyExists) {
       throw new AppError('Company already exists', 409);
     }
+
     const hashedPassword = await hash(password, 8);
     const company = await CompanyModel.create({
       accessToken,
@@ -47,6 +50,7 @@ class CreateCompanyService {
       sawTutorial: false,
       simulations: [],
       userName,
+      haveLifetimeAccess,
     });
     return company;
   }

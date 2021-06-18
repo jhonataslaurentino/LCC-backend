@@ -23,4 +23,7 @@ export default class RequestCreateCompanyInput {
 
   @Field(() => Int, { nullable: true })
   recurrence_code: number;
+
+  @Field(() => Boolean, { nullable: true })
+  haveLifetimeAccess: boolean;
 }

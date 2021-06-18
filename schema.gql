@@ -143,6 +143,7 @@ type Company {
 
   """The company email"""
   email: String!
+  haveLifetimeAccess: Boolean
   id: ID!
   isSuspended: Boolean
   logoBitrixFileID: Float
@@ -501,6 +502,7 @@ input RequestCreateCompanyInput {
   If you do not configure the time to expire token, the system will create a token to expire in 30 days
   """
   expiresIn: String
+  haveLifetimeAccess: Boolean
   name: String!
   recurrence_code: Int
 }

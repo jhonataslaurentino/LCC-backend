@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc && cp -a ./src/views/ ./dist/",
-    "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn src/server.ts",
+    "dev": "ts-node-dev --inspect=4001 --transpile-only --ignore-watch node_modules --trace-warnings --respawn src/server.ts",
     "start": "dist/server.js"
   },
   "dependencies": {
