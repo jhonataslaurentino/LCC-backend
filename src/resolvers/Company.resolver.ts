@@ -8,9 +8,6 @@ import {
 } from 'type-graphql';
 import Login from '../Schemas/Login';
 import RequestRecoverPasswordResponse from '../Schemas/RequestRecoverPasswordResponse';
-import CreateCompanyAtBitrixService from '../Services/CreateCompanyAtBitrixService';
-import CreateCompanyService from '../Services/CreateCompanyService';
-import UpdateBitrixIdService from '../Services/UpdateBitrixIdService';
 import AuthenticationCompanyInput from './types/Company/AuthenticationCompanyInput';
 import CreateCompanyInput from './types/Company/CreateCompanyInput';
 import RecoverPasswordInput from './types/Company/RecoverPasswordInput';
@@ -39,6 +36,7 @@ import { updateAllBitrixCompaniesCPFCNPJSUseCase } from '../Modules/Bitrix/useCa
 import { CreateCompanyInputType } from '../Modules/company/useCases/CreateCompany/CreateCompanyInput';
 import { createCompanyUseCase } from '../Modules/company/useCases/CreateCompany';
 import { sendMailToCreateCompanyUseCase } from '../Modules/company/useCases/CreateCompanyUsingEmail/SendMailToCreateCompany';
+import { createCompanyUsingEmailUseCase } from '../Modules/company/useCases/CreateCompanyUsingEmail/CreateCompanyUsingToken';
 
 @Resolver()
 class CompaniesResolver {
@@ -103,35 +101,20 @@ class CompaniesResolver {
       email,
       password,
       cpf_cnpj,
-      bitrix_id,
       phone,
       token,
     }: CreateCompanyInput,
   ): Promise<Company> {
     const emailInLowerCase = email.toLowerCase();
 
-    const createCompanyService = new CreateCompanyService();
-    const company = await createCompanyService.execute({
-      name,
-      personName,
-      email: emailInLowerCase,
-      password,
+    const registeredCompany = await createCompanyUsingEmailUseCase.execute({
+      accessToken: token,
       cpf_cnpj,
-      bitrix_id,
-      token,
-    });
-
-    const createCompanyAtBitrixService = new CreateCompanyAtBitrixService();
-    const companyAtBitrixID = await createCompanyAtBitrixService.execute({
       email: emailInLowerCase,
-      title: name,
+      name,
       phone,
-    });
-
-    const updateBitrixIdService = new UpdateBitrixIdService();
-    const registeredCompany = await updateBitrixIdService.execute({
-      company_id: company.id,
-      bitrix_id: companyAtBitrixID,
+      password,
+      personName,
     });
 
     registeredCompany.password = '';
