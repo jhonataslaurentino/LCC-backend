@@ -1,5 +1,6 @@
 import Company from '../../../schemas/Company';
 import {
+  IChangeCompanyEmailDTO,
   IChangePasswordDTO,
   ICompanyRepository,
   ICreateCompanyDTO,
@@ -8,6 +9,7 @@ import {
   IPushSimulationForCompanyDTO,
   IUpdateCompanyTokenDTO,
 } from '../../ICompanyRepository';
+import { ChangeCompanyEmailService } from './services/ChangeCompanyEmailService';
 import { ChangeCompanyPasswordService } from './services/ChangeCompanyPasswordService';
 import { CreateCompanyService } from './services/CreateCompanyService';
 import { CreateCompanyTokenService } from './services/CreateCompanyTokenService';
@@ -23,6 +25,12 @@ import { SuspendCompanyService } from './services/SuspendCompanyService';
 import { UpdateCompanyTokenService } from './services/UpdateCompanyTokenService';
 
 class CompanyRepository implements ICompanyRepository {
+  async changeCompanyEmail(data: IChangeCompanyEmailDTO): Promise<Company> {
+    const changeCompanyEmailService = new ChangeCompanyEmailService();
+    const company = await changeCompanyEmailService.execute(data);
+    return company;
+  }
+
   async list(): Promise<Company[]> {
     const listAllCompaniesService = new ListAllCompaniesService();
     const companies = await listAllCompaniesService.execute();

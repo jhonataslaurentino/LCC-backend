@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from 'type-graphql';
-import { BitrixFile } from './BitrixFile';
+import { BitrixTimelineFile } from './BitrixTimelineFile';
 
 @ObjectType({ description: 'Bitrix Timeline Comment' })
 class BitrixTimeLineComment {
@@ -18,8 +18,8 @@ class BitrixTimeLineComment {
   @Field()
   COMMENT: string;
 
-  @Field(() => [BitrixFile], { nullable: true })
-  FILES: BitrixFile[];
+  @Field(() => [BitrixTimelineFile], { nullable: true })
+  FILES: BitrixTimelineFile[];
 }
 
 export { BitrixTimeLineComment };

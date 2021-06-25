@@ -14,7 +14,7 @@ import CreateDealProductService from '../Services/deals/dealsCategories/CreateDe
 @Resolver()
 class DealProductResolver {
   @Mutation(() => DealProduct)
-  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired([permissions.admin]))
   async createDealProduct(
     @Arg('data')
     {
@@ -44,7 +44,7 @@ class DealProductResolver {
   }
 
   @Mutation(() => DealProduct)
-  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired([permissions.admin]))
   async editDealProduct(
     @Arg('data')
     { averageRate, competitiveRate, name, id }: EditDealProductInput,
@@ -60,7 +60,7 @@ class DealProductResolver {
   }
 
   @Mutation(() => DealProduct)
-  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired([permissions.admin]))
   async deleteDealProduct(
     @Arg('data')
     { id }: DeleteDealProductInput,

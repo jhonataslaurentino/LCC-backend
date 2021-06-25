@@ -6,7 +6,7 @@ import { RoleRepository } from '../Modules/company/repositories/implementations/
 import { getDefaultRoleForCompanyByEmailUseCase } from '../Modules/company/useCases/GetDefaultRoleForCompanyByEmail';
 
 function PermissionRequired(
-  permissionValue: number,
+  permissionValues: number[],
 ): MiddlewareFn<ContextData> {
   return async ({ context }: ResolverData<ContextData>, next: NextFn) => {
     const { id } = context;
@@ -23,13 +23,15 @@ function PermissionRequired(
     }
     const rolesRepository = new RoleRepository();
     const companyRole = await RoleModel.findById(company.roleId);
-    const hasPermission = rolesRepository.verifyIfHasPermission({
-      permissionValue,
-      rolePermissionValue: companyRole.permissions,
+    permissionValues.forEach(async permissionValue => {
+      const hasPermission = rolesRepository.verifyIfHasPermission({
+        permissionValue,
+        rolePermissionValue: companyRole.permissions,
+      });
+      if (!hasPermission) {
+        throw new Error('You do not have permission to access this area');
+      }
     });
-    if (!hasPermission) {
-      throw new Error('You do not have permission to access this area');
-    }
     return next();
   };
 }

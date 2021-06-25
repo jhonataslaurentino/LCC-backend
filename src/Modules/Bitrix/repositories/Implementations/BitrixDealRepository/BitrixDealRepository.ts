@@ -8,7 +8,8 @@ import {
   ICreateRealEstateDealDTO,
   ICreateVehicularDealDTO,
   IFindByCompanyIDDTO,
-  IFindByCompanyIDResponse,
+  IListDealsResponse,
+  IListDealsDTO,
   IUpdateDealDTO,
 } from '../../IBitrixDealRepository';
 import { CreateRealEstateDealService } from './service/CreateRealEstateDealService';
@@ -16,6 +17,7 @@ import { CreateVehicularDealService } from './service/CreateVehicularDealService
 import { FindBitrixDealByIDService } from './service/FindBitrixDealByIDService';
 import { GetBitrixDealsByCompanyIDService } from './service/GetBitrixDealByCompanyIDService';
 import { GetBitrixDealFieldsService } from './service/GetBitrixDealFieldsService';
+import { ListDealsService } from './service/ListDealsService';
 import { UpdateBitrixDealFieldService } from './service/UpdateBitrixDealFieldService';
 
 class BitrixDealRepository implements IBitrixDealRepository {
@@ -27,6 +29,12 @@ class BitrixDealRepository implements IBitrixDealRepository {
     this.api = axios.create({
       baseURL: endpointsConfig.bitrixBaseURL,
     });
+  }
+
+  async list(data: IListDealsDTO): Promise<IListDealsResponse> {
+    const listDealsService = new ListDealsService(this.api);
+    const response = await listDealsService.execute(data);
+    return response;
   }
 
   async CreateRealEstateDeal(
@@ -93,7 +101,7 @@ class BitrixDealRepository implements IBitrixDealRepository {
     companyID,
     page,
     category_id,
-  }: IFindByCompanyIDDTO): Promise<IFindByCompanyIDResponse> {
+  }: IFindByCompanyIDDTO): Promise<IListDealsResponse> {
     const getBitrixDealsByCompanyIDService = new GetBitrixDealsByCompanyIDService(
       this.api,
     );

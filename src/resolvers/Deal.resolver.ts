@@ -101,14 +101,14 @@ class DealsResolver {
   }
 
   @Query(() => [BitrixDealCategory])
-  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired([permissions.admin]))
   async getBitrixDealsCategories(): Promise<BitrixDealCategory[]> {
     const bitrixDealsCategories = await listBitrixDealsCategoriesUseCase.execute();
     return bitrixDealsCategories;
   }
 
   @Mutation(() => DealCategory)
-  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired([permissions.admin]))
   async createDealCategory(
     @Arg('data')
     {
@@ -133,7 +133,7 @@ class DealsResolver {
   }
 
   @Mutation(() => DealCategory)
-  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired([permissions.admin]))
   async deleteDealCategory(
     @Arg('data')
     { id }: DeleteDealCategoryInput,
@@ -153,7 +153,7 @@ class DealsResolver {
   }
 
   @Query(() => [BitrixDealField], { nullable: true })
-  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired([permissions.admin]))
   async getBitrixDealFields(): Promise<BitrixDealField[]> {
     const fields = await getBitrixDealFieldsUseCase.execute();
     return fields;
@@ -184,7 +184,7 @@ class DealsResolver {
   }
 
   @Mutation(() => DealCategory)
-  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired([permissions.admin]))
   async switchDealCategoryVisibility(
     @Arg('data')
     { dealCategoryID }: SwitchDealCategoryVisibilityInput,

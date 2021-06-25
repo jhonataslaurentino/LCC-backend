@@ -15,10 +15,10 @@ class BitrixContact {
   @Field(() => Int, { nullable: true })
   COMPANY_ID: number;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   DATE_CREATE: Date;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   DATE_MODIFY: Date;
 
   @Field(() => [ContactInfo], { nullable: true })
@@ -29,6 +29,12 @@ class BitrixContact {
 
   @Field(() => Int, { nullable: true })
   CREATED_BY_ID: number;
+
+  @Field({ nullable: true, description: 'Contact CNPJ' })
+  UF_CRM_1607694757: string;
+
+  @Field({ nullable: true, description: 'Contact CPF' })
+  UF_CRM_1602185690: string;
 }
 
 export { BitrixContact };

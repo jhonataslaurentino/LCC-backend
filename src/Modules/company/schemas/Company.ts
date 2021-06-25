@@ -1,9 +1,11 @@
-import { prop as Property, Ref } from '@typegoose/typegoose';
+import { plugin, prop as Property, Ref } from '@typegoose/typegoose';
 import { Field, ID, Int, ObjectType } from 'type-graphql';
+import * as autopopulate from 'mongoose-autopopulate';
 import Role from './Role';
 import Simulation from './Simulation';
 
 @ObjectType({ description: 'The company schema' })
+@plugin(autopopulate.default)
 export default class Company {
   @Field(() => ID)
   id?: string;
@@ -79,8 +81,8 @@ export default class Company {
   @Property()
   sawTutorial: boolean;
 
-  @Field(() => String, { nullable: true })
-  @Property({ ref: () => Role, type: () => String })
+  @Field(() => Role, { nullable: true })
+  @Property({ autopopulate: true, ref: () => Role })
   roleId: Ref<Role>;
 
   @Field(() => Date, { nullable: true })
@@ -99,8 +101,8 @@ export default class Company {
   @Property()
   accessToken: string;
 
-  @Field(() => [String], { nullable: true })
-  @Property({ ref: () => Simulation, type: () => String })
+  @Field(() => [Simulation], { nullable: true })
+  @Property({ autopopulate: true, ref: () => Simulation })
   simulations: Ref<Simulation>[];
 
   @Field(() => Boolean, { nullable: true })

@@ -8,7 +8,7 @@ import GetAdminDataResponse from './types/Admin/GetAdminDataResponse';
 @Resolver()
 class AdminResolver {
   @Query(() => GetAdminDataResponse)
-  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired([permissions.admin]))
   async getAdminData(): Promise<GetAdminDataResponse> {
     const getAdminDataService = new GetAdminDataService();
     const adminData = await getAdminDataService.execute();

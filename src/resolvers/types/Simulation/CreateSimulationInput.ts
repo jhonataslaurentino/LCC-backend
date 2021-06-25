@@ -40,7 +40,7 @@ class CreateSimulationInput {
   name: string;
 
   @Field()
-  @Validate(CPFValidator, { message: 'You should provid a valid CPF' })
+  @Validate(CPFValidator, { message: 'You should provide a valid CPF' })
   cpf: string;
 
   @Field()

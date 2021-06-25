@@ -1,21 +1,36 @@
 import { Field, Int, ObjectType } from 'type-graphql';
 
-@ObjectType({ description: 'Bitrix File' })
+@ObjectType({ description: 'Bitrix File Schema' })
 class BitrixFile {
   @Field(() => Int)
-  id: number;
+  ID: number;
 
   @Field()
-  date: string;
+  NAME: string;
 
   @Field()
-  type: string;
+  TYPE: string;
+
+  @Field({ nullable: true })
+  CODE: string;
+
+  @Field(() => Int)
+  STORAGE_ID: number;
+
+  @Field(() => Int)
+  PARENT_ID: number;
 
   @Field()
-  name: string;
+  CREATE_TIME: Date;
 
   @Field()
-  urlDownload: string;
+  UPDATE_TIME: Date;
+
+  @Field(() => Int)
+  FILE_ID: number;
+
+  @Field(() => Int)
+  SIZE: number;
 }
 
 export { BitrixFile };

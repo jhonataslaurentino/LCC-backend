@@ -22,7 +22,7 @@ class BitrixContactRepository implements IBitrixContactRepository {
     });
   }
 
-  async findByID(id: number): Promise<BitrixContact> {
+  async findByID(id: number): Promise<BitrixContact | null> {
     const getBitrixContactService = new GetBitrixContactService(this.api);
     const contact = await getBitrixContactService.execute(id);
     return contact;

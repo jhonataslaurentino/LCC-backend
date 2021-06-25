@@ -43,6 +43,18 @@ input AddVehicularCreditContactInput {
   vehicularCreditType: String!
 }
 
+"""Partner Authentication"""
+input AuthenticatePartnerInput {
+  email: String!
+  password: String!
+}
+
+"""Login Schema"""
+type AuthenticatePartnerSchema {
+  partner: Partner!
+  token: String!
+}
+
 """Company's Authentication Args"""
 input AuthenticationCompanyInput {
   email: String!
@@ -58,6 +70,25 @@ type BasicCompany {
   """The company name"""
   name: String!
   phone: String
+}
+
+"""Contact schema"""
+type BitrixContact {
+  COMPANY_ID: Int
+  CREATED_BY_ID: Int
+  DATE_CREATE: String
+  DATE_MODIFY: String
+  EMAIL: [ContactInfo!]
+  ID: Int!
+  LAST_NAME: String
+  NAME: String
+  PHONE: [ContactInfo!]
+
+  """Contact CPF"""
+  UF_CRM_1602185690: String
+
+  """Contact CNPJ"""
+  UF_CRM_1607694757: String
 }
 
 """The company deal's schema"""
@@ -97,8 +128,18 @@ type BitrixDealFieldItem {
   VALUE: String!
 }
 
+"""Bitrix Timeline Comment"""
+type BitrixTimeLineComment {
+  AUTHOR_ID: Int!
+  COMMENT: String!
+  CREATED: String!
+  ENTITY_TYPE: String!
+  FILES: [BitrixTimelineFile!]
+  ID: Int!
+}
+
 """Bitrix File"""
-type BitrixFile {
+type BitrixTimelineFile {
   date: String!
   id: Int!
   name: String!
@@ -106,19 +147,26 @@ type BitrixFile {
   urlDownload: String!
 }
 
-"""Bitrix Timeline Comment"""
-type BitrixTimeLineComment {
-  AUTHOR_ID: Int!
-  COMMENT: String!
-  CREATED: String!
-  ENTITY_TYPE: String!
-  FILES: [BitrixFile!]
-  ID: Int!
+"""
+Change company email arguments. You should be an administrator to change a company email
+"""
+input ChangeCompanyEmailInput {
+  companyID: String!
+  newEmail: String!
 }
 
 """Change company role arguments"""
 input ChangeCompanyRoleInput {
   roleID: String!
+}
+
+"""Change platform colors arguments"""
+input ChangePlatformColorsInput {
+  """Primary color (HEX)"""
+  primaryColor: String!
+
+  """Secondary color (HEX)"""
+  secondaryColor: String!
 }
 
 """The company schema"""
@@ -159,9 +207,9 @@ type Company {
   """The person name"""
   personName: String!
   phone: String
-  roleId: String
+  roleId: Role
   sawTutorial: Boolean
-  simulations: [String!]
+  simulations: [Simulation!]
   updatedAt: DateTime
 
   """The user name"""
@@ -186,6 +234,17 @@ type ContactInfo {
   ID: Int!
   VALUE: String!
   VALUE_TYPE: String!
+}
+
+"""
+Create Associate Partner Arguments. You should be a partner to create an associate user
+"""
+input CreateAssociateInput {
+  cpf_cnpj: String!
+  email: String!
+  name: String!
+  password: String!
+  phone: String!
 }
 
 """Create Basic Company Args"""
@@ -236,6 +295,18 @@ input CreateDealProductInput {
   competitiveRate: Float!
   dealCategoryID: String!
   name: String
+}
+
+"""
+Create Partner Arguments. You should be an administrator to create a partner
+"""
+input CreatePartnerInput {
+  cpf_cnpj: String!
+  email: String!
+  name: String!
+  password: String!
+  phone: String!
+  siteURL: String!
 }
 
 """Create simulation input data"""
@@ -331,16 +402,14 @@ input FileInput {
   fileName: String!
 }
 
-type GetAdminDataResponse {
-  activeAccounts: Int!
-  inactiveAccounts: Int!
-  numberOfNewBusiness: Int!
-  numberOfPlatformAccess: Int!
-}
-
 """Get Bitrix Deal Field Items Input"""
 input GetBitrixDealFieldItemsInput {
   dealFieldKey: String!
+}
+
+"""Get contact arguments"""
+input GetCompanyContactInput {
+  contactID: Int!
 }
 
 """Get Company Info Args"""
@@ -397,6 +466,32 @@ input GetDealsUpdatedInput {
   page: Int
 }
 
+"""Get Deals Input Arguments"""
+input GetPartnerDealsInput {
+  dealCategoryID: String!
+  page: Int
+}
+
+"""Get Partner Deals Output Schema. This will return a pagination"""
+type GetPartnerDealsSchema {
+  """
+  If there are more deals, you can pass this value as an argument into page parameter to get the next page of deals
+  """
+  next: Int
+
+  """The list of deals"""
+  result: [BitrixDeal!]
+
+  """The number of deals gathered"""
+  total: Int!
+}
+
+"""Get partner styles arguments"""
+input GetPartnerStyleInput {
+  """ID of the partner master"""
+  partnerID: String!
+}
+
 """Get Simulation Installments Input"""
 input GetSimulationInstallmentsInput {
   loanAmount: Float!
@@ -432,15 +527,27 @@ type Login {
 }
 
 type Mutation {
+  CreatePartner(data: CreatePartnerInput!): Partner!
   addCompany(data: CreateCompanyInputType!): Company!
   addRealEstateContact(data: AddContactInput!): BitrixDeal!
   addVehicularCreditContact(data: AddVehicularCreditContactInput!): BitrixDeal!
+
+  """
+  You can use this mutation to change a company email. To do it, you should be an administrator user
+  """
+  changeCompanyEmail(data: ChangeCompanyEmailInput!): Company!
   changeCompanyRole(data: ChangeCompanyRoleInput!): Company!
+  changePlatformColors(args: ChangePlatformColorsInput!): PartnerStyleSchema!
   confirmTutorialHasBeenViewed: Company!
   createBasicCompany(data: CreateBasicCompanyInput!): BasicCompany!
   createCompany(data: CreateCompanyInput!): Company!
   createDealCategory(data: CreateDealCategoryInput!): DealCategory!
   createDealProduct(data: CreateDealProductInput!): DealProduct!
+
+  """
+  Create a associate partner. You should be a partner to create your associates
+  """
+  createPartnerAssociate(data: CreateAssociateInput!): Partner!
   createSimulation(data: CreateSimulationInput!): Simulation!
   deleteDealCategory(data: DeleteDealCategoryInput!): DealCategory!
   deleteDealProduct(data: DeleteDealProductInput!): DealProduct!
@@ -449,6 +556,7 @@ type Mutation {
   getPriceTableSimulation(data: GetSimulationInstallmentsInput!): [Installment!]!
   getSACSimulation(data: GetSimulationInstallmentsInput!): [Installment!]!
   login(data: AuthenticationCompanyInput!): Login!
+  loginPartner(data: AuthenticatePartnerInput!): AuthenticatePartnerSchema!
   recoverPassword(data: RecoverPasswordInput!): Company!
   removeProfilePicture: Company!
   requestCreateCompany(data: RequestCreateCompanyInput!): Boolean!
@@ -460,12 +568,54 @@ type Mutation {
   updateProfile(data: UpdateCompanyProfileInput!): Company!
 }
 
+"""Partner Schema"""
+type Partner {
+  associates: [Partner!]
+  avatarBitrixFileID: Float
+
+  """The ID returned from Bitrix platform"""
+  bitrix_id: Int
+  cpf_cnpj: String!
+  createdAt: DateTime
+  createdBy: Partner
+
+  """The partner's email"""
+  email: String!
+  id: ID!
+  isSuspended: Boolean
+  logoBitrixFileID: Float
+
+  """The company name"""
+  name: String!
+
+  """The hashed Partner password. It should not be returned at any request"""
+  password: String!
+  phone: String!
+
+  """Primary color value (hex)"""
+  primaryColor: String!
+  roleID: Role
+
+  """Secondary color value (hex"""
+  secondaryColor: String!
+  simulations: [Simulation!]
+  siteURL: String!
+  updatedAt: DateTime
+}
+
+"""Colors and images to use in the partner platform"""
+type PartnerStyleSchema {
+  logoURL: String!
+  primaryColor: String!
+  secondaryColor: String!
+}
+
 type Query {
-  getAdminData: GetAdminDataResponse!
   getBasicCompanies: [BasicCompany!]
   getBitrixDealFieldItems(data: GetBitrixDealFieldItemsInput!): [BitrixDealFieldItem!]
   getBitrixDealFields: [BitrixDealField!]
   getBitrixDealsCategories: [BitrixDealCategory!]!
+  getCompanyContact(data: GetCompanyContactInput!): BitrixContact!
   getCompanyInfo(data: GetCompanyInfoInput!): Company!
   getCompanyRole: Role!
   getContacts(data: GetContactsInput!): GetContactsResponse!
@@ -476,10 +626,15 @@ type Query {
 
   """The company should use this resolver to get your deals"""
   getDealsUpdated(data: GetDealsUpdatedInput!): GetDealsResponse
+
+  """Get partner's deals"""
+  getPartnerDeals(data: GetPartnerDealsInput!): GetPartnerDealsSchema!
+  getPartnerStyle(data: GetPartnerStyleInput!): PartnerStyleSchema!
   getRoles: [Role!]
   getSELICRate: SELICRate!
   getSimulations: [Simulation!]
   getVehicularDeals(data: GetDealsInput!): GetDealsResponse
+  listPartners: [Partner!]
   listTimeLineComments(data: ListDealTimelineCommentsInput!): ListDealCommentsTimeLineSchema!
   verifyIfCompanySawTutorial: Boolean!
 }
@@ -520,7 +675,7 @@ type RequestRecoverPasswordResponse {
 
 """The user role schema"""
 type Role {
-  companies: [String!]
+  companies: [Company!]
 
   """Created date of the model"""
   createdAt: DateTime
@@ -546,14 +701,14 @@ type SELICRate {
 type Simulation {
   amortizationType: Int!
   averageRate: Float!
-  company: String
+  company: Company
   competitiveRate: Float!
   cpf: String!
 
   """Created date of the model"""
   createdAt: DateTime
-  dealCategory: String!
-  dealProduct: String!
+  dealCategory: DealCategory!
+  dealProduct: DealProduct!
   email: String!
   id: ID!
   name: String!

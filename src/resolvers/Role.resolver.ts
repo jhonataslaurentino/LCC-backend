@@ -10,7 +10,7 @@ import { getCompanyRoleUseCase } from '../Modules/company/useCases/GetCompanyRol
 @Resolver()
 class RolesResolver {
   @Query(() => [Role], { nullable: true })
-  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired([permissions.admin]))
   async getRoles(): Promise<Role[]> {
     const rolesRepository = new RoleRepository();
     const roles = await rolesRepository.list();

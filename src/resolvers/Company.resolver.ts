@@ -69,7 +69,7 @@ class CompaniesResolver {
   }
 
   @Mutation(() => Boolean)
-  @UseMiddleware()
+  @UseMiddleware(PermissionRequired([permissions.admin]))
   async requestCreateCompany(
     @Arg('data')
     {
@@ -227,7 +227,7 @@ class CompaniesResolver {
   }
 
   @Mutation(() => Company)
-  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired([permissions.admin]))
   async changeCompanyRole(
     @Ctx()
     contextData: ContextData,
@@ -245,14 +245,14 @@ class CompaniesResolver {
   }
 
   @Mutation(() => Boolean)
-  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired([permissions.admin]))
   async updateLeftingCompanyFields(): Promise<boolean> {
     await updateAllBitrixCompaniesCPFCNPJSUseCase.execute();
     return true;
   }
 
   @Mutation(() => Company)
-  @UseMiddleware(AuthenticatedChecker, PermissionRequired(permissions.admin))
+  @UseMiddleware(AuthenticatedChecker, PermissionRequired([permissions.admin]))
   async addCompany(
     @Arg('data')
     {

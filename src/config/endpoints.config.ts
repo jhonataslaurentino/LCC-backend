@@ -6,6 +6,7 @@ export default {
   serverPort: Number(process.env.PORT),
   bitrixBaseURL: String(process.env.BITRIX_URL),
   bitrixAvatarFolderID: Number(process.env.PROFILE_AVATAR_FOLDER_ID),
+  timelineFolderID: Number(process.env.TIMELINE_FOLDER_ID),
   serverMode: String(process.env.NODE_ENV),
   databaseURL: String(process.env.DATABASE_URL),
   mailUserName: String(process.env.MAIL_USERNAME),

@@ -1,8 +1,10 @@
-import { prop as Property, Ref } from '@typegoose/typegoose';
+import { plugin, prop as Property, Ref } from '@typegoose/typegoose';
 import { Field, ID, ObjectType, Int } from 'type-graphql';
+import * as autopopulate from 'mongoose-autopopulate';
 import Company from './Company';
 
 @ObjectType({ description: 'The user role schema' })
+@plugin(autopopulate.default)
 class Role {
   @Field(() => ID)
   id: string;
@@ -15,8 +17,12 @@ class Role {
   @Property({ default: 0 })
   permissions: number;
 
-  @Field(() => [String], { nullable: true })
-  @Property({ ref: () => Company, default: [], type: () => [String] })
+  @Field(() => [Company], { nullable: true })
+  @Property({
+    autopopulate: true,
+    ref: () => Company,
+    default: [],
+  })
   companies: Ref<Company>[];
 
   @Field(() => Date, {

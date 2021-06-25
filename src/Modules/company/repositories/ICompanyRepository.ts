@@ -40,6 +40,11 @@ interface IPushSimulationForCompanyDTO {
   companyID: string;
 }
 
+interface IChangeCompanyEmailDTO {
+  companyID: string;
+  newEmail: string;
+}
+
 interface ICompanyRepository {
   findByID(id: string): Promise<Company>;
   removeAvatar(id: string): Promise<Company>;
@@ -54,6 +59,10 @@ interface ICompanyRepository {
   changePassword(data: IChangePasswordDTO): Promise<Company>;
   pushSimulation(data: IPushSimulationForCompanyDTO): Promise<Company>;
   list(): Promise<Company[]>;
+  changeCompanyEmail({
+    companyID,
+    newEmail,
+  }: IChangeCompanyEmailDTO): Promise<Company>;
 }
 
 export {
@@ -64,4 +73,5 @@ export {
   IUpdateCompanyTokenDTO,
   IChangePasswordDTO,
   IPushSimulationForCompanyDTO,
+  IChangeCompanyEmailDTO,
 };

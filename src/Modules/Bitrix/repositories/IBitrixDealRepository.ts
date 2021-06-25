@@ -7,7 +7,7 @@ interface IFindByCompanyIDDTO {
   category_id: string;
 }
 
-interface IFindByCompanyIDResponse {
+interface IListDealsResponse {
   result: BitrixDeal[];
   total: number;
   next: number;
@@ -50,17 +50,29 @@ interface ICreateRealEstateDealDTO {
   propertyID: string;
 }
 
+interface IGenericObjectDTO {
+  [key: string]: string | string[] | number | number[] | Date | Date[];
+}
+
+interface IListDealsDTO {
+  page: number;
+  categoryID: number;
+  filter?: IGenericObjectDTO;
+  companyID: number | number[];
+}
+
 interface IBitrixDealRepository {
   findByCompanyID({
     companyID,
     page,
     category_id,
-  }: IFindByCompanyIDDTO): Promise<IFindByCompanyIDResponse>;
+  }: IFindByCompanyIDDTO): Promise<IListDealsResponse>;
   UpdateDealField(data: IUpdateDealDTO): Promise<BitrixDeal>;
   findByID(id: string): Promise<BitrixDeal>;
   listFields(): Promise<BitrixDealField[]>;
   CreateVehicularDeal(data: ICreateVehicularDealDTO): Promise<BitrixDeal>;
   CreateRealEstateDeal(data: ICreateRealEstateDealDTO): Promise<BitrixDeal>;
+  list(data: IListDealsDTO): Promise<IListDealsResponse>;
 }
 
 export {
@@ -68,6 +80,7 @@ export {
   IFindByCompanyIDDTO,
   ICreateVehicularDealDTO,
   ICreateRealEstateDealDTO,
-  IFindByCompanyIDResponse,
+  IListDealsResponse,
   IUpdateDealDTO,
+  IListDealsDTO,
 };

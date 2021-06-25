@@ -1,10 +1,12 @@
 import { Field, Float, ID, Int, ObjectType } from 'type-graphql';
-import { prop as Property, Ref } from '@typegoose/typegoose';
+import { plugin, prop as Property, Ref } from '@typegoose/typegoose';
+import * as autopopulate from 'mongoose-autopopulate';
 import DealCategory from '../../../Schemas/DealCategory';
 import DealProduct from '../../../Schemas/DealProduct';
 import Company from './Company';
 
 @ObjectType({ description: 'Simulation Schema' })
+@plugin(autopopulate.default)
 class Simulation {
   @Field(() => ID)
   id: string;
@@ -41,12 +43,12 @@ class Simulation {
   @Property()
   competitiveRate: number;
 
-  @Field(() => String)
-  @Property({ ref: () => DealCategory })
+  @Field(() => DealCategory)
+  @Property({ autopopulate: true, ref: () => DealCategory })
   dealCategory: Ref<DealCategory>;
 
-  @Field(() => String)
-  @Property({ ref: () => DealProduct })
+  @Field(() => DealProduct)
+  @Property({ autopopulate: true, ref: () => DealProduct })
   dealProduct: Ref<DealProduct>;
 
   @Field(() => Float)
@@ -69,8 +71,8 @@ class Simulation {
   @Property({ default: Date.now() })
   updatedAt: Date;
 
-  @Field(() => String, { nullable: true })
-  @Property({ ref: () => Company })
+  @Field(() => Company, { nullable: true })
+  @Property({ autopopulate: true, ref: () => Company })
   company: Ref<Company>;
 
   @Field(() => Int)
