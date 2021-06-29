@@ -160,6 +160,14 @@ input ChangeCompanyRoleInput {
   roleID: String!
 }
 
+"""Change partner information arguments"""
+input ChangePartnerInformationInput {
+  companyName: String!
+  name: String!
+  password: String!
+  phone: String!
+}
+
 """Change platform colors arguments"""
 input ChangePlatformColorsInput {
   """Primary color (HEX)"""
@@ -492,6 +500,11 @@ input GetPartnerStyleInput {
   partnerID: String!
 }
 
+"""Get partner platform logo query arguments"""
+input GetPlatformLogoInput {
+  partnerID: String!
+}
+
 """Get Simulation Installments Input"""
 input GetSimulationInstallmentsInput {
   loanAmount: Float!
@@ -537,7 +550,10 @@ type Mutation {
   """
   changeCompanyEmail(data: ChangeCompanyEmailInput!): Company!
   changeCompanyRole(data: ChangeCompanyRoleInput!): Company!
-  changePlatformColors(args: ChangePlatformColorsInput!): PartnerStyleSchema!
+
+  """Change partner information mutation"""
+  changePartnerInformation(data: ChangePartnerInformationInput!): Partner!
+  changePlatformColors(data: ChangePlatformColorsInput!): PartnerStyleSchema!
   confirmTutorialHasBeenViewed: Company!
   createBasicCompany(data: CreateBasicCompanyInput!): BasicCompany!
   createCompany(data: CreateCompanyInput!): Company!
@@ -575,6 +591,9 @@ type Partner {
 
   """The ID returned from Bitrix platform"""
   bitrix_id: Int
+
+  """The partner's company name"""
+  companyName: String!
   cpf_cnpj: String!
   createdAt: DateTime
   createdBy: Partner
@@ -585,7 +604,7 @@ type Partner {
   isSuspended: Boolean
   logoBitrixFileID: Float
 
-  """The company name"""
+  """The partner name"""
   name: String!
 
   """The hashed Partner password. It should not be returned at any request"""
@@ -629,6 +648,9 @@ type Query {
 
   """Get partner's deals"""
   getPartnerDeals(data: GetPartnerDealsInput!): GetPartnerDealsSchema!
+
+  """Get partner platform logo query"""
+  getPartnerPlatformLogo(data: GetPlatformLogoInput!): String!
   getPartnerStyle(data: GetPartnerStyleInput!): PartnerStyleSchema!
   getRoles: [Role!]
   getSELICRate: SELICRate!

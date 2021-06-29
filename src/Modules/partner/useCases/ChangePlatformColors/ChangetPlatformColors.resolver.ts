@@ -3,7 +3,7 @@ import { changePlatformColorsUseCase } from '.';
 import permissions from '../../../../config/permissions';
 import { ContextData } from '../../../../Context/context';
 import AuthenticatedChecker from '../../../../middlewares/AuthenticatedChecker';
-import PermissionRequired from '../../../../middlewares/PermissionRequired';
+import { PartnerPermissionRequired } from '../../../../middlewares/PartnerPermissionRequired';
 import { PartnerStyleSchema } from '../GetPartnerStyle/PartnerStyleSchema';
 import { ChangePlatformColorsInput } from './ChangePlatformColorsInput';
 
@@ -12,12 +12,12 @@ class ChangePlatformColorsResolver {
   @Mutation(() => PartnerStyleSchema)
   @UseMiddleware(
     AuthenticatedChecker,
-    PermissionRequired([permissions.changePlatformColorsAndLogo]),
+    PartnerPermissionRequired([permissions.changePlatformColorsAndLogo]),
   )
   async changePlatformColors(
     @Ctx()
     context: ContextData,
-    @Arg('args')
+    @Arg('data')
     { primaryColor, secondaryColor }: ChangePlatformColorsInput,
   ): Promise<PartnerStyleSchema> {
     const { id: partnerID } = context;

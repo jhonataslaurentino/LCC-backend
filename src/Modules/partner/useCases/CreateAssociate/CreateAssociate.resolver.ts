@@ -3,7 +3,7 @@ import { createAssociateUseCase } from '.';
 import permissions from '../../../../config/permissions';
 import { ContextData } from '../../../../Context/context';
 import AuthenticatedChecker from '../../../../middlewares/AuthenticatedChecker';
-import PermissionRequired from '../../../../middlewares/PermissionRequired';
+import { PartnerPermissionRequired } from '../../../../middlewares/PartnerPermissionRequired';
 import { Partner } from '../../Schemas/Partner';
 import { CreateAssociateInput } from './CreateAssociateInput';
 
@@ -15,7 +15,7 @@ class CreateAssociateResolver {
   })
   @UseMiddleware(
     AuthenticatedChecker,
-    PermissionRequired([permissions.createAssociatedUser]),
+    PartnerPermissionRequired([permissions.createAssociatedUser]),
   )
   async createPartnerAssociate(
     @Ctx()

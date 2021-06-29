@@ -1,23 +1,23 @@
 import { AxiosInstance } from 'axios';
+import fs from 'fs';
 import { BitrixFile } from '../../../../schemas/BitrixFile';
 import { IUploadFileDTO } from '../../../IBitrixDriveRepository';
 
 class UploadFileToBitrixDriveService {
   constructor(private api: AxiosInstance) {}
 
-  async execute({
-    fileBase64,
-    fileName,
-    folderID,
-  }: IUploadFileDTO): Promise<BitrixFile> {
+  async execute({ folderID, file }: IUploadFileDTO): Promise<BitrixFile> {
     const response = await this.api.post('/disk.folder.uploadfile', {
       id: folderID,
-      fileContent: fileBase64,
+      fileContent: fs.readFileSync(file.path, {
+        encoding: 'base64',
+      }),
       data: {
-        NAME: fileName,
+        NAME: `${file.filename}_${file.originalname}`,
       },
     });
     const { result } = response.data;
+    await fs.promises.unlink(file.path);
     return result;
   }
 }

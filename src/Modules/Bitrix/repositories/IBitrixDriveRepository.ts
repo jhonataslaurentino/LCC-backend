@@ -2,8 +2,7 @@ import { BitrixFile } from '../schemas/BitrixFile';
 
 interface IUploadFileDTO {
   folderID: number;
-  fileBase64: string;
-  fileName: string;
+  file: Express.Multer.File;
 }
 
 interface IBitrixDriveRepository {

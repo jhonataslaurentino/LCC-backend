@@ -10,9 +10,13 @@ class Partner {
   @Field(() => ID)
   id?: string;
 
-  @Field({ description: 'The company name' })
+  @Field({ description: 'The partner name' })
   @Property()
   name: string;
+
+  @Field({ description: "The partner's company name" })
+  @Property()
+  companyName: string;
 
   @Field({ description: "The partner's email" })
   @Property()
