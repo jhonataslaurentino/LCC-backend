@@ -12,6 +12,7 @@ import context from './Context/context';
 import ExpressErrorHandler from './errors/ExpressErrorHandler';
 import routes from './Modules/global/routes';
 import { RoleRepository } from './Modules/company/repositories/implementations/RoleRepository/RoleRepository';
+import { ApolloErrorHandler } from './errors/ApolloErrorHandler';
 
 const main = async () => {
   await connectToDatabase();
@@ -21,6 +22,7 @@ const main = async () => {
   const server = new ApolloServer({
     schema,
     context,
+    formatError: ApolloErrorHandler,
   });
   const app = express();
   app.use(cors());

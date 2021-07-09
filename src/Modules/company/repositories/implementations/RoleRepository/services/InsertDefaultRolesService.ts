@@ -15,6 +15,8 @@ class InsertDefaultRolesService {
         permissions.changePlatformColorsAndLogo,
         permissions.visualizeCommissions,
         permissions.requestCredit,
+        permissions.addPartnerDealCategory,
+        permissions.deletePartnerDealCategory,
       ],
       Administrator: Object.values(permissions),
     };

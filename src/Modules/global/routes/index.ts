@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import companiesRouter from '../../company/routes/company';
 import { dealsRouter } from '../../company/routes/deals';
-import simulationsRouter from '../../company/routes/Simulation';
 import { partnerRouter } from '../../partner/routes/partner';
+import simulationsRouter from '../../simulation/routes/Simulation';
 import { assetsRouter } from './assets.routes';
 
 const routes = Router();

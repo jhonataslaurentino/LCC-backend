@@ -1,5 +1,5 @@
-import DealProductModel from '../../../Entities/DealProduct';
-import DealProduct from '../../../Schemas/DealProduct';
+import { DealProductModel } from '../../../Modules/deal/models/DealProduct';
+import { DealProduct } from '../../../Modules/deal/schemas/DealProduct';
 
 interface Request {
   id: string;

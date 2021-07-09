@@ -2,7 +2,8 @@ import { Field, ID, Int, ObjectType } from 'type-graphql';
 import { plugin, prop as Property, Ref } from '@typegoose/typegoose';
 import * as autopopulate from 'mongoose-autopopulate';
 import Role from '../../company/schemas/Role';
-import Simulation from '../../company/schemas/Simulation';
+import { PartnerDealCategory } from './PartnerDealsCategories';
+import Simulation from '../../simulation/schemas/Simulation';
 
 @ObjectType({ description: 'Partner Schema' })
 @plugin(autopopulate.default)
@@ -84,13 +85,13 @@ class Partner {
   @Property()
   siteURL: string;
 
-  @Field(() => [Partner], { nullable: true })
-  @Property({ autopopulate: { maxDepth: 1 }, ref: () => Partner })
-  associates: Ref<Partner>[];
-
   @Field(() => Partner, { nullable: true })
   @Property({ autopopulate: { maxDepth: 1 }, ref: () => Partner })
   createdBy: Ref<Partner>;
+
+  @Field(() => [PartnerDealCategory], { nullable: true })
+  @Property({ autopopulate: true, ref: () => PartnerDealCategory })
+  dealCategories: Ref<PartnerDealCategory>[];
 }
 
 export { Partner };

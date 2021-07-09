@@ -21,6 +21,11 @@ input AddContactInput {
   term: Int
 }
 
+"""Add a deal category to the partner arguments."""
+input AddPartnerDealCategoryInput {
+  dealCategoryID: String!
+}
+
 """Add Contact Info Args"""
 input AddVehicularCreditContactInput {
   address: String
@@ -168,6 +173,15 @@ input ChangePartnerInformationInput {
   phone: String!
 }
 
+"""Change partner password arguments"""
+input ChangePartnerPasswordInput {
+  """The new password"""
+  newPassword: String!
+
+  """Your current password"""
+  oldPassword: String!
+}
+
 """Change platform colors arguments"""
 input ChangePlatformColorsInput {
   """Primary color (HEX)"""
@@ -248,6 +262,7 @@ type ContactInfo {
 Create Associate Partner Arguments. You should be a partner to create an associate user
 """
 input CreateAssociateInput {
+  companyName: String!
   cpf_cnpj: String!
   email: String!
   name: String!
@@ -289,7 +304,7 @@ input CreateCompanyInputType {
 """Create Deal Category Input"""
 input CreateDealCategoryInput {
   bitrixProductsField: String!
-  bitrix_id: String!
+  bitrix_id: Float!
   isInDevelopment: Boolean!
   isVisible: Boolean!
   name: String
@@ -302,6 +317,7 @@ input CreateDealProductInput {
   bitrix_id: String!
   competitiveRate: Float!
   dealCategoryID: String!
+  maxNumberOfInstallments: Int!
   name: String
 }
 
@@ -309,6 +325,7 @@ input CreateDealProductInput {
 Create Partner Arguments. You should be an administrator to create a partner
 """
 input CreatePartnerInput {
+  companyName: String!
   cpf_cnpj: String!
   email: String!
   name: String!
@@ -317,10 +334,66 @@ input CreatePartnerInput {
   siteURL: String!
 }
 
+"""Add real estate to partner arguments"""
+input CreatePartnerRealEstateDealInput {
+  address: String
+  birthday: DateTime!
+  cnpj: String
+  companyID: String!
+  cpf: String
+  creditType: String
+  email: String!
+  name: String!
+  opportunityValue: Float
+  personType: String!
+  phone: String
+  propertyID: String
+  propertyValue: Float
+  term: Int
+}
+
+"""Create simulation input data"""
+input CreatePartnerSimulationInput {
+  amortizationType: Int!
+  birthday: DateTime!
+  cpf_cnpj: String!
+  dealCategoryID: String!
+  dealProductID: String!
+  email: String!
+  name: String!
+  numberOfInstallments: Int!
+  personType: String!
+  phone: String!
+  value: Float!
+}
+
+"""Add Contact Info Args"""
+input CreatePartnerVehicularDealInput {
+  address: String
+  birthday: DateTime!
+  clientSituation: String!
+  cnpj: String
+  companyID: String!
+  contactMonthlyIncome: Float!
+  cpf: String
+  email: String!
+  name: String!
+  opportunityValue: Float
+  personType: String!
+  phone: String
+  vehicleManufacturedDate: String!
+  vehicleModel: String!
+  vehicleName: String!
+  vehicleTargetValue: Float!
+  vehicleValue: Float!
+  vehicularCreditType: String!
+}
+
 """Create simulation input data"""
 input CreateSimulationInput {
   amortizationType: Int!
-  cpf: String!
+  birthday: DateTime!
+  cpf_cnpj: String!
   dealCategoryID: String!
   dealProductID: String!
   email: String!
@@ -336,7 +409,7 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 """
 scalar DateTime
 
-"""The deals categories"""
+"""Deal category schema"""
 type DealCategory {
   bitrixProductsField: String!
   bitrix_id: Int!
@@ -345,11 +418,11 @@ type DealCategory {
   createdAt: DateTime
   id: ID!
 
-  """Information if the deal wether is in development or not"""
-  isInDevelopment: Boolean
+  """It describes if the deal is in development or not"""
+  isInDevelopment: Boolean!
   isVisible: Boolean
   name: String!
-  products: [String!]
+  products: [DealProduct!]
 
   """Created date of the model"""
   updatedAt: DateTime
@@ -365,6 +438,7 @@ type DealCategoryStage {
   STATUS_ID: String!
 }
 
+"""Deal product schema"""
 type DealProduct {
   averageRate: Float
   bitrix_id: Int!
@@ -372,8 +446,9 @@ type DealProduct {
 
   """Created date of the model"""
   createdAt: DateTime
-  dealCategory: String
+  dealCategory: DealCategory!
   id: ID!
+  maxNumberOfInstallments: Int
   name: String!
 
   """Created date of the model"""
@@ -389,6 +464,12 @@ input DeleteDealProductInput {
   id: String!
 }
 
+"""Delete a Partner's deal category arguments"""
+input DeletePartnerDealCategoryInput {
+  """Partner's deal category id"""
+  partnerDealCategoryID: String!
+}
+
 """Delete Simulation Mutation Input"""
 input DeleteSimulationInput {
   id: String!
@@ -398,6 +479,7 @@ input EditDealProductInput {
   averageRate: Float!
   competitiveRate: Float!
   id: String!
+  maxNumberOfInstallments: Int!
   name: String
 }
 
@@ -474,9 +556,17 @@ input GetDealsUpdatedInput {
   page: Int
 }
 
+"""Deal's information schema"""
+type GetPartnerDealsInformationSchema {
+  completedDealsAmount: Float!
+  numberOfActiveDeals: Int!
+  numberOfCompletedDeals: Int!
+  numberOfRegisteredAssociates: Int!
+}
+
 """Get Deals Input Arguments"""
 input GetPartnerDealsInput {
-  dealCategoryID: String!
+  dealCategoryID: String
   page: Int
 }
 
@@ -492,6 +582,11 @@ type GetPartnerDealsSchema {
 
   """The number of deals gathered"""
   total: Int!
+}
+
+"""Get partner information arguments"""
+input GetPartnerInformationInput {
+  partnerID: String!
 }
 
 """Get partner styles arguments"""
@@ -533,6 +628,28 @@ input ListDealTimelineCommentsInput {
   id: Int!
 }
 
+"""Get contacts input"""
+input ListPartnerContactsInput {
+  """The page to get contacts"""
+  page: Int
+}
+
+"""
+Get partner contacts response schema. If the partner have a master role, the contact will be of all associates
+"""
+type ListPartnerContactsSchema {
+  """
+  If there are more deals, the bitrix api should return a number to get the next list of deals
+  """
+  next: Int
+
+  """The list of contacts gathered from bitrix api."""
+  result: [Contact!]
+
+  """The number of deals gathered."""
+  total: Int
+}
+
 """Login Schema"""
 type Login {
   company: Company!
@@ -542,6 +659,11 @@ type Login {
 type Mutation {
   CreatePartner(data: CreatePartnerInput!): Partner!
   addCompany(data: CreateCompanyInputType!): Company!
+
+  """
+  Add a deal category to the partner. You should be a partner master and be authenticated.
+  """
+  addPartnerDealCategory(data: AddPartnerDealCategoryInput!): PartnerDealCategory!
   addRealEstateContact(data: AddContactInput!): BitrixDeal!
   addVehicularCreditContact(data: AddVehicularCreditContactInput!): BitrixDeal!
 
@@ -553,10 +675,17 @@ type Mutation {
 
   """Change partner information mutation"""
   changePartnerInformation(data: ChangePartnerInformationInput!): Partner!
+
+  """
+  Change the partner password mutation. The partner must be authenticated to change it password
+  """
+  changePartnerPassword(data: ChangePartnerPasswordInput!): Partner!
   changePlatformColors(data: ChangePlatformColorsInput!): PartnerStyleSchema!
   confirmTutorialHasBeenViewed: Company!
   createBasicCompany(data: CreateBasicCompanyInput!): BasicCompany!
   createCompany(data: CreateCompanyInput!): Company!
+
+  """Create a deal category mutation"""
   createDealCategory(data: CreateDealCategoryInput!): DealCategory!
   createDealProduct(data: CreateDealProductInput!): DealProduct!
 
@@ -564,9 +693,21 @@ type Mutation {
   Create a associate partner. You should be a partner to create your associates
   """
   createPartnerAssociate(data: CreateAssociateInput!): Partner!
+
+  """Create a real estate deal for a partner"""
+  createPartnerRealEstate(data: CreatePartnerRealEstateDealInput!): BitrixDeal!
+  createPartnerSimulation(data: CreatePartnerSimulationInput!): Simulation!
+
+  """Create a vehicular deal for a partner"""
+  createPartnerVehicularDeal(data: CreatePartnerVehicularDealInput!): BitrixDeal!
   createSimulation(data: CreateSimulationInput!): Simulation!
   deleteDealCategory(data: DeleteDealCategoryInput!): DealCategory!
   deleteDealProduct(data: DeleteDealProductInput!): DealProduct!
+
+  """
+  Delete a partner's deal category resolver. you should be a partner master and be authenticated to execute it.
+  """
+  deletePartnerDealCategory(data: DeletePartnerDealCategoryInput!): PartnerDealCategory!
   deleteSimulation(data: DeleteSimulationInput!): Simulation
   editDealProduct(data: EditDealProductInput!): DealProduct!
   getPriceTableSimulation(data: GetSimulationInstallmentsInput!): [Installment!]!
@@ -586,7 +727,6 @@ type Mutation {
 
 """Partner Schema"""
 type Partner {
-  associates: [Partner!]
   avatarBitrixFileID: Float
 
   """The ID returned from Bitrix platform"""
@@ -597,6 +737,7 @@ type Partner {
   cpf_cnpj: String!
   createdAt: DateTime
   createdBy: Partner
+  dealCategories: [PartnerDealCategory!]
 
   """The partner's email"""
   email: String!
@@ -620,6 +761,25 @@ type Partner {
   simulations: [Simulation!]
   siteURL: String!
   updatedAt: DateTime
+}
+
+"""Partner deals categories"""
+type PartnerDealCategory {
+  createdAt: DateTime!
+  dealCategory: DealCategory!
+  id: ID!
+  isVisible: Boolean!
+  updatedAt: DateTime!
+}
+
+"""Partner information Schema"""
+type PartnerInformationSchema {
+  """Partner's company name"""
+  companyName: String!
+  id: ID!
+
+  """Partner's name"""
+  name: String!
 }
 
 """Colors and images to use in the partner platform"""
@@ -646,8 +806,17 @@ type Query {
   """The company should use this resolver to get your deals"""
   getDealsUpdated(data: GetDealsUpdatedInput!): GetDealsResponse
 
+  """
+  Query a partner. You should pass a bearer authorization in the header body
+  """
+  getPartner: Partner
+
   """Get partner's deals"""
   getPartnerDeals(data: GetPartnerDealsInput!): GetPartnerDealsSchema!
+  getPartnerDealsInformation: GetPartnerDealsInformationSchema!
+
+  """Get partner information query"""
+  getPartnerInformation(data: GetPartnerInformationInput!): PartnerInformationSchema!
 
   """Get partner platform logo query"""
   getPartnerPlatformLogo(data: GetPlatformLogoInput!): String!
@@ -656,6 +825,14 @@ type Query {
   getSELICRate: SELICRate!
   getSimulations: [Simulation!]
   getVehicularDeals(data: GetDealsInput!): GetDealsResponse
+
+  """
+  List the partner's associate. To use this query, you should use the authentication token
+  """
+  listAssociates: [Partner!]
+  listPartnerContacts(data: ListPartnerContactsInput!): ListPartnerContactsSchema
+  listPartnerDealsCategories: [PartnerDealCategory!]
+  listPartnerSimulations: [Simulation!]
   listPartners: [Partner!]
   listTimeLineComments(data: ListDealTimelineCommentsInput!): ListDealCommentsTimeLineSchema!
   verifyIfCompanySawTutorial: Boolean!
@@ -723,9 +900,10 @@ type SELICRate {
 type Simulation {
   amortizationType: Int!
   averageRate: Float!
-  company: Company
+  birthday: DateTime!
+  company: String!
   competitiveRate: Float!
-  cpf: String!
+  cpf_cnpj: String!
 
   """Created date of the model"""
   createdAt: DateTime

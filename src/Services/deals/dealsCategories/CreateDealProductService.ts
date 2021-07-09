@@ -1,7 +1,7 @@
-import DealCategoryModel from '../../../Entities/DealCategory';
-import DealProductModel from '../../../Entities/DealProduct';
 import { getBitrixDealFieldsUseCase } from '../../../Modules/Bitrix/useCases/GetBitrixDealFields';
-import DealProduct from '../../../Schemas/DealProduct';
+import { DealCategoryModel } from '../../../Modules/deal/models/DealCategory';
+import { DealProductModel } from '../../../Modules/deal/models/DealProduct';
+import { DealProduct } from '../../../Modules/deal/schemas/DealProduct';
 
 interface Request {
   name?: string;
@@ -9,6 +9,7 @@ interface Request {
   averageRate: number;
   competitiveRate: number;
   dealCategoryID: string;
+  maxNumberOfInstallments: number;
 }
 
 class CreateDealProductService {
@@ -18,10 +19,11 @@ class CreateDealProductService {
     averageRate,
     competitiveRate,
     dealCategoryID,
+    maxNumberOfInstallments,
   }: Request): Promise<DealProduct> {
     const isThereAnyDealProductWithSameBitrixID = await DealProductModel.findOne(
       {
-        bitrix_id,
+        bitrix_id: Number(bitrix_id),
       },
     ).exec();
     if (isThereAnyDealProductWithSameBitrixID) {
@@ -57,6 +59,7 @@ class CreateDealProductService {
       competitiveRate,
       averageRate,
       dealCategory: dealCategory.id,
+      maxNumberOfInstallments,
     });
 
     dealCategory.products.push(dealProduct.id);

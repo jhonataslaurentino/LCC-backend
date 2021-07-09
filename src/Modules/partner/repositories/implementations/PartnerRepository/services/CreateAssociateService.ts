@@ -14,6 +14,7 @@ class CreateAssociateService {
     password,
     phone,
     roleID,
+    companyName,
   }: ICreatePartnerAssociateDTO): Promise<Partner> {
     const creatorPartner = await PartnerModel.findById(partnerCreatorID);
     if (!creatorPartner) {
@@ -23,11 +24,12 @@ class CreateAssociateService {
       email,
     });
     if (partnerAlreadyExists) {
-      throw new AppError('Partner already exists');
+      throw new AppError('Email already used', 400);
     }
     const hashedPassword = await hash(password, 8);
     const associate = await PartnerModel.create({
-      associates: [],
+      dealCategories: [],
+      companyName,
       avatarBitrixFileID: null,
       bitrix_id,
       cpf_cnpj,

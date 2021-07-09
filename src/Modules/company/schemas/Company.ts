@@ -2,7 +2,7 @@ import { plugin, prop as Property, Ref } from '@typegoose/typegoose';
 import { Field, ID, Int, ObjectType } from 'type-graphql';
 import * as autopopulate from 'mongoose-autopopulate';
 import Role from './Role';
-import Simulation from './Simulation';
+import Simulation from '../../simulation/schemas/Simulation';
 
 @ObjectType({ description: 'The company schema' })
 @plugin(autopopulate.default)

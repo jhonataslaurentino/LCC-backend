@@ -9,6 +9,7 @@ interface ICreateAssociate {
   cpf_cnpj: string;
   phone: string;
   partnerCreatorID: string;
+  companyName: string;
 }
 
 class CreateAssociateUseCase {
@@ -18,6 +19,7 @@ class CreateAssociateUseCase {
   ) {}
 
   async execute({
+    companyName,
     cpf_cnpj,
     email,
     name,
@@ -27,6 +29,7 @@ class CreateAssociateUseCase {
   }: ICreateAssociate): Promise<Partner> {
     const role = await this.rolesRepository.findByName('User');
     const partner = await this.partnersRepository.createAssociate({
+      companyName,
       bitrix_id: 129,
       cpf_cnpj,
       email,

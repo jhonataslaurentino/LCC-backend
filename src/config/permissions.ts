@@ -11,6 +11,8 @@ const permissions = {
   visualizeCommissions: 512,
   requestCredit: 1024,
   admin: 2048,
+  addPartnerDealCategory: 4096,
+  deletePartnerDealCategory: 8192,
 };
 
 export default permissions;

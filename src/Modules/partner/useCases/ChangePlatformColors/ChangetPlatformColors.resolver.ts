@@ -3,7 +3,7 @@ import { changePlatformColorsUseCase } from '.';
 import permissions from '../../../../config/permissions';
 import { ContextData } from '../../../../Context/context';
 import AuthenticatedChecker from '../../../../middlewares/AuthenticatedChecker';
-import { PartnerPermissionRequired } from '../../../../middlewares/PartnerPermissionRequired';
+import { PartnerPermissionRequired } from '../../middlewares/PartnerPermissionRequired';
 import { PartnerStyleSchema } from '../GetPartnerStyle/PartnerStyleSchema';
 import { ChangePlatformColorsInput } from './ChangePlatformColorsInput';
 

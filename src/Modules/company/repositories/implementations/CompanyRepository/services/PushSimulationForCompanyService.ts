@@ -1,6 +1,6 @@
 import AppError from '../../../../../../errors/AppError';
+import { SimulationModel } from '../../../../../simulation/models/Simulation';
 import { CompanyModel } from '../../../../models/Company';
-import { SimulationModel } from '../../../../models/Simulation';
 import Company from '../../../../schemas/Company';
 import { IPushSimulationForCompanyDTO } from '../../../ICompanyRepository';
 

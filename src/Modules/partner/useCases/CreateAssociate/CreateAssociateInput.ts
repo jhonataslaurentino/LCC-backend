@@ -12,6 +12,9 @@ class CreateAssociateInput {
   name: string;
 
   @Field()
+  companyName: string;
+
+  @Field()
   @IsEmail()
   email: string;
 

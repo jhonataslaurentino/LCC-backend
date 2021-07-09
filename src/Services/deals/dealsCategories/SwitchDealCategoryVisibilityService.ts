@@ -1,5 +1,5 @@
-import DealCategoryModel from '../../../Entities/DealCategory';
-import DealCategory from '../../../Schemas/DealCategory';
+import { DealCategoryModel } from '../../../Modules/deal/models/DealCategory';
+import { DealCategory } from '../../../Modules/deal/schemas/DealCategory';
 
 interface Request {
   dealCategoryID: string;

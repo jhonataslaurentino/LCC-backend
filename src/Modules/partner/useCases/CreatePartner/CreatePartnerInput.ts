@@ -12,6 +12,9 @@ class CreatePartnerInput {
   name: string;
 
   @Field()
+  companyName: string;
+
+  @Field()
   @IsEmail()
   email: string;
 

@@ -10,24 +10,15 @@ import { ContextData } from '../Context/context';
 import AuthenticatedChecker from '../middlewares/AuthenticatedChecker';
 import GetDealsResponse from '../Schemas/GetDealsResponse';
 import GetDealsInput from './types/Deal/GetDealsInput';
-import DealCategory from '../Schemas/DealCategory';
 import PermissionRequired from '../middlewares/PermissionRequired';
 import permissions from '../config/permissions';
-import CreateDealCategoryInput from './types/Deal/CreateDealCategoryInput';
-import CreateDealCategoryService from '../Services/deals/dealsCategories/CreateDealCategoryService';
-import GetDealsCategoriesService from '../Services/deals/dealsCategories/GetDealsCategoriesService';
-import DeleteDealCategoryInput from './types/Deal/DeleteDealCategoryInput';
-import DeleteDealCategoryService from '../Services/deals/dealsCategories/DeleteDealCategoryService';
 import BitrixDealFieldItem from '../Schemas/BitrixDealFieldItem';
 import GetBitrixDealFieldItemsInput from './types/Deal/GetBitrixDealFieldItemsInput';
 import GetBitrixDealFieldItemsService from '../Services/deals/dealsCategories/GetBitrixDealFieldItemsService';
-import SwitchDealCategoryVisibilityInput from './types/Deal/SwitchDealCategoryVisibilityInput';
-import SwitchDealCategoryVisibilityService from '../Services/deals/dealsCategories/SwitchDealCategoryVisibilityService';
 import GetDealsUpdatedInput from './types/Deal/GetDealsUpdatedInput';
 import DealCategoryStage from '../Schemas/DealCategoryStage';
 import GetDealCategoryStageInput from './types/Deal/GetDealCategoryStagesInput';
 import GetDealCategoryStagesService from '../Services/deals/dealsCategories/GetDealCategoryStagesService';
-import { listBitrixDealsByCompanyIDUseCase } from '../Modules/Bitrix/useCases/ListDeals';
 import BitrixDealCategory from '../Modules/Bitrix/schemas/BitrixDealCategory';
 import { listBitrixDealsCategoriesUseCase } from '../Modules/Bitrix/useCases/ListBitrixDealsCategories';
 import { BitrixDeal } from '../Modules/Bitrix/schemas/BitrixDeal';
@@ -38,6 +29,7 @@ import { getBitrixDealFieldsUseCase } from '../Modules/Bitrix/useCases/GetBitrix
 import ListDealTimelineCommentsInput from './types/Deal/ListDealTimelineCommentsInput';
 import { listDealCommentsTimelineUseCase } from '../Modules/Bitrix/useCases/ListDealCommentsTimeline';
 import { ListDealCommentsTimeLineSchema } from '../Modules/Bitrix/useCases/ListDealCommentsTimeline/ListDealCommentsTimeLineSchema';
+import { listBitrixDealsByCompanyIDUseCase } from '../Modules/Bitrix/useCases/ListDeals';
 
 @Resolver()
 class DealsResolver {
@@ -107,51 +99,6 @@ class DealsResolver {
     return bitrixDealsCategories;
   }
 
-  @Mutation(() => DealCategory)
-  @UseMiddleware(AuthenticatedChecker, PermissionRequired([permissions.admin]))
-  async createDealCategory(
-    @Arg('data')
-    {
-      bitrix_id,
-      isVisible,
-      name,
-      bitrixProductsField,
-      isInDevelopment,
-      url,
-    }: CreateDealCategoryInput,
-  ): Promise<DealCategory> {
-    const createDealCategoryService = new CreateDealCategoryService();
-    const dealCategory = await createDealCategoryService.execute({
-      bitrix_id,
-      isVisible,
-      name,
-      bitrixProductsField,
-      isInDevelopment,
-      url,
-    });
-    return dealCategory;
-  }
-
-  @Mutation(() => DealCategory)
-  @UseMiddleware(AuthenticatedChecker, PermissionRequired([permissions.admin]))
-  async deleteDealCategory(
-    @Arg('data')
-    { id }: DeleteDealCategoryInput,
-  ): Promise<DealCategory> {
-    const deleteDealCategoryService = new DeleteDealCategoryService();
-    const dealCategory = await deleteDealCategoryService.execute({
-      dealCategoryID: id,
-    });
-    return dealCategory;
-  }
-
-  @Query(() => [DealCategory], { nullable: true })
-  async getDealsCategories(): Promise<DealCategory[]> {
-    const getDealsCategoriesService = new GetDealsCategoriesService();
-    const dealsCategories = await getDealsCategoriesService.execute();
-    return dealsCategories;
-  }
-
   @Query(() => [BitrixDealField], { nullable: true })
   @UseMiddleware(AuthenticatedChecker, PermissionRequired([permissions.admin]))
   async getBitrixDealFields(): Promise<BitrixDealField[]> {
@@ -181,19 +128,6 @@ class DealsResolver {
       dealFieldKey,
     });
     return bitrixDealFieldItems;
-  }
-
-  @Mutation(() => DealCategory)
-  @UseMiddleware(AuthenticatedChecker, PermissionRequired([permissions.admin]))
-  async switchDealCategoryVisibility(
-    @Arg('data')
-    { dealCategoryID }: SwitchDealCategoryVisibilityInput,
-  ): Promise<DealCategory> {
-    const switchDealCategoryVisibilityService = new SwitchDealCategoryVisibilityService();
-    const dealCategory = await switchDealCategoryVisibilityService.execute({
-      dealCategoryID,
-    });
-    return dealCategory;
   }
 
   @Mutation(() => BitrixDeal)

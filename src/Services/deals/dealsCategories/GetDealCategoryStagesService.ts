@@ -1,7 +1,7 @@
 import qs from 'qs';
 import bitrixApi from '../../../api/bitrix';
-import DealCategoryModel from '../../../Entities/DealCategory';
 import AppError from '../../../errors/AppError';
+import { DealCategoryModel } from '../../../Modules/deal/models/DealCategory';
 import DealCategoryStage from '../../../Schemas/DealCategoryStage';
 
 interface Request {

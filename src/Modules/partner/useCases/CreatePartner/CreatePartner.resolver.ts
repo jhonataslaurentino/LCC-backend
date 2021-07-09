@@ -12,9 +12,18 @@ class CreatePartnerResolver {
   @UseMiddleware(AuthenticatedChecker, PermissionRequired([permissions.admin]))
   async CreatePartner(
     @Arg('data', { validate: true })
-    { cpf_cnpj, email, name, password, phone, siteURL }: CreatePartnerInput,
+    {
+      companyName,
+      cpf_cnpj,
+      email,
+      name,
+      password,
+      phone,
+      siteURL,
+    }: CreatePartnerInput,
   ): Promise<Partner> {
     const partner = await createPartnerUseCase.execute({
+      companyName,
       cpf_cnpj,
       email,
       name,

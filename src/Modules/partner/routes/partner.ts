@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import multer from 'multer';
 import ensureAuthenticated from '../../../middlewares/AuthenticatedCheckerExpress';
+import { changePartnerAvatarController } from '../useCases/ChangePartnerAvatar';
 import { changePlatformLogoController } from '../useCases/ChangePlatformLogo';
-import { getPlatformLogoController } from '../useCases/getPlatformLogo';
+import { getPartnerAvatarController } from '../useCases/GetPartnerAvatar';
+import { getPlatformLogoController } from '../useCases/GetPlatformLogo';
 
 const partnerRouter = Router();
 
@@ -21,6 +23,18 @@ partnerRouter.patch(
 
 partnerRouter.get('/platform/logo/:id', async (request, response) =>
   getPlatformLogoController.handle(request, response),
+);
+
+partnerRouter.patch(
+  '/avatar',
+  ensureAuthenticated,
+  upload.single('file'),
+  async (request, response) =>
+    changePartnerAvatarController.handle(request, response),
+);
+
+partnerRouter.get('/avatar/:id', async (request, response) =>
+  getPartnerAvatarController.handle(request, response),
 );
 
 export { partnerRouter };

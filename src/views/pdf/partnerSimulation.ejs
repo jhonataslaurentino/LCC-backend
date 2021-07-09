@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>Simulation Table</title>
+    <style>
+      html,
+      body,* {
+        font-family: 'Roboto', sans-serif;
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      .Container {
+        width: 100vw;
+        height: 100%;
+
+        display: flex;
+        align-items: stretch;
+      }
+
+      .Content {
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-direction: column;
+
+        gap: 1rem;
+
+        padding: 0.5rem;
+      }
+
+      .Title {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .Title>img{
+        height: 40px;
+        width: auto;
+      }
+
+      .Title>h1{
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 1.25rem;
+        line-height: 9px;
+        color: <%=primaryColor %>;
+        padding: 1rem 0;
+      }
+
+      .Separator{
+        content: '';
+        width: 100%;
+        height: 4px;
+        background: <%=primaryColor %>;
+      }
+
+      .InfoSection {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .Info {
+        width: min-content;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 1rem;
+        flex-direction: column;
+        white-space: nowrap;
+      }
+
+      .Info>h1{
+        color: <%=primaryColor %>;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 9px;
+      }
+
+      .Info>h2{
+        font-size: .9rem;
+        color: #071620;
+        font-weight: normal;
+      }
+
+      .ResultSection {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .BetterRate{
+        width: min-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        white-space: nowrap;
+        border-radius: 1px;
+        border: 1px solid <%=secondaryColor %>;
+        flex-direction: row;
+      }
+
+      .BetterRate>article{
+        padding: 0.5rem;
+        color: <%=secondaryColor %>;
+        background-color: rgba(36, 108, 159, 0.1);
+        border-radius: 1px;
+      }
+
+      .AverageRate{
+        width: min-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        white-space: nowrap;
+        border-radius: 1px;
+        border: 1px solid <%=primaryColor %>;
+        flex-direction: row;
+      }
+
+      .AverageRate>article{
+        padding: 0.5rem;
+        color: <%=primaryColor %>;
+        background-color: rgba(70, 161, 132, 0.1);
+        border-radius: 1px;
+      }
+
+      .Table {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .Table > thead {
+        height: 29px;
+
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: <%=primaryColor %>;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 10.7246px;
+        line-height: 16px;
+        /* or 145% */
+
+        color: #fbfbfb;
+      }
+
+      .Table > thead > tr {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 10% repeat(4, calc(90% / 4));
+        grid-auto-flow: column;
+        align-items: center;
+        justify-items: center;
+        align-self: center;
+        justify-self: center;
+        white-space: nowrap;
+      }
+
+      .Table > tbody {
+        width: 100%;
+        display: grid;
+      }
+
+      .Table > tbody > tr {
+        width: 100%;
+        height: 54.48px;
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: 10% repeat(4, calc(90% / 4));
+        justify-items: center;
+        align-items: center;
+        align-self: center;
+        justify-self: center;
+
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 9.65217px;
+        line-height: 16px;
+        letter-spacing: 0.193824px;
+
+        box-shadow: inset 0px -0.775295px 0px #dfe2e9;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section class="Container">
+      <section class="Content">
+        <div class="Title">
+          <img src="http://localhost:4000/partner/platform/logo/<%=partnerID%>" />
+          <h1>Simulação de Crédito</h1>
+          <p>11/07/2021</p>
+        </div>
+        <div class="Separator"></div>
+        <article class="TitleSection">Dados do cliente</article>
+        <section class="InfoSection">
+          <article class="Info">
+            <h1>Nome</h1>
+            <h2><%= name %></h2>
+          </article>
+          <article class="Info">
+            <h1>E-mail</h1>
+            <h2><%= email %></h2>
+          </article>
+          <article class="Info">
+            <h1>telefone</h1>
+            <h2><%= phone %></h2>
+          </article>
+        </section>
+        <article class="TitleSection">Resultado da Simulação</article>
+        <section class="ResultSection">
+          <section class="BetterRate">
+            <article>Melhor Taxa:</article>
+            <p><%= betterRate %>%</p>
+          </section>
+          <section class="AverageRate">
+            <article>Taxa Média:</article>
+            <p><%= averageRate %>%</p>
+          </section>
+        </section>
+        <table class="Table">
+          <thead>
+            <tr>
+              <th>Período</th>
+              <th>Prestação</th>
+              <th>Juros</th>
+              <th>Amortização</th>
+              <th>Saldo Devedor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if(installments.length>0) {%> <%
+            installments.forEach(({amortization, amount, installment, interest},
+            index) => { %>
+            <tr>
+              <td><%= index+1 %></td>
+              <td>
+                <%=new Intl.NumberFormat('pt-BR', { style: 'currency', currency:
+                'BRL', }).format(installment)%>
+              </td>
+              <td>
+                <%=new Intl.NumberFormat('pt-BR', { style: 'currency', currency:
+                'BRL', }).format(interest)%>
+              </td>
+              <td>
+                <%=new Intl.NumberFormat('pt-BR', { style: 'currency', currency:
+                'BRL', }).format(amortization)%>
+              </td>
+              <td>
+                <%=new Intl.NumberFormat('pt-BR', { style: 'currency', currency:
+                'BRL', }).format(amount)%>
+              </td>
+            </tr>
+            <% }) %> <% } %>
+          </tbody>
+        </table>
+      </section>
+    </section>
+  </body>
+</html>

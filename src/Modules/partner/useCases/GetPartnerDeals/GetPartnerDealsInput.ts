@@ -5,7 +5,7 @@ class GetPartnerDealsInput {
   @Field(() => Int, { nullable: true })
   page: number;
 
-  @Field()
+  @Field({ nullable: true })
   dealCategoryID: string;
 }
 export { GetPartnerDealsInput };

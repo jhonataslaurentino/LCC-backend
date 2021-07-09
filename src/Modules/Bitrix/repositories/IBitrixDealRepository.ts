@@ -50,13 +50,23 @@ interface ICreateRealEstateDealDTO {
   propertyID: string;
 }
 
+// interface ICreatePersonalDeal {
+//   opportunityValue: number;
+//   contactID: string;
+//   companyID: string;
+//   cpf_cnpj: string;
+//   birthday: Date;
+//   typeOfContract: string;
+//   CNH
+// }
+
 interface IGenericObjectDTO {
   [key: string]: string | string[] | number | number[] | Date | Date[];
 }
 
 interface IListDealsDTO {
   page: number;
-  categoryID: number;
+  categoryID: number | number[];
   filter?: IGenericObjectDTO;
   companyID: number | number[];
 }
@@ -72,6 +82,7 @@ interface IBitrixDealRepository {
   listFields(): Promise<BitrixDealField[]>;
   CreateVehicularDeal(data: ICreateVehicularDealDTO): Promise<BitrixDeal>;
   CreateRealEstateDeal(data: ICreateRealEstateDealDTO): Promise<BitrixDeal>;
+  // CreatePersonalDeal();
   list(data: IListDealsDTO): Promise<IListDealsResponse>;
 }
 

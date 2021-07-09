@@ -1,8 +1,8 @@
-import DealCategoryModel from '../../../../Entities/DealCategory';
 import AppError from '../../../../errors/AppError';
-import DealCategory from '../../../../Schemas/DealCategory';
+import GetDealsResponse from '../../../../Schemas/GetDealsResponse';
 import { CompanyModel } from '../../../company/models/Company';
-import { IFindByCompanyIDResponse } from '../../repositories/IBitrixDealRepository';
+import { DealCategoryModel } from '../../../deal/models/DealCategory';
+import { DealCategory } from '../../../deal/schemas/DealCategory';
 import { BitrixDealRepository } from '../../repositories/Implementations/BitrixDealRepository/BitrixDealRepository';
 
 interface IRequest {
@@ -20,7 +20,7 @@ class ListDealsByCompanyIDUseCase {
     dealCategoryID,
     page = 0,
     bitrixDealCategoryID,
-  }: IRequest): Promise<IFindByCompanyIDResponse> {
+  }: IRequest): Promise<GetDealsResponse> {
     const company = await CompanyModel.findById(companyID);
     if (!company) {
       throw new AppError('Company does not exists', 404);
@@ -33,7 +33,7 @@ class ListDealsByCompanyIDUseCase {
       }
     }
     const response = await this.bitrixDealRepository.findByCompanyID({
-      category_id: bitrixDealCategoryID || dealCategory.bitrix_id,
+      category_id: bitrixDealCategoryID || String(dealCategory.bitrix_id),
       companyID: String(company.bitrix_id),
       page,
     });

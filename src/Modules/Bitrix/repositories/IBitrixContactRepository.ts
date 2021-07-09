@@ -12,7 +12,7 @@ interface ICreateBitrixContactData {
 }
 
 interface IListByCompanyID {
-  bitrixCompanyID: number;
+  bitrixCompanyID: number | number[];
   page: number;
 }
 

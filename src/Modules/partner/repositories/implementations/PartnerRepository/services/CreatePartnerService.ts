@@ -10,6 +10,7 @@ class CreatePartnerService {
     cpf_cnpj,
     email,
     name,
+    companyName,
     password,
     phone,
     roleID,
@@ -23,9 +24,10 @@ class CreatePartnerService {
     }
     const hashedPassword = await hash(password, 8);
     const partner = await PartnerModel.create({
-      associates: [],
+      dealCategories: [],
       avatarBitrixFileID: null,
       bitrix_id,
+      companyName,
       cpf_cnpj,
       createdAt: Date.now(),
       email,

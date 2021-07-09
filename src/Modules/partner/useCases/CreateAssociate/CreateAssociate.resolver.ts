@@ -3,7 +3,7 @@ import { createAssociateUseCase } from '.';
 import permissions from '../../../../config/permissions';
 import { ContextData } from '../../../../Context/context';
 import AuthenticatedChecker from '../../../../middlewares/AuthenticatedChecker';
-import { PartnerPermissionRequired } from '../../../../middlewares/PartnerPermissionRequired';
+import { PartnerPermissionRequired } from '../../middlewares/PartnerPermissionRequired';
 import { Partner } from '../../Schemas/Partner';
 import { CreateAssociateInput } from './CreateAssociateInput';
 
@@ -21,10 +21,18 @@ class CreateAssociateResolver {
     @Ctx()
     contextData: ContextData,
     @Arg('data')
-    { cpf_cnpj, email, name, password, phone }: CreateAssociateInput,
+    {
+      cpf_cnpj,
+      email,
+      name,
+      password,
+      phone,
+      companyName,
+    }: CreateAssociateInput,
   ): Promise<Partner> {
     const { id: partnerCreatorID } = contextData;
     const partner = await createAssociateUseCase.execute({
+      companyName,
       cpf_cnpj,
       email,
       name,

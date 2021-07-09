@@ -27,19 +27,20 @@ ICreateAddContactRequestBody): Object => {
       NAME: name,
       PHONE: [
         {
-          VALUE_TYPE: 'WORK',
           VALUE: phone,
+          VALUE_TYPE: 'WORK',
         },
       ],
       EMAIL: [
         {
-          VALUE_TYPE: 'WORK',
           VALUE: email,
+          VALUE_TYPE: 'WORK',
         },
       ],
       UF_CRM_1607694733: personType === 'PF' ? '147' : '149',
       UF_CRM_1602185690: cpf,
       UF_CRM_1607694757: cnpj,
+      UF_CRM_1602185703: cpf,
     },
   };
 };
