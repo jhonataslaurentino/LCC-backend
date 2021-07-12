@@ -2,7 +2,6 @@ import { Arg, Ctx, Query, Resolver, UseMiddleware } from 'type-graphql';
 import { listPartnerContactsUseCase } from '.';
 import { ContextData } from '../../../../Context/context';
 import AuthenticatedChecker from '../../../../middlewares/AuthenticatedChecker';
-import { BitrixContact } from '../../../Bitrix/schemas/BitrixContact';
 import { ListPartnerContactsInput } from './ListPartnerContactsInput';
 import { ListPartnerContactsSchema } from './ListPartnerContactsSchema';
 

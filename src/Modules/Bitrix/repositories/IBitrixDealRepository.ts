@@ -50,15 +50,16 @@ interface ICreateRealEstateDealDTO {
   propertyID: string;
 }
 
-// interface ICreatePersonalDeal {
-//   opportunityValue: number;
-//   contactID: string;
-//   companyID: string;
-//   cpf_cnpj: string;
-//   birthday: Date;
-//   typeOfContract: string;
-//   CNH
-// }
+interface ICreatePersonalDealDTO {
+  opportunityValue: number;
+  contactID: string;
+  companyID: string;
+  cpf: string;
+  birthday: Date;
+  typeOfContract: '612' | '614';
+  CNH: Express.Multer.File;
+  proofOfAddress: Express.Multer.File;
+}
 
 interface IGenericObjectDTO {
   [key: string]: string | string[] | number | number[] | Date | Date[];
@@ -82,7 +83,7 @@ interface IBitrixDealRepository {
   listFields(): Promise<BitrixDealField[]>;
   CreateVehicularDeal(data: ICreateVehicularDealDTO): Promise<BitrixDeal>;
   CreateRealEstateDeal(data: ICreateRealEstateDealDTO): Promise<BitrixDeal>;
-  // CreatePersonalDeal();
+  CreatePersonalDeal(data: ICreatePersonalDealDTO): Promise<BitrixDeal>;
   list(data: IListDealsDTO): Promise<IListDealsResponse>;
 }
 
@@ -94,4 +95,5 @@ export {
   IListDealsResponse,
   IUpdateDealDTO,
   IListDealsDTO,
+  ICreatePersonalDealDTO,
 };

@@ -11,7 +11,9 @@ import {
   IListDealsResponse,
   IListDealsDTO,
   IUpdateDealDTO,
+  ICreatePersonalDealDTO,
 } from '../../IBitrixDealRepository';
+import { CreatePersonalDealService } from './service/CreatePesronalDealService';
 import { CreateRealEstateDealService } from './service/CreateRealEstateDealService';
 import { CreateVehicularDealService } from './service/CreateVehicularDealService';
 import { FindBitrixDealByIDService } from './service/FindBitrixDealByIDService';
@@ -23,12 +25,17 @@ import { UpdateBitrixDealFieldService } from './service/UpdateBitrixDealFieldSer
 class BitrixDealRepository implements IBitrixDealRepository {
   private api: AxiosInstance;
 
-  private static INSTANCE: BitrixDealRepository;
-
   constructor() {
     this.api = axios.create({
       baseURL: endpointsConfig.bitrixBaseURL,
     });
+  }
+
+  async CreatePersonalDeal(data: ICreatePersonalDealDTO): Promise<BitrixDeal> {
+    const createPersonalDealService = new CreatePersonalDealService(this.api);
+    const dealID = await createPersonalDealService.execute(data);
+    const deal = await this.findByID(dealID);
+    return deal;
   }
 
   async list(data: IListDealsDTO): Promise<IListDealsResponse> {
@@ -55,13 +62,6 @@ class BitrixDealRepository implements IBitrixDealRepository {
     const dealID = await createVehicularDealService.execute(data);
     const bitrixDeal = await this.findByID(String(dealID));
     return bitrixDeal;
-  }
-
-  public static getInstance(): BitrixDealRepository {
-    if (!BitrixDealRepository.INSTANCE) {
-      BitrixDealRepository.INSTANCE = new BitrixDealRepository();
-    }
-    return BitrixDealRepository.INSTANCE;
   }
 
   async listFields(): Promise<BitrixDealField[]> {
