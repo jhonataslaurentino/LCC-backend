@@ -1,7 +1,7 @@
-import { getBitrixDealFieldsUseCase } from '../../../Modules/Bitrix/useCases/GetBitrixDealFields';
-import { DealCategoryModel } from '../../../Modules/deal/models/DealCategory';
-import { DealProductModel } from '../../../Modules/deal/models/DealProduct';
-import { DealProduct } from '../../../Modules/deal/schemas/DealProduct';
+import { getBitrixDealFieldsUseCase } from '../../../modules/Bitrix/useCases/GetBitrixDealFields';
+import { DealCategoryModel } from '../../../modules/deal/models/DealCategory';
+import { DealProductModel } from '../../../modules/deal/models/DealProduct';
+import { DealProduct } from '../../../modules/deal/schemas/DealProduct';
 
 interface Request {
   name?: string;

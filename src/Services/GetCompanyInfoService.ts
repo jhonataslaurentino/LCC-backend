@@ -1,5 +1,5 @@
-import { CompanyModel } from '../Modules/company/models/Company';
-import Company from '../Modules/company/schemas/Company';
+import { CompanyModel } from '../modules/company/models/Company';
+import Company from '../modules/company/schemas/Company';
 
 interface Request {
   id: string;

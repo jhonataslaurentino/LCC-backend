@@ -1,5 +1,5 @@
-import { DealProductModel } from '../../../Modules/deal/models/DealProduct';
-import { DealProduct } from '../../../Modules/deal/schemas/DealProduct';
+import { DealProductModel } from '../../../modules/deal/models/DealProduct';
+import { DealProduct } from '../../../modules/deal/schemas/DealProduct';
 
 class GetDealsProductsService {
   public async execute(): Promise<DealProduct[]> {

@@ -1,5 +1,5 @@
 import endpointsConfig from '../config/endpoints.config';
-import { CompanyModel } from '../Modules/company/models/Company';
+import { CompanyModel } from '../modules/company/models/Company';
 import DeleteFileAtBitrixStorageService from './DeleteFileAtBitrixStorageService';
 import UploadFileToBitrixStorageService from './UploadFileToBitrixStorageService';
 

@@ -1,6 +1,6 @@
-import { DealCategoryModel } from '../../../Modules/deal/models/DealCategory';
-import { DealProductModel } from '../../../Modules/deal/models/DealProduct';
-import { DealCategory } from '../../../Modules/deal/schemas/DealCategory';
+import { DealCategoryModel } from '../../../modules/deal/models/DealCategory';
+import { DealProductModel } from '../../../modules/deal/models/DealProduct';
+import { DealCategory } from '../../../modules/deal/schemas/DealCategory';
 
 interface Request {
   dealCategoryID: string;

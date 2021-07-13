@@ -1,7 +1,7 @@
 import bitrixApi from '../api/bitrix';
 import bitrixApiMethods from '../api/Bitrix/bitrixMethods';
 import VehicularDealRequestBody from '../api/Bitrix/VehicularCredit/VehicularDealRequestBody';
-import { CompanyModel } from '../Modules/company/models/Company';
+import { CompanyModel } from '../modules/company/models/Company';
 
 export interface Request {
   name: string;

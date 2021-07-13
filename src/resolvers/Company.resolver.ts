@@ -27,16 +27,16 @@ import ChangeCompanyRoleInput from './types/Company/ChangeCompanyRoleInput';
 import ChangeCompanyRoleService from '../Services/ChangeCompanyRoleService';
 import PermissionRequired from '../middlewares/PermissionRequired';
 import permissions from '../config/permissions';
-import Company from '../Modules/company/schemas/Company';
-import { removeCompanyAvatarUseCase } from '../Modules/company/useCases/RemoveCompanyAvatar';
-import { authenticateCompanyUseCase } from '../Modules/company/useCases/AuthenticateCompany';
-import { requestRecoverPasswordUseCase } from '../Modules/company/useCases/RecoverPassword/RequestRecoverPassword';
-import { recoverPasswordUseCase } from '../Modules/company/useCases/RecoverPassword/RecoverPassword';
-import { updateAllBitrixCompaniesCPFCNPJSUseCase } from '../Modules/Bitrix/useCases/UpdateAllBitrixCompaniesCPFCNPJ';
-import { CreateCompanyInputType } from '../Modules/company/useCases/CreateCompany/CreateCompanyInput';
-import { createCompanyUseCase } from '../Modules/company/useCases/CreateCompany';
-import { sendMailToCreateCompanyUseCase } from '../Modules/company/useCases/CreateCompanyUsingEmail/SendMailToCreateCompany';
-import { createCompanyUsingEmailUseCase } from '../Modules/company/useCases/CreateCompanyUsingEmail/CreateCompanyUsingToken';
+import Company from '../modules/company/schemas/Company';
+import { removeCompanyAvatarUseCase } from '../modules/company/useCases/RemoveCompanyAvatar';
+import { authenticateCompanyUseCase } from '../modules/company/useCases/AuthenticateCompany';
+import { requestRecoverPasswordUseCase } from '../modules/company/useCases/RecoverPassword/RequestRecoverPassword';
+import { recoverPasswordUseCase } from '../modules/company/useCases/RecoverPassword/RecoverPassword';
+import { updateAllBitrixCompaniesCPFCNPJSUseCase } from '../modules/Bitrix/useCases/UpdateAllBitrixCompaniesCPFCNPJ';
+import { CreateCompanyInputType } from '../modules/company/useCases/CreateCompany/CreateCompanyInput';
+import { createCompanyUseCase } from '../modules/company/useCases/CreateCompany';
+import { sendMailToCreateCompanyUseCase } from '../modules/company/useCases/CreateCompanyUsingEmail/SendMailToCreateCompany';
+import { createCompanyUsingEmailUseCase } from '../modules/company/useCases/CreateCompanyUsingEmail/CreateCompanyUsingToken';
 
 @Resolver()
 class CompaniesResolver {

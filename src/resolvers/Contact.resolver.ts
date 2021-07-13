@@ -8,10 +8,10 @@ import {
 } from 'type-graphql';
 import { ContextData } from '../Context/context';
 import AuthenticatedChecker from '../middlewares/AuthenticatedChecker';
-import { BitrixDeal } from '../Modules/Bitrix/schemas/BitrixDeal';
-import { createRealEstateDealUseCase } from '../Modules/Bitrix/useCases/CreateRealEstateDeal';
-import { createVehicularDealUseCase } from '../Modules/Bitrix/useCases/CreateVehicularDeal';
-import { listContactsUseCase } from '../Modules/Bitrix/useCases/ListContacts';
+import { BitrixDeal } from '../modules/Bitrix/schemas/BitrixDeal';
+import { createRealEstateDealUseCase } from '../modules/Bitrix/useCases/CreateRealEstateDeal';
+import { createVehicularDealUseCase } from '../modules/Bitrix/useCases/CreateVehicularDeal';
+import { listContactsUseCase } from '../modules/Bitrix/useCases/ListContacts';
 import GetContactsResponse from '../Schemas/GetContactsResponse';
 import { AddContactInput } from './types/Contact/AddContactInput';
 import { AddVehicularCreditContactInput } from './types/Contact/AddVehicularCreditContactInput';

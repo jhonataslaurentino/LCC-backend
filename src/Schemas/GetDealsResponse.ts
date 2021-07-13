@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from 'type-graphql';
-import { BitrixDeal } from '../Modules/Bitrix/schemas/BitrixDeal';
+import { BitrixDeal } from '../modules/Bitrix/schemas/BitrixDeal';
 
 @ObjectType({
   description: 'The schema response for get deals service request.',

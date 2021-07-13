@@ -1,10 +1,10 @@
 import { Arg, Mutation, Resolver, Query, UseMiddleware } from 'type-graphql';
 import AuthenticatedChecker from '../middlewares/AuthenticatedChecker';
-import { getCurrentSELICRateUseCase } from '../Modules/BCB/useCases/GetCurrentSELICRate';
-import { SimulationRepository } from '../Modules/simulation/repositories/SimulationsRepository/SimulationRepository';
+import { getCurrentSELICRateUseCase } from '../modules/BCB/useCases/GetCurrentSELICRate';
+import { SimulationRepository } from '../modules/simulation/repositories/SimulationsRepository/SimulationRepository';
 import SELICRate from '../Schemas/SELICRate';
 import GetSimulationInstallmentsInput from './types/Simulation/GetSimulationInstallmentsInput';
-import Installment from '../Modules/simulation/schemas/Installment';
+import Installment from '../modules/simulation/schemas/Installment';
 
 @Resolver()
 class SimulationsResolver {

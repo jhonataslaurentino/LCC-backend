@@ -1,7 +1,7 @@
 import { sign } from 'jsonwebtoken';
 import authConfig from '../config/authConfig';
 import endpointsConfig from '../config/endpoints.config';
-import { CompanyModel } from '../Modules/company/models/Company';
+import { CompanyModel } from '../modules/company/models/Company';
 import SendEmailService from './SendEmailService';
 
 interface Request {

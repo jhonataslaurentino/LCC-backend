@@ -303,8 +303,8 @@ input CreateCompanyInputType {
 
 """Create Deal Category Input"""
 input CreateDealCategoryInput {
-  bitrixProductsField: String!
-  bitrix_id: Float!
+  bitrixProductsField: String
+  bitrix_id: Int!
   isInDevelopment: Boolean!
   isVisible: Boolean!
   name: String

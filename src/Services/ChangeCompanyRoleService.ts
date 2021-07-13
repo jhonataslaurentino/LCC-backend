@@ -1,6 +1,6 @@
-import { CompanyModel } from '../Modules/company/models/Company';
-import { RoleRepository } from '../Modules/company/repositories/implementations/RoleRepository/RoleRepository';
-import Company from '../Modules/company/schemas/Company';
+import { CompanyModel } from '../modules/company/models/Company';
+import { RoleRepository } from '../modules/company/repositories/implementations/RoleRepository/RoleRepository';
+import Company from '../modules/company/schemas/Company';
 
 interface Request {
   roleID: string;

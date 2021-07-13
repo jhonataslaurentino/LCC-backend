@@ -1,6 +1,6 @@
 import { compare } from 'bcryptjs';
-import { CompanyModel } from '../Modules/company/models/Company';
-import Company from '../Modules/company/schemas/Company';
+import { CompanyModel } from '../modules/company/models/Company';
+import Company from '../modules/company/schemas/Company';
 import UpdateProfileAtBitrixService from './UpdateProfileAtBitrixService';
 
 interface Request {

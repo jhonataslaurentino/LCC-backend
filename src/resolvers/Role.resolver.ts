@@ -3,9 +3,9 @@ import permissions from '../config/permissions';
 import { ContextData } from '../Context/context';
 import AuthenticatedChecker from '../middlewares/AuthenticatedChecker';
 import PermissionRequired from '../middlewares/PermissionRequired';
-import Role from '../Modules/company/schemas/Role';
-import { RoleRepository } from '../Modules/company/repositories/implementations/RoleRepository/RoleRepository';
-import { getCompanyRoleUseCase } from '../Modules/company/useCases/GetCompanyRole';
+import Role from '../modules/company/schemas/Role';
+import { RoleRepository } from '../modules/company/repositories/implementations/RoleRepository/RoleRepository';
+import { getCompanyRoleUseCase } from '../modules/company/useCases/GetCompanyRole';
 
 @Resolver()
 class RolesResolver {

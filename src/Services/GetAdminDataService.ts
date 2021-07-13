@@ -1,4 +1,4 @@
-import { CompanyModel } from '../Modules/company/models/Company';
+import { CompanyModel } from '../modules/company/models/Company';
 
 interface Response {
   activeAccounts: number;

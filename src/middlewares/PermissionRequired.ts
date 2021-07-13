@@ -1,9 +1,9 @@
 import { MiddlewareFn, NextFn, ResolverData } from 'type-graphql';
 import { ContextData } from '../Context/context';
-import { CompanyModel } from '../Modules/company/models/Company';
-import RoleModel from '../Modules/company/models/Role';
-import { RoleRepository } from '../Modules/company/repositories/implementations/RoleRepository/RoleRepository';
-import { getDefaultRoleForCompanyByEmailUseCase } from '../Modules/company/useCases/GetDefaultRoleForCompanyByEmail';
+import { CompanyModel } from '../modules/company/models/Company';
+import RoleModel from '../modules/company/models/Role';
+import { RoleRepository } from '../modules/company/repositories/implementations/RoleRepository/RoleRepository';
+import { getDefaultRoleForCompanyByEmailUseCase } from '../modules/company/useCases/GetDefaultRoleForCompanyByEmail';
 
 function PermissionRequired(
   permissionValues: number[],

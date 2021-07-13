@@ -1,5 +1,5 @@
 import { Field, ID, InputType } from 'type-graphql';
-import Company from '../../../Modules/company/schemas/Company';
+import Company from '../../../modules/company/schemas/Company';
 
 @InputType({ description: "Update Company's bitrix id Args" })
 export default class UpdateBitrixIdInput implements Partial<Company> {

@@ -1,9 +1,9 @@
 import { hash } from 'bcryptjs';
 import { verify } from 'jsonwebtoken';
 import authConfig from '../config/authConfig';
-import { CompanyModel } from '../Modules/company/models/Company';
-import Company from '../Modules/company/schemas/Company';
-import { getDefaultRoleForCompanyByEmailUseCase } from '../Modules/company/useCases/GetDefaultRoleForCompanyByEmail';
+import { CompanyModel } from '../modules/company/models/Company';
+import Company from '../modules/company/schemas/Company';
+import { getDefaultRoleForCompanyByEmailUseCase } from '../modules/company/useCases/GetDefaultRoleForCompanyByEmail';
 
 interface Request {
   name: string;

@@ -19,17 +19,17 @@ import GetDealsUpdatedInput from './types/Deal/GetDealsUpdatedInput';
 import DealCategoryStage from '../Schemas/DealCategoryStage';
 import GetDealCategoryStageInput from './types/Deal/GetDealCategoryStagesInput';
 import GetDealCategoryStagesService from '../Services/deals/dealsCategories/GetDealCategoryStagesService';
-import BitrixDealCategory from '../Modules/Bitrix/schemas/BitrixDealCategory';
-import { listBitrixDealsCategoriesUseCase } from '../Modules/Bitrix/useCases/ListBitrixDealsCategories';
-import { BitrixDeal } from '../Modules/Bitrix/schemas/BitrixDeal';
+import BitrixDealCategory from '../modules/Bitrix/schemas/BitrixDealCategory';
+import { listBitrixDealsCategoriesUseCase } from '../modules/Bitrix/useCases/ListBitrixDealsCategories';
+import { BitrixDeal } from '../modules/Bitrix/schemas/BitrixDeal';
 import { UpdateBitrixDealCommentsInput } from './types/Deal/UpdateBitrixDealCommentsInput';
-import { updateDealCommentUseCase } from '../Modules/Bitrix/useCases/UpdateDealComments';
-import BitrixDealField from '../Modules/Bitrix/schemas/BitrixDealField';
-import { getBitrixDealFieldsUseCase } from '../Modules/Bitrix/useCases/GetBitrixDealFields';
+import { updateDealCommentUseCase } from '../modules/Bitrix/useCases/UpdateDealComments';
+import BitrixDealField from '../modules/Bitrix/schemas/BitrixDealField';
+import { getBitrixDealFieldsUseCase } from '../modules/Bitrix/useCases/GetBitrixDealFields';
 import ListDealTimelineCommentsInput from './types/Deal/ListDealTimelineCommentsInput';
-import { listDealCommentsTimelineUseCase } from '../Modules/Bitrix/useCases/ListDealCommentsTimeline';
-import { ListDealCommentsTimeLineSchema } from '../Modules/Bitrix/useCases/ListDealCommentsTimeline/ListDealCommentsTimeLineSchema';
-import { listBitrixDealsByCompanyIDUseCase } from '../Modules/Bitrix/useCases/ListDeals';
+import { listDealCommentsTimelineUseCase } from '../modules/Bitrix/useCases/ListDealCommentsTimeline';
+import { ListDealCommentsTimeLineSchema } from '../modules/Bitrix/useCases/ListDealCommentsTimeline/ListDealCommentsTimeLineSchema';
+import { listBitrixDealsByCompanyIDUseCase } from '../modules/Bitrix/useCases/ListDeals';
 
 @Resolver()
 class DealsResolver {
