@@ -321,6 +321,54 @@ input CreateDealProductInput {
   name: String
 }
 
+"""C"""
+input CreatePartnerExchangeDealForLegalPersonInput {
+  addressNumber: String!
+  birthday: DateTime!
+  city: String!
+  cnpj: String!
+  companyAddress: String!
+  complement: String!
+  corporateName: String!
+  district: String!
+  email: String!
+  fantasyName: String!
+  mainActivity: String!
+  name: String!
+  opportunityValue: Float!
+  personType: String!
+  phone: String!
+  uf: String!
+}
+
+"""Input arguments to create a new Exchange deal for physical person"""
+input CreatePartnerExchangeDealForPhysicalPersonInput {
+  UF: String!
+  birthday: DateTime!
+  cellPhone: String!
+  city: String!
+  cpf: String!
+  district: String!
+  doesTheCustomerHaveAnyRelevantRole: String!
+  email: String!
+  gender: String!
+  homeAddress: String!
+  interestComment: String!
+  maritalStatus: String!
+  monthlyIncome: Float!
+  name: String!
+  nationality: String!
+  naturalness: String!
+  opportunityValue: Float!
+  personType: String!
+  phone: String!
+  profession: String!
+  rg: String!
+  rgIssueDate: DateTime!
+  rgIssuingAgency: String!
+  zipCode: String!
+}
+
 """
 Create Partner Arguments. You should be an administrator to create a partner
 """
@@ -693,6 +741,8 @@ type Mutation {
   Create a associate partner. You should be a partner to create your associates
   """
   createPartnerAssociate(data: CreateAssociateInput!): Partner!
+  createPartnerExchangeDealForLegalPerson(data: CreatePartnerExchangeDealForLegalPersonInput!): BitrixDeal!
+  createPartnerExchangeDealForPhysicalPerson(data: CreatePartnerExchangeDealForPhysicalPersonInput!): BitrixDeal!
 
   """Create a real estate deal for a partner"""
   createPartnerRealEstate(data: CreatePartnerRealEstateDealInput!): BitrixDeal!
@@ -720,6 +770,7 @@ type Mutation {
   requestRecoverPassword(data: RequestRecoverPasswordInput!): RequestRecoverPasswordResponse!
   setProfilePicture(data: FileInput!): Boolean!
   switchDealCategoryVisibility(data: SwitchDealCategoryVisibilityInput!): DealCategory!
+  togglePartnerDealCategories(data: TogglePartnerDealCategoriesInput!): [PartnerDealCategory!]
   updateDealComment(data: UpdateBitrixDealCommentsInput!): BitrixDeal!
   updateLeftingCompanyFields: Boolean!
   updateProfile(data: UpdateCompanyProfileInput!): Company!
@@ -924,6 +975,17 @@ type Simulation {
 
 """Switch deal category visibility input"""
 input SwitchDealCategoryVisibilityInput {
+  dealCategoryID: String!
+}
+
+"""Toggle partner deal categories mutation arguments"""
+input TogglePartnerDealCategoriesInput {
+  togglePartnerDealCategorySchemas: [TogglePartnerDealCategorySchema!]!
+}
+
+"""Toggle partner deal category schema"""
+input TogglePartnerDealCategorySchema {
+  checked: Boolean!
   dealCategoryID: String!
 }
 

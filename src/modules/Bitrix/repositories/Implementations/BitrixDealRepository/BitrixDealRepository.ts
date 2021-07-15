@@ -15,9 +15,12 @@ import {
   ICreateExchangeDealForLegalPersonDTO,
   ICreateExchangeDealForPhysicalPersonDTO,
   ICreateConsignedDealDTO,
+  ICreatePrepaymentOfReceivablesDTO,
 } from '../../IBitrixDealRepository';
 import { CreateConsignedDealService } from './service/CreateConsignedDealService';
+import { CreateExchangeDealForLegalPersonService } from './service/CreateExchangeDealForLegalPersonService';
 import { CreatePersonalDealService } from './service/CreatePersonalDealService';
+import { CreatePrepaymentOfReceivablesDealService } from './service/CreatePrepaymentOfReceivablesDealService';
 import { CreateRealEstateDealService } from './service/CreateRealEstateDealService';
 import { CreateVehicularDealService } from './service/CreateVehicularDealService';
 import { FindBitrixDealByIDService } from './service/FindBitrixDealByIDService';
@@ -35,6 +38,17 @@ class BitrixDealRepository implements IBitrixDealRepository {
     });
   }
 
+  async CreatePrepaymentOfReceivablesDeal(
+    data: ICreatePrepaymentOfReceivablesDTO,
+  ): Promise<BitrixDeal> {
+    const createPrepaymentOfReceivablesDealService = new CreatePrepaymentOfReceivablesDealService(
+      this.api,
+    );
+    const dealID = await createPrepaymentOfReceivablesDealService.execute(data);
+    const deal = await this.findByID(dealID);
+    return deal;
+  }
+
   async CreateConsignedDeal(
     data: ICreateConsignedDealDTO,
   ): Promise<BitrixDeal> {
@@ -50,10 +64,15 @@ class BitrixDealRepository implements IBitrixDealRepository {
     throw new Error('Method not implemented.');
   }
 
-  CreateExchangeDealForLegalPerson(
+  async CreateExchangeDealForLegalPerson(
     data: ICreateExchangeDealForLegalPersonDTO,
   ): Promise<BitrixDeal> {
-    throw new Error('Method not implemented.');
+    const createExchangeDealForLegalPersonService = new CreateExchangeDealForLegalPersonService(
+      this.api,
+    );
+    const dealID = await createExchangeDealForLegalPersonService.execute(data);
+    const deal = await this.findByID(dealID);
+    return deal;
   }
 
   async CreatePersonalDeal(data: ICreatePersonalDealDTO): Promise<BitrixDeal> {

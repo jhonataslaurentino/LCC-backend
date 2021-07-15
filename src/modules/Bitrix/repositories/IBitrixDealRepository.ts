@@ -67,12 +67,12 @@ interface ICreateExchangeDealForPhysicalPersonDTO {
   opportunityValue: number;
   name: string;
   cpf: string;
-  comment: string;
+  interestComment: string;
   birthday: Date;
   monthlyIncome: number;
   rg: string;
   rgIssueDate: Date;
-  rgIssuingBody: string;
+  rgIssuingAgency: string;
   naturalness: string;
   nationality: string;
   gender: string;
@@ -83,25 +83,27 @@ interface ICreateExchangeDealForPhysicalPersonDTO {
   UF: string;
   zipCode: string;
   maritalStatus: string;
-  landline: string;
+  phone: string;
   cellPhone: string;
   doesTheCustomerHaveAnyRelevantRole: string;
 }
 
 interface ICreateExchangeDealForLegalPersonDTO {
+  addressNumber: string;
+  contactID: string;
+  companyID: string;
+  complement: string;
+  district: string;
+  opportunityValue: number;
   corporateName: string;
   fantasyName: string;
-  CNPJ: string;
   companyAddress: string;
-  companyAddressNumber: string;
-  companyAddressComplement: string;
-  companyAddressDistrict: string;
-  companyAddressCity: string;
-  companyAddressUF: string;
-  companyAddressZipCode: string;
   phone: string;
-  email: string;
   mainActivity: string;
+  cnpj: string;
+  city: string;
+  uf: string;
+  email: string;
 }
 
 interface ICreateConsignedDealDTO {
@@ -115,6 +117,18 @@ interface ICreateConsignedDealDTO {
   bankFinancialInstitution: string;
   CNH: Express.Multer.File;
   proofOfAddress: Express.Multer.File;
+}
+
+interface ICreatePrepaymentOfReceivablesDTO {
+  contactID: string;
+  companyID: string;
+  opportunityValue: number;
+  associateCPF: Express.Multer.File;
+  associateRG: Express.Multer.File;
+  proofOfAddress: Express.Multer.File;
+  proofOfBusinessAddress: Express.Multer.File;
+  socialContract: Express.Multer.File;
+  annualInvoice: number;
 }
 
 interface IGenericObjectDTO {
@@ -147,6 +161,9 @@ interface IBitrixDealRepository {
   CreateExchangeDealForLegalPerson(
     data: ICreateExchangeDealForLegalPersonDTO,
   ): Promise<BitrixDeal>;
+  CreatePrepaymentOfReceivablesDeal(
+    data: ICreatePrepaymentOfReceivablesDTO,
+  ): Promise<BitrixDeal>;
   list(data: IListDealsDTO): Promise<IListDealsResponse>;
 }
 
@@ -162,4 +179,5 @@ export {
   ICreateExchangeDealForLegalPersonDTO,
   ICreateExchangeDealForPhysicalPersonDTO,
   ICreateConsignedDealDTO,
+  ICreatePrepaymentOfReceivablesDTO,
 };

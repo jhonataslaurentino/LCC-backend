@@ -1,6 +1,7 @@
 import { PartnerDealCategory } from '../../../Schemas/PartnerDealsCategories';
 import {
   ICreatePartnerDealCategory,
+  IDeletePartnerDealCategory,
   IPartnerDealCategoryRepository,
 } from '../../IPartnerDealCategoryRepository';
 import { AddDealCategoryToPartnerService } from './services/AddDealCategoryToPartnerService';
@@ -18,10 +19,10 @@ class PartnerDealCategoryRepository implements IPartnerDealCategoryRepository {
     return foundPartnerDealCategory;
   }
 
-  async delete(partnerDealCategoryID: string): Promise<PartnerDealCategory> {
+  async delete(data: IDeletePartnerDealCategory): Promise<PartnerDealCategory> {
     const deletePartnerDealCategoryService = new DeletePartnerDealCategoryService();
     const deletedPartnerDealCategory = await deletePartnerDealCategoryService.execute(
-      partnerDealCategoryID,
+      data,
     );
     return deletedPartnerDealCategory;
   }
