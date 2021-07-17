@@ -21,14 +21,7 @@ class CreateAssociateResolver {
     @Ctx()
     contextData: ContextData,
     @Arg('data')
-    {
-      cpf_cnpj,
-      email,
-      name,
-      password,
-      phone,
-      companyName,
-    }: CreateAssociateInput,
+    { cpf_cnpj, email, name, phone, companyName }: CreateAssociateInput,
   ): Promise<Partner> {
     const { id: partnerCreatorID } = contextData;
     const partner = await createAssociateUseCase.execute({
@@ -37,7 +30,6 @@ class CreateAssociateResolver {
       email,
       name,
       partnerCreatorID,
-      password,
       phone,
     });
     return partner;
