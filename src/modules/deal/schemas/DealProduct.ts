@@ -13,7 +13,7 @@ class DealProduct {
   @Property()
   name: string;
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   @Property()
   bitrix_id: number;
 

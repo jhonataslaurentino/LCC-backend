@@ -6,10 +6,10 @@ class CreateDealProductInput {
   @Field()
   dealCategoryID: string;
 
-  @Field({ nullable: true })
+  @Field()
   name: string;
 
-  @Field()
+  @Field({ nullable: true })
   bitrix_id: string;
 
   @Field(() => Float)

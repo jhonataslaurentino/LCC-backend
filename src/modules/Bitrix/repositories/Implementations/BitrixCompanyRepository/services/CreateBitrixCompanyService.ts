@@ -10,6 +10,7 @@ class CreateBitrixCompanyService {
     name,
     phone,
     cpf_cnpj,
+    ...anotherFields
   }: ICreateBitrixCompanyDTO): Promise<number> {
     const response = await this.api.post('/crm.company.add', {
       fields: {
@@ -25,6 +26,7 @@ class CreateBitrixCompanyService {
           },
         ],
         UF_CRM_1602185703: cpf_cnpj,
+        ...anotherFields,
       },
     });
     const { result } = response.data;

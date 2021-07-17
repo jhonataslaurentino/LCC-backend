@@ -21,14 +21,6 @@ class CreateDealProductService {
     dealCategoryID,
     maxNumberOfInstallments,
   }: Request): Promise<DealProduct> {
-    const isThereAnyDealProductWithSameBitrixID = await DealProductModel.findOne(
-      {
-        bitrix_id: Number(bitrix_id),
-      },
-    ).exec();
-    if (isThereAnyDealProductWithSameBitrixID) {
-      throw new Error('There is a Deal Type using the same bitrix id');
-    }
     const dealCategory = await DealCategoryModel.findById(dealCategoryID);
     if (!dealCategory) {
       throw new Error('Deal category does not exists');

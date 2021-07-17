@@ -5,6 +5,7 @@ interface ICreateBitrixCompanyDTO {
   phone: string;
   email: string;
   cpf_cnpj: string;
+  [field: string]: string | number | Date;
 }
 
 interface IUpdateCompanyDTO {

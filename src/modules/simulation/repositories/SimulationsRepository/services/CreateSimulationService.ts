@@ -4,21 +4,7 @@ import { DealProductModel } from '../../../../deal/models/DealProduct';
 import { SimulationModel } from '../../../models/Simulation';
 import Simulation from '../../../schemas/Simulation';
 import { CompanyRepository } from '../../../../company/repositories/implementations/CompanyRepository/CompanyRepository';
-
-interface Request {
-  value: number;
-  numberOfInstallments: number;
-  name: string;
-  cpf_cnpj: string;
-  email: string;
-  phone: string;
-  dealCategoryID: string;
-  dealProductID: string;
-  companyID: string;
-  amortizationType: number;
-  personType: string;
-  birthday: Date;
-}
+import { ICreateSimulationDTO } from '../../ISimulationRepository';
 
 class CreateSimulationService {
   public async execute({
@@ -34,7 +20,7 @@ class CreateSimulationService {
     amortizationType,
     personType,
     birthday,
-  }: Request): Promise<Simulation> {
+  }: ICreateSimulationDTO): Promise<Simulation> {
     if (!['pf', 'pj'].includes(personType)) {
       throw new Error('You should provide pf or pj on personType field');
     }

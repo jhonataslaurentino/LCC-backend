@@ -9,7 +9,7 @@ interface ICreateSimulationDTO {
   email: string;
   phone: string;
   dealCategoryID: string;
-  dealProductID: string;
+  dealProductID?: string;
   companyID: string;
   amortizationType: number;
   personType: string;

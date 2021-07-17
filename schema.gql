@@ -266,7 +266,6 @@ input CreateAssociateInput {
   cpf_cnpj: String!
   email: String!
   name: String!
-  password: String!
   phone: String!
 }
 
@@ -314,11 +313,11 @@ input CreateDealCategoryInput {
 """Create Deal Type Input"""
 input CreateDealProductInput {
   averageRate: Float!
-  bitrix_id: String!
+  bitrix_id: String
   competitiveRate: Float!
   dealCategoryID: String!
   maxNumberOfInstallments: Int!
-  name: String
+  name: String!
 }
 
 """C"""
@@ -328,6 +327,7 @@ input CreatePartnerExchangeDealForLegalPersonInput {
   city: String!
   cnpj: String!
   companyAddress: String!
+  companyID: String!
   complement: String!
   corporateName: String!
   district: String!
@@ -347,6 +347,7 @@ input CreatePartnerExchangeDealForPhysicalPersonInput {
   birthday: DateTime!
   cellPhone: String!
   city: String!
+  companyID: String!
   cpf: String!
   district: String!
   doesTheCustomerHaveAnyRelevantRole: String!
@@ -406,7 +407,7 @@ input CreatePartnerSimulationInput {
   birthday: DateTime!
   cpf_cnpj: String!
   dealCategoryID: String!
-  dealProductID: String!
+  dealProductID: String
   email: String!
   name: String!
   numberOfInstallments: Int!
@@ -489,7 +490,7 @@ type DealCategoryStage {
 """Deal product schema"""
 type DealProduct {
   averageRate: Float
-  bitrix_id: Int!
+  bitrix_id: Int
   competitiveRate: Float
 
   """Created date of the model"""
@@ -764,9 +765,11 @@ type Mutation {
   getSACSimulation(data: GetSimulationInstallmentsInput!): [Installment!]!
   login(data: AuthenticationCompanyInput!): Login!
   loginPartner(data: AuthenticatePartnerInput!): AuthenticatePartnerSchema!
+  recoverPartnerPassword(data: RecoverPartnerPasswordInput!): Partner!
   recoverPassword(data: RecoverPasswordInput!): Company!
   removeProfilePicture: Company!
   requestCreateCompany(data: RequestCreateCompanyInput!): Boolean!
+  requestPartnerRecoverPassword(data: RequestPartnerRecoverPasswordInput!): Boolean!
   requestRecoverPassword(data: RequestRecoverPasswordInput!): RequestRecoverPasswordResponse!
   setProfilePicture(data: FileInput!): Boolean!
   switchDealCategoryVisibility(data: SwitchDealCategoryVisibilityInput!): DealCategory!
@@ -889,6 +892,11 @@ type Query {
   verifyIfCompanySawTutorial: Boolean!
 }
 
+input RecoverPartnerPasswordInput {
+  newPassword: String!
+  token: String!
+}
+
 """Recover Password Args"""
 input RecoverPasswordInput {
   """Company email to recover"""
@@ -910,6 +918,11 @@ input RequestCreateCompanyInput {
   haveLifetimeAccess: Boolean
   name: String!
   recurrence_code: Int
+}
+
+"""Recover partner password input arguments"""
+input RequestPartnerRecoverPasswordInput {
+  email: String!
 }
 
 """Request Recover Password Args"""
@@ -959,7 +972,7 @@ type Simulation {
   """Created date of the model"""
   createdAt: DateTime
   dealCategory: DealCategory!
-  dealProduct: DealProduct!
+  dealProduct: DealProduct
   email: String!
   id: ID!
   name: String!

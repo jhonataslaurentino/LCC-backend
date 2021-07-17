@@ -7,6 +7,9 @@ class CreatePartnerExchangeDealForLegalPersonInput {
   name: string;
 
   @Field()
+  companyID: string;
+
+  @Field()
   birthday: Date;
 
   @Field()

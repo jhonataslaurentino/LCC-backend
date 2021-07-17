@@ -19,6 +19,7 @@ import {
 } from '../../IBitrixDealRepository';
 import { CreateConsignedDealService } from './service/CreateConsignedDealService';
 import { CreateExchangeDealForLegalPersonService } from './service/CreateExchangeDealForLegalPersonService';
+import { CreateExchangeDealForPhysicalPersonService } from './service/CreateExchangeDealForPhysicalPersonService';
 import { CreatePersonalDealService } from './service/CreatePersonalDealService';
 import { CreatePrepaymentOfReceivablesDealService } from './service/CreatePrepaymentOfReceivablesDealService';
 import { CreateRealEstateDealService } from './service/CreateRealEstateDealService';
@@ -58,10 +59,17 @@ class BitrixDealRepository implements IBitrixDealRepository {
     return deal;
   }
 
-  CreateExchangeDealForPhysicalPerson(
+  async CreateExchangeDealForPhysicalPerson(
     data: ICreateExchangeDealForPhysicalPersonDTO,
   ): Promise<BitrixDeal> {
-    throw new Error('Method not implemented.');
+    const createExchangeDealForPhysicalPersonService = new CreateExchangeDealForPhysicalPersonService(
+      this.api,
+    );
+    const dealID = await createExchangeDealForPhysicalPersonService.execute(
+      data,
+    );
+    const deal = await this.findByID(dealID);
+    return deal;
   }
 
   async CreateExchangeDealForLegalPerson(

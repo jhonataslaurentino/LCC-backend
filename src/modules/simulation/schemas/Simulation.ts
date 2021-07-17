@@ -3,8 +3,6 @@ import { plugin, prop as Property, Ref } from '@typegoose/typegoose';
 import * as autopopulate from 'mongoose-autopopulate';
 import { DealCategory } from '../../deal/schemas/DealCategory';
 import { DealProduct } from '../../deal/schemas/DealProduct';
-import { Partner } from '../../partner/Schemas/Partner';
-import Company from '../../company/schemas/Company';
 
 @ObjectType({ description: 'Simulation Schema' })
 @plugin(autopopulate.default)
@@ -52,8 +50,8 @@ class Simulation {
   @Property({ autopopulate: true, ref: () => DealCategory })
   dealCategory: Ref<DealCategory>;
 
-  @Field(() => DealProduct)
-  @Property({ autopopulate: true, ref: () => DealProduct })
+  @Field(() => DealProduct, { nullable: true })
+  @Property({ autopopulate: true, ref: () => DealProduct, default: '' })
   dealProduct: Ref<DealProduct>;
 
   @Field(() => Float)

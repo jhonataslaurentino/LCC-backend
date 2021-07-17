@@ -1,12 +1,12 @@
-import CreateDealProductService from '../../../../../Services/deals/dealsCategories/CreateDealProductService';
-import EditDealProductService from '../../../../../Services/deals/dealsCategories/EditDealProductService';
 import { DealProduct } from '../../../schemas/DealProduct';
 import {
   ICreateDealProductData,
   IDealProductRepository,
   IEditDealProductDTO,
 } from '../../IDealProductRepository';
+import { CreateDealProductService } from './services/CreateDealProductService';
 import DeleteDealProductService from './services/DeleteDealProductService';
+import { EditDealProductService } from './services/EditDealProductService';
 import { FindDealProductByIDService } from './services/FindDealProductByIDService';
 import { ListDealProductsService } from './services/ListDealProductsService';
 

@@ -1,7 +1,7 @@
 import nodemailer, { Transporter } from 'nodemailer';
-import handlebars from 'handlebars';
 import fs from 'fs';
-import endpointsConfig from '../../config/endpoints.config';
+import handlebars from 'handlebars';
+import endpointsConfig from '../../../config/endpoints.config';
 
 interface ISendMailServiceDTO {
   to: string;
@@ -9,9 +9,10 @@ interface ISendMailServiceDTO {
   // eslint-disable-next-line @typescript-eslint/ban-types
   variables: object;
   path: string;
+  from: string;
 }
 
-class SendMailService {
+class SendPartnerMailService {
   private client: Transporter;
 
   constructor() {
@@ -20,13 +21,14 @@ class SendMailService {
       port: 465,
       secure: true,
       auth: {
-        user: endpointsConfig.mailUserName,
-        pass: endpointsConfig.mailPassword,
+        user: endpointsConfig.partnerMailUserName,
+        pass: endpointsConfig.partnerMailPassword,
       },
     });
   }
 
   async execute({
+    from,
     path,
     subject,
     to,
@@ -35,14 +37,13 @@ class SendMailService {
     const templateFileContent = fs.readFileSync(path).toString('utf-8');
     const mailTemplateParse = handlebars.compile(templateFileContent);
     const html = mailTemplateParse(variables);
-
     await this.client.sendMail({
+      html,
       to,
       subject,
-      html,
-      from: 'Lucrando com Crédito <noreply@lucrandocomcredito.com.br',
+      from,
     });
   }
 }
 
-export { SendMailService };
+export { SendPartnerMailService };

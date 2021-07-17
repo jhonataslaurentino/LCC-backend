@@ -1,8 +1,9 @@
+import AppError from '../../../../../errors/AppError';
 import { getCurrentSELICRateUseCase } from '../../../../BCB/useCases/GetCurrentSELICRate';
-import { DealCategoryRepository } from '../../../../deal/repositories/implementations/DealCategory';
 import { DealProductRepository } from '../../../../deal/repositories/implementations/DealProduct';
 import { DealCategory } from '../../../../deal/schemas/DealCategory';
 import { DealProduct } from '../../../../deal/schemas/DealProduct';
+import { PartnerDealCategoryModel } from '../../../../partner/models/PartnerDealCategoryModel';
 import { PartnerRepository } from '../../../../partner/repositories/implementations/PartnerRepository';
 import { SimulationModel } from '../../../models/Simulation';
 import Simulation from '../../../schemas/Simulation';
@@ -32,13 +33,16 @@ class CreatePartnerSimulationService {
       throw new Error('Partner does not exists');
     }
 
-    const dealCategoriesRepository = new DealCategoryRepository();
-    const dealCategory = await dealCategoriesRepository.findByID(
+    const partnerDealCategory = await PartnerDealCategoryModel.findById(
       dealCategoryID,
     );
-    if (!dealCategory) {
-      throw new Error('Deal Category does not exists');
+    if (!partnerDealCategory) {
+      throw new AppError(
+        'Your partner master do not have this deal category',
+        404,
+      );
     }
+    const dealCategory = partnerDealCategory.dealCategory as DealCategory;
 
     const dealProductsRepository = new DealProductRepository();
     const dealProduct = (await dealProductsRepository.findById(

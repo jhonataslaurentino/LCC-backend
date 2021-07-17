@@ -23,6 +23,11 @@ interface IAddDealCategory {
   partnerID: string;
 }
 
+interface IChangePartnerPassword {
+  partnerID: string;
+  newPassword: string;
+}
+
 interface IPartnerRepository {
   findById(id: string): Promise<Partner | DocumentType<Partner> | null>;
   create(data: ICreatePartnerDTO): Promise<Partner | DocumentType<Partner>>;
@@ -33,6 +38,7 @@ interface IPartnerRepository {
     data: ICreatePartnerAssociateDTO,
   ): Promise<Partner | DocumentType<Partner>>;
   listAssociates(partnerID: string): Promise<Partner[]>;
+  changePartnerPassword(data: IChangePartnerPassword): Promise<Partner>;
 }
 
 export {
@@ -40,4 +46,5 @@ export {
   ICreatePartnerDTO,
   ICreatePartnerAssociateDTO,
   IAddDealCategory,
+  IChangePartnerPassword,
 };

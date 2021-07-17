@@ -2,7 +2,6 @@ import { resolve } from 'path';
 import { IBitrixCompanyRepository } from '../../../Bitrix/repositories/IBitrixCompanyRepository';
 import { SendMailService } from '../../../global/SendMailService';
 import { ICompanyRepository } from '../../repositories/ICompanyRepository';
-import { IRoleRepository } from '../../repositories/IRoleRepository';
 import Company from '../../schemas/Company';
 import { getDefaultRoleForCompanyByEmailUseCase } from '../GetDefaultRoleForCompanyByEmail';
 
@@ -36,7 +35,6 @@ class CreateCompanyUseCase {
   constructor(
     private companiesRepository: ICompanyRepository,
     private bitrixCompaniesRepository: IBitrixCompanyRepository,
-    private rolesRepository: IRoleRepository,
   ) {}
 
   async execute({

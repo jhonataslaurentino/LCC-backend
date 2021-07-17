@@ -1,4 +1,5 @@
 import AppError from '../../../../errors/AppError';
+import { IBitrixCompanyRepository } from '../../../Bitrix/repositories/IBitrixCompanyRepository';
 import { IRoleRepository } from '../../../company/repositories/IRoleRepository';
 import { IPartnerRepository } from '../../repositories/IPartnerRepository';
 import { Partner } from '../../Schemas/Partner';

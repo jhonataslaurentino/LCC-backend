@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap" rel="stylesheet">
+  <title>Document</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .Container {
+      width: 100%;
+      height: min-content;
+      display: flex;
+      padding: 1rem;
+      font-family: 'Roboto', sans-serif;
+      line-height: 1.5;
+    }
+    .Content {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content:center;
+      flex-direction: column;
+      text-align: center;
+      gap: 1rem;
+    }
+    .Content>img{
+      height: 500;
+      width: auto;
+      margin: 1rem;
+    }
+    .Content>div{
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: center;
+    }
+    .Link{
+      text-decoration: none;
+      color: #294D91;
+      transition: all ease 0.5s;
+    }
+    .Link:hover{
+      text-decoration: underline;
+    }
+    .UserCredentials{
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      font-weight: bold;
+      line-height: 1;
+    }
+    .PS{
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      font-size: 11pt;
+    }
+  </style>
+</head>
+<body>
+  <div class=Container>
+    <div class="Content">
+      <img src="http://www.cdlmossoro.com.br/images/cdl_logo.png" alt="Partner" />
+      <div>
+        <p>Olá <strong><em>nome do cliente</em></strong>, agora você terá acesso a todo conteúdo necessário para ser o Agente autônomo de soluções financeiras da sua região.</p>
+        <p>
+          <a class="Link" href="http://google.com.br">Clique aqui</a> para acessar a Plataforma de crédito.
+        </p>
+      </div>
+      <div class="UserCredentials">
+        <p>Email: <em>(email do cliente)</em></p>
+        <p>Senha: <em>(Senha automática)</em></p>
+      </div>
+      <div>
+        <p>
+          Assim que entrar na plataforma aproveite para alterar sua senha e adicionar sua foto.
+        </p>
+      </div>
+      <div class="PS">
+        <p>*Caso não tenha feito o cadastro entre em contato com nosso atendimento o mais rápido o possível.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

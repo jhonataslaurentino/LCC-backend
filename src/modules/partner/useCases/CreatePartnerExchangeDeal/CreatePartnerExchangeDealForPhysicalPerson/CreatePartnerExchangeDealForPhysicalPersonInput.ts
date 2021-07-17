@@ -7,6 +7,9 @@ import { Field, Float, InputType } from 'type-graphql';
 })
 class CreatePartnerExchangeDealForPhysicalPersonInput {
   @Field()
+  companyID: string;
+
+  @Field()
   @IsEmail()
   email: string;
 

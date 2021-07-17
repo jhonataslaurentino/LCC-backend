@@ -53,7 +53,7 @@ class CreatePartnerSimulationInput {
   @Field()
   dealCategoryID: string;
 
-  @Field()
+  @Field({ nullable: true })
   dealProductID: string;
 
   @Field()

@@ -19,10 +19,6 @@ class CreateAssociateInput {
   email: string;
 
   @Field()
-  @Length(8, 255)
-  password: string;
-
-  @Field()
   @Validate(CPFORCNPJValidator, {
     message: 'You should provide a valid CPF/CNPJ',
   })

@@ -1,10 +1,12 @@
 import { PartnerModel } from '../../../models/PartnerModel';
 import { Partner } from '../../../Schemas/Partner';
 import {
+  IChangePartnerPassword,
   ICreatePartnerAssociateDTO,
   ICreatePartnerDTO,
   IPartnerRepository,
 } from '../../IPartnerRepository';
+import { ChangePartnerPasswordPassword } from './services/ChangePartnerPasswordPassword';
 import { CreateAssociateService } from './services/CreateAssociateService';
 import { CreatePartnerService } from './services/CreatePartnerService';
 import { FindPartnerByEmailService } from './services/FindPartnerByEmailService';
@@ -13,6 +15,12 @@ import { ListAssociatesService } from './services/ListAssociatesService';
 import { SavePartnerService } from './services/SavePartnerService';
 
 class PartnerRepository implements IPartnerRepository {
+  async changePartnerPassword(data: IChangePartnerPassword): Promise<Partner> {
+    const changePartnerPasswordPassword = new ChangePartnerPasswordPassword();
+    const changedPartner = await changePartnerPasswordPassword.execute(data);
+    return changedPartner;
+  }
+
   async listAssociates(partnerID: string): Promise<Partner[]> {
     const listAssociatesService = new ListAssociatesService();
     const associates = await listAssociatesService.execute(partnerID);
