@@ -18,6 +18,7 @@ class CreatePartnerUseCase {
   constructor(
     private partnersRepository: IPartnerRepository,
     private rolesRepository: IRoleRepository,
+    private bitrixCompaniesRepository: IBitrixCompanyRepository,
   ) {}
 
   async execute({
@@ -33,9 +34,17 @@ class CreatePartnerUseCase {
     if (!role) {
       throw new AppError('Company role does not exists', 500);
     }
+    const createdBitrixCompanyID = await this.bitrixCompaniesRepository.createBitrixCompany(
+      {
+        cpf_cnpj,
+        email,
+        name,
+        phone,
+      },
+    );
     const partner = await this.partnersRepository.create({
       companyName,
-      bitrix_id: 129,
+      bitrix_id: createdBitrixCompanyID,
       cpf_cnpj,
       email,
       name,
