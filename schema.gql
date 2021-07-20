@@ -182,6 +182,12 @@ input ChangePartnerPasswordInput {
   oldPassword: String!
 }
 
+"""Change Partner URL Use Case"""
+input ChangePartnerURLInput {
+  partnerID: String!
+  url: String!
+}
+
 """Change platform colors arguments"""
 input ChangePlatformColorsInput {
   """Primary color (HEX)"""
@@ -519,6 +525,11 @@ input DeletePartnerDealCategoryInput {
   partnerDealCategoryID: String!
 }
 
+"""Delete partner arguments"""
+input DeletePartnerInput {
+  id: String!
+}
+
 """Delete Simulation Mutation Input"""
 input DeleteSimulationInput {
   id: String!
@@ -729,6 +740,7 @@ type Mutation {
   Change the partner password mutation. The partner must be authenticated to change it password
   """
   changePartnerPassword(data: ChangePartnerPasswordInput!): Partner!
+  changePartnerURL(data: ChangePartnerURLInput!): Partner!
   changePlatformColors(data: ChangePlatformColorsInput!): PartnerStyleSchema!
   confirmTutorialHasBeenViewed: Company!
   createBasicCompany(data: CreateBasicCompanyInput!): BasicCompany!
@@ -754,6 +766,7 @@ type Mutation {
   createSimulation(data: CreateSimulationInput!): Simulation!
   deleteDealCategory(data: DeleteDealCategoryInput!): DealCategory!
   deleteDealProduct(data: DeleteDealProductInput!): DealProduct!
+  deletePartner(data: DeletePartnerInput!): Partner!
 
   """
   Delete a partner's deal category resolver. you should be a partner master and be authenticated to execute it.
