@@ -8,7 +8,7 @@ class GeneratePRICETableSimulationUseCase {
     const simulation = await this.simulationsRepository.findByID(id);
     const installments = this.simulationsRepository.generatePRICETable({
       loanAmount: simulation.value,
-      loanInterest: simulation.selicRate + simulation.averageRate,
+      loanInterest: (simulation.selicRate + simulation.averageRate) / 100,
       numberOfInstallments: simulation.numberOfInstallments,
     });
     return installments;
