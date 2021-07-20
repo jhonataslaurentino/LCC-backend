@@ -15,7 +15,7 @@ class ChangePartnerURLUseCase {
     if (!partner) {
       throw new AppError('Partner does not exists', 404);
     }
-    const partners = await this.partnersRepository.list();
+    const partners = (await this.partnersRepository.list()) as Partner[];
     const urlList = partners.map(({ siteURL }) => siteURL);
     if (urlList.includes(url)) {
       throw new AppError('Site url already used');
