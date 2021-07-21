@@ -19,6 +19,16 @@ class CreateVehicularDealController{
       cpf,
       personType,
       phone,
+      clientSituation,
+      contactMonthlyIncome,
+      opportunityValue,
+      vehicleManufacturedDate,
+      vehicleModel,
+      vehicleName,
+      vehicleTargetValue,
+      vehicleValue,
+      vehicularCreditType,
+      address,
     }= request.body;
 
     const createdDeal = await this.CreateVehicularDealUseCase.execute({
