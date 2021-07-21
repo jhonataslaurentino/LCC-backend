@@ -10,5 +10,14 @@ class CreateRealEstateDealController{
 
   async handle(request: Request, response: Response): Promise<Response> {
     const files = request.files as IFiles;
-
+    const {
+      birthday,
+      companyID,
+      email,
+      name,
+      cnpj,
+      cpf,
+      personType,
+      phone,
+    }= request.body;
 }
