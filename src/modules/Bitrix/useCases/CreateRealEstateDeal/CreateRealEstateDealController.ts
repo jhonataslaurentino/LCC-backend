@@ -19,6 +19,12 @@ class CreateRealEstateDealController{
       cpf,
       personType,
       phone,
+      address,
+      creditType,
+      opportunityValue,
+      propertyID,
+      propertyValue,
+      term,
     }= request.body;
 
     const createdDeal = await this.CreateRealEstateDealUseCase.execute({
