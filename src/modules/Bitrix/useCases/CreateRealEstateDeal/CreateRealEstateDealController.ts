@@ -20,4 +20,25 @@ class CreateRealEstateDealController{
       personType,
       phone,
     }= request.body;
+
+    const createdDeal = await this.CreateRealEstateDealUseCase.execute({
+      address,
+      birthday,
+      cnpj,
+      companyID,
+      cpf,
+      creditType,
+      email,
+      name,
+      opportunityValue,
+      personType,
+      phone,
+      propertyID,
+      propertyValue,
+      term,
+    });
+    return response.json(createdDeal);
+  }
 }
+
+export { CreateRealEstateDealUseCase };
