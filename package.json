@@ -34,7 +34,7 @@
     "nodemailer": "^6.5.0",
     "nodemailer-express-handlebars": "^4.0.0",
     "puppeteer": "^9.1.0",
-    "qs": "^6.9.6",
+    "qs": "^6.9.7",
     "reflect-metadata": "^0.1.13",
     "request": "^2.88.2",
     "type-graphql": "^1.1.1",
